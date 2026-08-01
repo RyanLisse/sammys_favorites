@@ -8,5 +8,6 @@ pre-commit:
         - "**/*.tsx"
         - "**/*.json"
         - "**/*.css"
+      exclude: "docs/evidence/**"
       run: pnpm dlx ultracite fix {staged_files}
       stage_fixed: true
