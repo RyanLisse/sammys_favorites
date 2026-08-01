@@ -14,6 +14,20 @@ const stackEnvironment = {
   CONDUCTOR_WORKSPACE_NAME: "Test Helsinki",
   CONDUCTOR_WORKSPACE_PATH: workspacePath,
 };
+const requiredLocalDevEnvironmentVariables = [
+  "ADMIN_CORS",
+  "AGENT_WORKER_PORT",
+  "ATELIER_PORT",
+  "AUTH_CORS",
+  "COMMERCE_PORT",
+  "COOKIE_SECRET",
+  "DATABASE_URL",
+  "JWT_SECRET",
+  "REDIS_URL",
+  "SAMMYS_REDIS_DB",
+  "STOREFRONT_PORT",
+  "STORE_CORS",
+];
 
 const readEnvironment = async (
   environment = stackEnvironment,
@@ -79,6 +93,18 @@ test("local stack emits explicit isolated resources and ports", async () => {
   assert.equal(environment.S3_BUCKET, environment.SAMMYS_TEST_NAMESPACE);
   assert.ok(environment.JWT_SECRET.length >= 64);
   assert.ok(environment.COOKIE_SECRET.length >= 64);
+});
+
+test("Turbo forwards every required local development variable", async () => {
+  const turboConfig = JSON.parse(await readFile("turbo.json", "utf-8"));
+  const forwardedEnvironment = new Set(turboConfig.tasks?.dev?.env);
+
+  for (const variable of requiredLocalDevEnvironmentVariables) {
+    assert.ok(
+      forwardedEnvironment.has(variable),
+      `turbo dev.env must forward ${variable}`
+    );
+  }
 });
 
 test("path and port discriminator prevents same-name workspace collisions", async () => {
