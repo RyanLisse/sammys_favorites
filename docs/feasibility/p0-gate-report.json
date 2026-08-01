@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 2,
+  "asOf": "2026-08-01",
+  "issueStatus": "human_review",
+  "overall": "at_risk",
+  "gates": {
+    "G0": {
+      "status": "blocked_external",
+      "reasons": [
+        "Stripe sandbox and signed-webhook evidence are not available",
+        "Meta WABA, phone number, template, permission grant, and service-window evidence are not available",
+        "AliExpress application keys, approved API scope list, ordering, and tracking evidence are not available",
+        "Specialist compliance sign-off is pending"
+      ]
+    },
+    "G1": {
+      "status": "in_progress",
+      "reasons": [
+        "RJC-256 through RJC-260 require merged clean-checkout evidence"
+      ]
+    }
+  },
+  "providers": {
+    "stripe": {
+      "status": "blocked_external",
+      "sourceObservations": [
+        {
+          "url": "https://docs.stripe.com/testing",
+          "retrievedAt": "2026-08-01",
+          "prerequisites": [
+            "Stripe account with sandbox access",
+            "sandbox secret key stored outside Git"
+          ],
+          "scopesOrPermissions": [
+            "restricted sandbox key limited to the PaymentIntent resources used by checkout"
+          ],
+          "finding": "Sandbox mode can exercise payment flows without moving real funds, but repository fixtures do not prove account access or a successful PaymentIntent."
+        },
+        {
+          "url": "https://docs.stripe.com/webhooks/signature",
+          "retrievedAt": "2026-08-01",
+          "prerequisites": [
+            "registered webhook endpoint",
+            "endpoint signing secret stored outside Git",
+            "unmodified raw request body"
+          ],
+          "scopesOrPermissions": [
+            "subscribe only to the payment event types consumed by the integration"
+          ],
+          "finding": "Signature verification requires the Stripe-Signature header, endpoint secret, and raw body; replay-safe and duplicate delivery handling still need sandbox evidence."
+        }
+      ],
+      "requiredEvidence": [
+        "restricted sandbox credential availability and recorded resource restrictions",
+        "successful test PaymentIntent and payment receipt",
+        "raw-body webhook signature verification with a real endpoint secret",
+        "idempotent duplicate and stale webhook results"
+      ],
+      "fallback": "Checkout and live payment collection remain disabled."
+    },
+    "metaWhatsApp": {
+      "status": "blocked_external",
+      "sourceObservations": [
+        {
+          "url": "https://developers.facebook.com/docs/whatsapp/cloud-api/get-started",
+          "retrievedAt": "2026-08-01",
+          "prerequisites": [
+            "Meta business portfolio",
+            "WhatsApp Business Account",
+            "registered business phone number",
+            "approved message template for business-initiated traffic"
+          ],
+          "scopesOrPermissions": [
+            "whatsapp_business_messaging",
+            "whatsapp_business_management",
+            "business_management when the selected business-management endpoint requires it"
+          ],
+          "finding": "The setup flow depends on business assets and granted app permissions; no repository artifact proves ownership, review, or a production-capable token."
+        },
+        {
+          "url": "https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks",
+          "retrievedAt": "2026-08-01",
+          "prerequisites": [
+            "HTTPS callback",
+            "verification token",
+            "app secret for authenticity validation",
+            "subscribed WABA"
+          ],
+          "scopesOrPermissions": [
+            "webhook subscription for only the WhatsApp fields consumed by the adapter"
+          ],
+          "finding": "Webhook registration and delivery-status handling require live app/WABA configuration; local fixtures alone are not authenticity or delivery proof."
+        }
+      ],
+      "requiredEvidence": [
+        "WABA and phone-number ownership",
+        "approved transactional template and documented 24-hour customer-service-window behavior",
+        "observed app permission grant and least-privilege token",
+        "webhook verification, authenticity, consent, and opt-out fixtures"
+      ],
+      "fallback": "Use authenticated Atelier workflows and manual customer communication; no automated WhatsApp delivery."
+    },
+    "chatSdk": {
+      "status": "documented_not_integrated",
+      "sourceObservations": [
+        {
+          "url": "https://chat-sdk.dev/docs",
+          "retrievedAt": "2026-08-01",
+          "prerequisites": [
+            "pinned SDK and adapter versions",
+            "provider-specific credentials outside Git",
+            "an authenticated channel adapter"
+          ],
+          "scopesOrPermissions": [
+            "only provider permissions required by the selected inbound/outbound adapter"
+          ],
+          "finding": "Chat SDK is an implementation framework, not evidence of Meta entitlement, channel ownership, webhook authenticity, or successful provider delivery."
+        }
+      ],
+      "requiredEvidence": [
+        "pinned package and adapter versions",
+        "inbound and outbound fixture conformance",
+        "duplicate, replay, attachment-size, and provider-status tests"
+      ],
+      "fallback": "Keep the channel adapter disabled and test proposals through local fixtures only."
+    },
+    "aliExpress": {
+      "status": "blocked_external",
+      "sourceObservations": [
+        {
+          "url": "https://open.aliexpress.com",
+          "retrievedAt": "2026-08-01",
+          "prerequisites": [
+            "approved Open Platform developer/application identity",
+            "app key and secret outside Git",
+            "authorized access token",
+            "supplier/program eligibility"
+          ],
+          "scopesOrPermissions": [
+            "listing and exact-SKU read APIs",
+            "fresh freight/quote capability",
+            "order placement API",
+            "order detail and logistics tracking APIs"
+          ],
+          "finding": "The portal is the authority for the exact API list granted to an approved application; public reachability does not establish application approval, API grants, rate limits, ordering eligibility, or test facilities."
+        }
+      ],
+      "requiredEvidence": [
+        "application identity, approval state, and credential custody",
+        "captured exact approved API names/scopes and rate limits",
+        "listing and exact-SKU read response",
+        "fresh quote response and rate-limit behavior",
+        "order submission and tracking capability"
+      ],
+      "fallback": "Samantha performs sourcing, ordering, and tracking manually; SupplierOrderWritePort remains disabled."
+    }
+  },
+  "compliance": {
+    "accountableCoordinator": "Ryan Lisse",
+    "specialistSignoff": "pending",
+    "notLegalAdvice": true,
+    "topics": [
+      "GPSR economic operator, traceability, warnings, and online-offer information",
+      "exact-SKU materials and Dutch hallmark obligations",
+      "consumer withdrawal, returns, and pre-contract information",
+      "VAT, IOSS, duties, and importer-of-record",
+      "packaging and EPR",
+      "supplier address handoff and privacy processors"
+    ]
+  },
+  "deliveryPolicy": {
+    "p1AndP2MayStart": false,
+    "supplierWritesEnabled": false,
+    "automatedWhatsAppEnabled": false,
+    "livePaymentsEnabled": false
+  }
+}
