@@ -3,12 +3,14 @@ pre-commit:
     - run: pnpm exec oxlint --fix {staged_files}
       glob:
         - "**/*.js"
+        - "**/*.mjs"
         - "**/*.jsx"
         - "**/*.ts"
         - "**/*.tsx"
     - run: pnpm exec oxfmt --write {staged_files}
       glob:
         - "**/*.js"
+        - "**/*.mjs"
         - "**/*.jsx"
         - "**/*.ts"
         - "**/*.tsx"

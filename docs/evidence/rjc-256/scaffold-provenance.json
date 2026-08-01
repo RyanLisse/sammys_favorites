@@ -1,12 +1,13 @@
 {
   "schema_version": 1,
   "strategy": "clean-room",
-  "authorship_readback": {
-    "scaffold_commit": "cf901921a132be19f4bdc53fcdebb011bca16350",
+  "independent_rebuild_readback": {
+    "scaffold_commit": "82c2815a0113af8cfa58c96be1e09249e76a59e5",
     "author": "Ryan Lisse <ryan.lisse@gmail.com>",
-    "authored_at": "2026-08-01T12:07:12+02:00",
-    "subject": "scaffold RJC-257 monorepo with Ultracite/Oxlint tooling and verified matrix",
-    "changed_path_inventory_sha256": "caaaef01c781ae4e26fc08177d15aad5810b4ba719fd0a8cf125249b1b1ef372"
+    "authored_at": "2026-08-01T13:56:30+02:00",
+    "subject": "RJC-256 RJC-257: rebuild scaffold through clean room",
+    "changed_path_inventory_sha256": "9f612ad16e2458888dfdccc279aede72549851a52ba99248f597a3ab49e1119d",
+    "inventory_command": "git diff-tree --no-commit-id --name-only -r 82c2815a0113af8cfa58c96be1e09249e76a59e5 | LC_ALL=C sort | shasum -a 256"
   },
   "independent_source_basis": [
     "official Medusa documentation and @medusajs packages",
@@ -20,5 +21,6 @@
     "manifests contain no @starter/* package references",
     "selected direct and resolved versions match manifests, runtime, and lockfile"
   ],
-  "limitation": "Git authorship alone cannot prove independent creation. The claim is supported by the recorded source basis plus repeatable negative provenance and version readback checks; uncertain files must be removed and recreated."
+  "superseded_scaffold_commit": "cf901921a132be19f4bdc53fcdebb011bca16350 is not relied on because it predates the isolated builder receipt",
+  "limitation": "Git authorship alone cannot prove independent creation. The claim is supported by the isolated builder receipt, recorded source basis, and repeatable no-copy and version readbacks; uncertain files must be removed and recreated."
 }

@@ -132,6 +132,7 @@ for (const path of currentPaths) {
 
 const report = {
   schemaVersion: 1,
+  comparison: "sha256 exact match and normalized-line Jaccard >= 0.8",
   currentFileCount: currentPaths.length,
   upstreamFileCount: upstreamPaths.length,
   exactMatches,

@@ -127,11 +127,15 @@ test("official-source and scaffold provenance readbacks are complete", async () 
     assert.match(record.url, /^https:\/\//u);
   }
   assert.equal(provenance.strategy, "clean-room");
-  assert.match(provenance.authorship_readback.scaffold_commit, /^[a-f0-9]{40}$/u);
   assert.match(
-    provenance.authorship_readback.changed_path_inventory_sha256,
+    provenance.independent_rebuild_readback.scaffold_commit,
+    /^[a-f0-9]{40}$/u
+  );
+  assert.match(
+    provenance.independent_rebuild_readback.changed_path_inventory_sha256,
     /^[a-f0-9]{64}$/u
   );
+  assert.match(provenance.superseded_scaffold_commit, /is not relied on/iu);
   assert.match(provenance.limitation, /cannot prove independent creation/iu);
 });
 
