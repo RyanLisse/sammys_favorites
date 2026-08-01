@@ -17,7 +17,7 @@ jobs:
   supply-chain:
     name: Supply-chain lockfile verification
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
       - name: Verify lockfile and populate the shared pnpm cache
         run: |
           for attempt in 1 2 3; do
-            if pnpm install --frozen-lockfile; then
+            if pnpm install --frozen-lockfile --network-concurrency=1; then
               exit 0
             fi
             if [ "$attempt" -eq 3 ]; then
@@ -73,7 +73,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline --network-concurrency=4
 
       - name: Run PostgreSQL policy durability tests
         env:
@@ -99,7 +99,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline --network-concurrency=4
 
       - name: Validate isolated service configuration
         run: node --test test/local-stack.test.mjs
@@ -151,7 +151,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline --network-concurrency=4
 
       - name: Verify build-script policy
         run: pnpm ignored-builds
@@ -204,7 +204,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline
+        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline --network-concurrency=4
 
       - name: Verify exact workspace manifest
         env:
