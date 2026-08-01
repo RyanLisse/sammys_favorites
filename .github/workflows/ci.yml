@@ -14,8 +14,38 @@ permissions:
   contents: read
 
 jobs:
+  supply-chain:
+    name: Supply-chain lockfile verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.1
+          cache: pnpm
+
+      - name: Verify lockfile and populate the shared pnpm cache
+        run: |
+          for attempt in 1 2 3; do
+            if pnpm install --frozen-lockfile; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              exit 1
+            fi
+            sleep "$((attempt * 15))"
+          done
+
   policy-postgres:
     name: Policy PostgreSQL durability
+    needs: supply-chain
     runs-on: ubuntu-latest
     timeout-minutes: 15
     services:
@@ -43,7 +73,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline
 
       - name: Run PostgreSQL policy durability tests
         env:
@@ -52,6 +82,7 @@ jobs:
 
   integration-services:
     name: Real local services
+    needs: supply-chain
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -68,7 +99,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline
 
       - name: Validate isolated service configuration
         run: node --test test/local-stack.test.mjs
@@ -103,6 +134,7 @@ jobs:
 
   quality:
     name: Quality gates
+    needs: supply-chain
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -119,7 +151,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline
 
       - name: Verify build-script policy
         run: pnpm ignored-builds
@@ -138,10 +170,12 @@ jobs:
 
   workspace-matrix:
     name: Workspace ${{ matrix.workspace }}
+    needs: supply-chain
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
       fail-fast: false
+      max-parallel: 4
       matrix:
         workspace:
           - "@sammys/agent-worker"
@@ -170,7 +204,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline
 
       - name: Verify exact workspace manifest
         env:
