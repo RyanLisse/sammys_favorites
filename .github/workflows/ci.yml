@@ -15,9 +15,9 @@ permissions:
 
 jobs:
   supply-chain:
-    name: Supply-chain lockfile verification
+    name: Frozen lockfile and advisory verification
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -31,17 +31,11 @@ jobs:
           node-version: 24.18.1
           cache: pnpm
 
-      - name: Verify lockfile and populate the shared pnpm cache
-        run: |
-          for attempt in 1 2 3; do
-            if pnpm install --frozen-lockfile --network-concurrency=1; then
-              exit 0
-            fi
-            if [ "$attempt" -eq 3 ]; then
-              exit 1
-            fi
-            sleep "$((attempt * 15))"
-          done
+      - name: Install the exact reviewed lockfile
+        run: pnpm install --frozen-lockfile --trust-lockfile --network-concurrency=4
+
+      - name: Reject high and critical advisories
+        run: pnpm audit --audit-level high
 
   policy-postgres:
     name: Policy PostgreSQL durability
