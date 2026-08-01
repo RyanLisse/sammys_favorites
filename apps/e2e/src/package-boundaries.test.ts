@@ -12,6 +12,20 @@ const dependencySections = [
   "peerDependencies",
 ] as const;
 const protectedApplicationDirectories = ["agent-worker", "atelier"] as const;
+const expectedWorkspaceNames = [
+  "@sammys/agent-worker",
+  "@sammys/atelier",
+  "@sammys/commerce",
+  "@sammys/commerce-port",
+  "@sammys/contracts",
+  "@sammys/e2e",
+  "@sammys/observability",
+  "@sammys/policy",
+  "@sammys/storefront",
+  "@sammys/supplier-gateway",
+  "@sammys/test-support",
+  "@sammys/typescript-config",
+] as const;
 const sourceExtensions = new Set([
   ".cjs",
   ".cts",
@@ -140,6 +154,34 @@ test("every workspace manifest has the exact unique directory-derived name", asy
     );
     seenNames.add(expectedName);
   }
+
+  assert.deepEqual([...seenNames].toSorted(), [...expectedWorkspaceNames]);
+});
+
+test("build-script policy has only the reviewed allowances and explicit denials", async () => {
+  const workspaceConfiguration = await readFile(
+    path.join(repositoryRoot, "pnpm-workspace.yaml"),
+    "utf-8"
+  );
+  const allowBuildsBlock = workspaceConfiguration.match(
+    /^allowBuilds:\n(?<entries>(?: {2}.+\n)+)/mu
+  )?.groups?.entries;
+  assert.ok(allowBuildsBlock, "pnpm-workspace.yaml must define allowBuilds");
+
+  const entries = Object.fromEntries(
+    [
+      ...allowBuildsBlock.matchAll(
+        /^ {2}"?(?<name>[^"\n:]+)"?: (?<value>true|false)$/gmu
+      ),
+    ].map((match) => [match.groups?.name, match.groups?.value === "true"])
+  );
+  assert.deepEqual(entries, {
+    "@medusajs/telemetry": false,
+    esbuild: true,
+    "msgpackr-extract": false,
+    protobufjs: false,
+    sharp: true,
+  });
 });
 
 test("workspace dependencies never point into applications", async () => {

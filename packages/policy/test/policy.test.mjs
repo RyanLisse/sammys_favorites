@@ -4,8 +4,10 @@ import test from "node:test";
 import {
   CAPABILITY_STAGE,
   DefaultPolicyEvaluator,
+  DnsPinnedOutboundTargetVerifier,
   HmacApprovalVerifier,
   InMemoryApprovalExecutionRepository,
+  InMemoryWebhookVerificationRepository,
   canonicalizeJson,
   createApprovalSignature,
   sha256CanonicalJson,
@@ -14,6 +16,22 @@ import {
 const now = new Date("2026-08-01T12:00:00Z");
 const approvalKey = Buffer.from("phase-0-test-approval-key");
 const evaluator = new DefaultPolicyEvaluator();
+
+const outboundVerifier = (
+  resolver = () =>
+    Promise.resolve([
+      { address: "8.8.8.8", family: 4 },
+      { address: "2606:4700:4700::1111", family: 6 },
+    ])
+) =>
+  new DnsPinnedOutboundTargetVerifier(
+    new Map([
+      ["supplier.order.execute", new Set(["https://api.supplier.example"])],
+      ["supplier.quote.create", new Set(["https://api.supplier.example"])],
+      ["supplier.snapshot.read", new Set(["https://api.supplier.example"])],
+    ]),
+    resolver
+  );
 
 const binding = {
   actionType: "supplier.place-order",
@@ -78,6 +96,7 @@ const context = (overrides = {}) => ({
   authorizedApprovers: new Set(["ryan"]),
   grants: new Set(["supplier.order.execute"]),
   now,
+  outboundTargetVerifier: outboundVerifier(),
   principalKind: "service",
   ...overrides,
 });
@@ -160,22 +179,88 @@ test("every capability has exactly one allowed stage", async () => {
   }
 });
 
-test("derives outbound target validation from the bound target", async () => {
-  const decision = await evaluator.evaluate(
+test("pins outbound targets to provider origins and public IPv4/IPv6 DNS answers", async () => {
+  const unsafeAnswers = [
+    "127.0.0.1",
+    "10.0.0.1",
+    "169.254.169.254",
+    "::1",
+    "0:0:0:0:0:0:0:1",
+    "fe80::1",
+    "fd00::1",
+    "::ffff:127.0.0.1",
+    "0:0:0:0:0:ffff:7f00:1",
+    "2001:db8::1",
+  ];
+  for (const address of unsafeAnswers) {
+    const decision = await evaluator.evaluate(
+      context({
+        grants: new Set(["supplier.quote.create"]),
+        outboundTargetVerifier: outboundVerifier(() =>
+          Promise.resolve([{ address, family: address.includes(":") ? 6 : 4 }])
+        ),
+      }),
+      {
+        binding: {
+          ...binding,
+          capability: "supplier.quote.create",
+          stage: "propose",
+        },
+      }
+    );
+    assert.equal(decision.reasonCode, "UNSAFE_TARGET", address);
+  }
+
+  const mixedDns = await evaluator.evaluate(
+    context({
+      grants: new Set(["supplier.quote.create"]),
+      outboundTargetVerifier: outboundVerifier(() =>
+        Promise.resolve([
+          { address: "8.8.8.8", family: 4 },
+          { address: "fe80::1", family: 6 },
+        ])
+      ),
+    }),
+    {
+      binding: {
+        ...binding,
+        capability: "supplier.quote.create",
+        stage: "propose",
+      },
+    }
+  );
+  assert.equal(mixedDns.reasonCode, "UNSAFE_TARGET");
+
+  for (const target of [
+    "https://[::1]/orders",
+    "https://169.254.169.254/latest",
+    "https://attacker.example/orders",
+  ]) {
+    const decision = await evaluator.evaluate(
+      context({ grants: new Set(["supplier.quote.create"]) }),
+      {
+        binding: {
+          ...binding,
+          capability: "supplier.quote.create",
+          resource: { ...binding.resource, target },
+          stage: "propose",
+        },
+      }
+    );
+    assert.equal(decision.reasonCode, "UNSAFE_TARGET", target);
+  }
+
+  const allowed = await evaluator.evaluate(
     context({ grants: new Set(["supplier.quote.create"]) }),
     {
       binding: {
         ...binding,
         capability: "supplier.quote.create",
-        resource: {
-          ...binding.resource,
-          target: "http://169.254.169.254/latest",
-        },
         stage: "propose",
       },
     }
   );
-  assert.equal(decision.reasonCode, "UNSAFE_TARGET");
+  assert.equal(allowed.reasonCode, "ALLOW");
 });
 
 test("never permits an agent to execute a privileged write", async () => {
@@ -184,6 +269,14 @@ test("never permits an agent to execute a privileged write", async () => {
     approvedAction()
   );
   assert.equal(decision.reasonCode, "DIRECT_AGENT_EXECUTION_DENIED");
+
+  const webhookDecision = await evaluator.evaluate(
+    context({ grants: new Set(["webhook.receive"]), principalKind: "agent" }),
+    {
+      binding: { ...binding, capability: "webhook.receive" },
+    }
+  );
+  assert.equal(webhookDecision.reasonCode, "DIRECT_AGENT_EXECUTION_DENIED");
 });
 
 test("rejects caller-manufactured and invalidly signed approvals", async () => {
@@ -330,4 +423,41 @@ test("blocks forged webhooks, secrets, prompt injection, and kill switches", asy
     const decision = await evaluator.evaluate(policyContext, action);
     assert.equal(decision.reasonCode, reason);
   }
+});
+
+test("accepts webhooks only through an immutable verification receipt lookup", async () => {
+  const webhookBinding = { ...binding, capability: "webhook.receive" };
+  const receipt = {
+    bindingSha256: sha256CanonicalJson(webhookBinding),
+    expiresAt: "2026-08-01T12:05:00Z",
+    provider: "stripe",
+    receiptId: "webhook-receipt-1",
+    verifiedAt: "2026-08-01T11:59:00Z",
+  };
+  const webhookContext = context({
+    grants: new Set(["webhook.receive"]),
+    webhookVerificationRepository: new InMemoryWebhookVerificationRepository([
+      receipt,
+    ]),
+  });
+  const callerBoolean = await evaluator.evaluate(webhookContext, {
+    binding: webhookBinding,
+    webhookSignatureVerified: true,
+  });
+  assert.equal(callerBoolean.reasonCode, "UNTRUSTED_WEBHOOK");
+
+  const verified = await evaluator.evaluate(webhookContext, {
+    binding: webhookBinding,
+    webhookVerificationReceiptId: receipt.receiptId,
+  });
+  assert.equal(verified.reasonCode, "ALLOW");
+
+  const altered = await evaluator.evaluate(webhookContext, {
+    binding: {
+      ...webhookBinding,
+      payload: { forged: true },
+    },
+    webhookVerificationReceiptId: receipt.receiptId,
+  });
+  assert.equal(altered.reasonCode, "UNTRUSTED_WEBHOOK");
 });

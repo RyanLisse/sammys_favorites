@@ -17,14 +17,17 @@
     "build": "tsc -p tsconfig.json",
     "check-types": "tsc -p tsconfig.json --noEmit",
     "test": "pnpm run build && node --test test/*.test.mjs",
+    "test:postgres": "pnpm run build && test -n \"$POLICY_TEST_DATABASE_URL\" && node --test test/postgres-repository.test.mjs",
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@sammys/contracts": "workspace:*"
+    "@sammys/contracts": "workspace:*",
+    "pg": "8.20.0"
   },
   "devDependencies": {
     "@sammys/typescript-config": "workspace:*",
     "@types/node": "^22.20.1",
+    "@types/pg": "8.15.5",
     "typescript": "5.9.3"
   },
   "engines": {

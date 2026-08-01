@@ -8,6 +8,8 @@ import type {
   ExecutionClaimResult,
   VerifiedApprovalRecord,
 } from "./execution-approval-repository.js";
+import type { OutboundTargetVerifier } from "./outbound-target-verifier.js";
+import type { WebhookVerificationRepository } from "./webhook-verification-repository.js";
 
 export {
   createApprovalSignature,
@@ -16,6 +18,7 @@ export {
 export type { ApprovalVerifier } from "./approval-verifier.js";
 export { canonicalizeJson, sha256CanonicalJson } from "./canonical-json.js";
 export { InMemoryApprovalExecutionRepository } from "./execution-approval-repository.js";
+export { PostgresApprovalExecutionRepository } from "./postgres-approval-execution-repository.js";
 export type {
   ApprovalExecutionRepository,
   ExecutionClaim,
@@ -24,6 +27,20 @@ export type {
   ExecutionCompletion,
   VerifiedApprovalRecord,
 } from "./execution-approval-repository.js";
+export {
+  DnsPinnedOutboundTargetVerifier,
+  isPublicIpAddress,
+} from "./outbound-target-verifier.js";
+export type {
+  AddressResolver,
+  OutboundTargetVerifier,
+  ResolvedAddress,
+} from "./outbound-target-verifier.js";
+export { InMemoryWebhookVerificationRepository } from "./webhook-verification-repository.js";
+export type {
+  WebhookVerificationReceipt,
+  WebhookVerificationRepository,
+} from "./webhook-verification-repository.js";
 
 export const POLICY_CAPABILITIES = [
   "cart.read",
@@ -72,7 +89,9 @@ export interface PolicyContext {
   readonly grants: ReadonlySet<PolicyCapability>;
   readonly killSwitches?: ReadonlySet<PolicyCapability | "all-writes">;
   readonly now: Date;
+  readonly outboundTargetVerifier?: OutboundTargetVerifier;
   readonly principalKind: PrincipalKind;
+  readonly webhookVerificationRepository?: WebhookVerificationRepository;
 }
 
 export interface PolicyAction {
@@ -81,7 +100,7 @@ export interface PolicyAction {
   readonly containsSecret?: boolean;
   readonly idempotencyKey?: string;
   readonly untrustedInstructions?: boolean;
-  readonly webhookSignatureVerified?: boolean;
+  readonly webhookVerificationReceiptId?: string;
 }
 
 export interface PolicyDecision {
@@ -132,28 +151,6 @@ const deny = (
   requiredApproval: RequiredApproval = "none"
 ): PolicyDecision => ({ allowed: false, reasonCode, requiredApproval });
 
-const isSafeTarget = (targetUrl: string): boolean => {
-  try {
-    const url = new URL(targetUrl);
-    const hostname = url.hostname.toLowerCase();
-    const isLocal =
-      hostname === "localhost" ||
-      hostname === "0.0.0.0" ||
-      hostname === "::1" ||
-      hostname.endsWith(".local") ||
-      hostname.startsWith("127.") ||
-      hostname.startsWith("10.") ||
-      hostname.startsWith("192.168.") ||
-      hostname.startsWith("169.254.") ||
-      /^172\.(?<privateOctet>1[6-9]|2\d|3[01])\./u.test(hostname);
-    return (
-      url.protocol === "https:" && !isLocal && !url.username && !url.password
-    );
-  } catch {
-    return false;
-  }
-};
-
 const validateKnownCapability = (
   context: PolicyContext,
   action: PolicyAction,
@@ -174,30 +171,44 @@ const validateKnownCapability = (
   if (capability === "proposal.approve" && context.principalKind !== "human") {
     return deny("WRONG_STAGE", "human");
   }
-  if (
-    APPROVAL_REQUIRED_CAPABILITIES.has(capability) &&
-    context.principalKind === "agent"
-  ) {
+  if (action.binding.stage === "execute" && context.principalKind === "agent") {
     return deny("DIRECT_AGENT_EXECUTION_DENIED", "human");
   }
   return null;
 };
 
-const validateUntrustedInput = (
+const validateUntrustedInput = async (
+  context: PolicyContext,
   action: PolicyAction,
   capability: PolicyCapability
-): PolicyDecision | null => {
+): Promise<PolicyDecision | null> => {
   if (action.containsSecret) {
     return deny("SECRET_IN_ACTION");
   }
   if (
     OUTBOUND_CAPABILITIES.has(capability) &&
-    !isSafeTarget(action.binding.resource.target)
+    !(await context.outboundTargetVerifier?.verify(
+      capability,
+      action.binding.resource.target
+    ))
   ) {
     return deny("UNSAFE_TARGET");
   }
-  if (capability === "webhook.receive" && !action.webhookSignatureVerified) {
-    return deny("UNTRUSTED_WEBHOOK");
+  if (capability === "webhook.receive") {
+    const receipt = action.webhookVerificationReceiptId
+      ? await context.webhookVerificationRepository?.getVerifiedReceipt(
+          action.webhookVerificationReceiptId
+        )
+      : null;
+    const now = context.now.getTime();
+    if (
+      !receipt ||
+      Date.parse(receipt.verifiedAt) > now ||
+      Date.parse(receipt.expiresAt) <= now ||
+      receipt.bindingSha256 !== sha256CanonicalJson(action.binding)
+    ) {
+      return deny("UNTRUSTED_WEBHOOK");
+    }
   }
   if (
     action.untrustedInstructions &&
@@ -320,9 +331,14 @@ export class DefaultPolicyEvaluator implements PolicyEvaluator {
       );
     }
     const capability = requestedCapability as PolicyCapability;
+    const knownCapabilityFailure = validateKnownCapability(
+      context,
+      normalizedAction,
+      capability
+    );
     const failure =
-      validateKnownCapability(context, normalizedAction, capability) ??
-      validateUntrustedInput(normalizedAction, capability);
+      knownCapabilityFailure ??
+      (await validateUntrustedInput(context, normalizedAction, capability));
     if (failure) {
       return failure;
     }

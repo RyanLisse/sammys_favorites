@@ -27,10 +27,10 @@ only after the target implementation commit exists:
 
 ```sh
 node scripts/rjc-256/verify-no-upstream-copy.mjs \
-  <detached-pinned-upstream-checkout> --target <target-commit>
+  <pinned-upstream-checkout> --target <target-commit>
 ```
 
-The command rejects an upstream checkout that is not detached at
+The command rejects an upstream checkout whose `HEAD` does not resolve to
 `10b5d4b0623123737854a3cb02d54f6e32a1fb9e`. The resulting evidence commit may
 follow the target commit; the report must not claim to cover its own later
 evidence commit.

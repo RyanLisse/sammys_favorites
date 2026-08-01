@@ -47,7 +47,7 @@ const resolveObject = async (root, revision) => {
   return object.trim();
 };
 
-const commitMetadata = async (root, revision) => {
+export const commitMetadata = async (root, revision) => {
   const commit = await resolveObject(root, `${revision}^{commit}`);
   const tree = await resolveObject(root, `${commit}^{tree}`);
   const committedAtOutput = await git(root, [
@@ -115,7 +115,7 @@ const jaccard = (left, right) => {
   return union === 0 ? 0 : intersection / union;
 };
 
-const recordsAt = async (root, commit, pathFilter = () => true) => {
+export const recordsAt = async (root, commit, pathFilter = () => true) => {
   const allPaths = await treePaths(root, commit);
   const paths = allPaths.filter(pathFilter);
   return Promise.all(
@@ -194,7 +194,7 @@ export const createReport = async ({ targetRef, upstreamRoot }) => {
   const upstream = await commitMetadata(upstreamRoot, "HEAD");
   if (upstream.commit !== pinnedUpstreamCommit) {
     throw new Error(
-      `Upstream checkout must be detached at ${pinnedUpstreamCommit}; received ${upstream.commit}`
+      `Upstream checkout HEAD must resolve to ${pinnedUpstreamCommit}; received ${upstream.commit}`
     );
   }
   const superseded = await commitMetadata(

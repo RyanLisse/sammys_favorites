@@ -11,8 +11,10 @@ import {
   scanProductionProvenance,
 } from "../scripts/rjc-256/conformance.mjs";
 import {
+  commitMetadata,
   contentManifestSha256,
   isActiveTrackedFile,
+  recordsAt,
 } from "../scripts/rjc-256/verify-no-upstream-copy.mjs";
 
 const evidence = "docs/evidence/rjc-256";
@@ -194,6 +196,76 @@ test("the active suite and utility are tracked and independent of ignored OMC st
     "utf-8"
   );
   assert.doesNotMatch(activeTest, /\.omx\//u);
+});
+
+test("the isolated tooling receipt binds the replacement files and isolation basis", async () => {
+  const receipt = await readJson(
+    `${evidence}/isolated-tooling-rebuild-receipt.json`
+  );
+  const records = await recordsAt(
+    rootDirectory,
+    receipt.implementation_commit,
+    (trackedPath) => receipt.recreated_paths.includes(trackedPath)
+  );
+
+  assert.equal(receipt.strategy, "isolated-clean-room-rebuild");
+  assert.equal(receipt.recreated_paths.length, 9);
+  assert.equal(records.length, receipt.recreated_paths.length);
+  assert.equal(
+    contentManifestSha256(records),
+    receipt.path_content_manifest_sha256
+  );
+  assert.equal(receipt.constraints.read_prior_contents, false);
+  assert.equal(receipt.constraints.read_repository_history, false);
+  assert.equal(receipt.constraints.read_upstream_checkout, false);
+  assert.ok(receipt.source_basis.length >= 4);
+});
+
+test("the committed no-copy report is bound to its exact target and sources", async () => {
+  const report = await readJson(`${evidence}/no-copy-report.json`);
+  const targetMetadata = await commitMetadata(
+    rootDirectory,
+    report.target.commit
+  );
+  const records = await recordsAt(
+    rootDirectory,
+    report.target.commit,
+    isActiveTrackedFile
+  );
+  const sources = new Map(
+    report.sources.map((source) => [source.kind, source])
+  );
+
+  assert.equal(report.schema_version, 2);
+  assert.equal(report.passed, true);
+  assert.deepEqual(report.exact_matches, []);
+  assert.deepEqual(report.high_similarity_matches, []);
+  assert.equal(report.target.tree, targetMetadata.tree);
+  assert.equal(report.target.committed_at, targetMetadata.committedAt);
+  assert.equal(report.target.active_file_count, records.length);
+  assert.equal(
+    report.target.content_manifest_sha256,
+    contentManifestSha256(records)
+  );
+  assert.ok(
+    Date.parse(report.generated_at) > Date.parse(report.target.committed_at)
+  );
+  assert.equal(
+    sources.get("pinned-upstream")?.commit,
+    "10b5d4b0623123737854a3cb02d54f6e32a1fb9e"
+  );
+  assert.equal(
+    sources.get("pinned-upstream")?.tree,
+    "36a3fe5dd2c318faf232e15bc6ea190bc246a6e5"
+  );
+  assert.equal(
+    sources.get("superseded-scaffold")?.commit,
+    "cf901921a132be19f4bdc53fcdebb011bca16350"
+  );
+  assert.equal(
+    sources.get("superseded-scaffold")?.tree,
+    "deb5153e9ccee1e1d3aa2b8821888af59bb58275"
+  );
 });
 
 test("the no-copy scope covers active source and configuration across the repository", async () => {
