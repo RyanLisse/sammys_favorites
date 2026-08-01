@@ -1,5 +1,6 @@
 import { lookup } from "node:dns/promises";
 import { isIP } from "node:net";
+import type { LookupFunction } from "node:net";
 
 import type { PolicyCapability } from "./index.js";
 
@@ -9,7 +10,22 @@ export interface ResolvedAddress {
 }
 
 export interface OutboundTargetVerifier {
-  verify: (capability: PolicyCapability, target: string) => Promise<boolean>;
+  createConnectionPlan: (
+    capability: PolicyCapability,
+    target: string
+  ) => Promise<VerifiedOutboundConnectionPlan | null>;
+}
+
+export interface VerifiedOutboundConnectionPlan {
+  readonly addresses: readonly ResolvedAddress[];
+  readonly hostname: string;
+  readonly lookup: LookupFunction;
+  readonly origin: string;
+  readonly port: number;
+  readonly target: string;
+  readonly verifyRedirect: (
+    target: string
+  ) => Promise<VerifiedOutboundConnectionPlan | null>;
 }
 
 export type AddressResolver = (
@@ -53,6 +69,7 @@ const isReservedIpv4 = (
   return (
     (first === 192 && second === 0 && third === 0) ||
     (first === 192 && second === 0 && third === 2) ||
+    (first === 192 && second === 88 && third === 99) ||
     (first === 198 && (second === 18 || second === 19)) ||
     (first === 198 && second === 51 && third === 100) ||
     (first === 203 && second === 0 && third === 113) ||
@@ -75,7 +92,16 @@ const parseIpv6Words = (address: string): readonly number[] | null => {
   if (isIP(normalized) !== 6) {
     return null;
   }
-  const [left = "", right = ""] = normalized.split("::");
+  const finalSeparator = normalized.lastIndexOf(":");
+  const ipv4Suffix = normalized.slice(finalSeparator + 1);
+  const ipv4Octets = parseIpv4(ipv4Suffix);
+  const wordAddress = ipv4Octets
+    ? `${normalized.slice(0, finalSeparator + 1)}${(
+        ipv4Octets[0] * 256 +
+        ipv4Octets[1]
+      ).toString(16)}:${(ipv4Octets[2] * 256 + ipv4Octets[3]).toString(16)}`
+    : normalized;
+  const [left = "", right = ""] = wordAddress.split("::");
   const leftWords = left ? left.split(":") : [];
   const rightWords = right ? right.split(":") : [];
   const missingWords = 8 - leftWords.length - rightWords.length;
@@ -85,24 +111,6 @@ const parseIpv6Words = (address: string): readonly number[] | null => {
     ...rightWords,
   ].map((word) => Number.parseInt(word, 16));
   return words.length === 8 ? words : null;
-};
-
-const mappedIpv4 = (address: string): string | null => {
-  const normalized = normalizeIpv6(address);
-  const dottedMatch = /^::ffff:(?<address>\d+\.\d+\.\d+\.\d+)$/u.exec(
-    normalized
-  );
-  if (dottedMatch?.groups?.address) {
-    return dottedMatch.groups.address;
-  }
-  const hexadecimalMatch =
-    /^::ffff:(?<high>[\da-f]{1,4}):(?<low>[\da-f]{1,4})$/u.exec(normalized);
-  if (!(hexadecimalMatch?.groups?.high && hexadecimalMatch.groups.low)) {
-    return null;
-  }
-  const high = Number.parseInt(hexadecimalMatch.groups.high, 16);
-  const low = Number.parseInt(hexadecimalMatch.groups.low, 16);
-  return `${Math.floor(high / 256)}.${high % 256}.${Math.floor(low / 256)}.${low % 256}`;
 };
 
 const mappedIpv4FromWords = (words: readonly number[]): string | null => {
@@ -115,38 +123,56 @@ const mappedIpv4FromWords = (words: readonly number[]): string | null => {
   return `${Math.floor(high / 256)}.${high % 256}.${Math.floor(low / 256)}.${low % 256}`;
 };
 
-export const isPublicIpAddress = (address: string): boolean => {
-  if (isIP(address) === 4) {
-    return isPublicIpv4(address);
-  }
-  if (isIP(address) !== 6) {
-    return false;
-  }
-  const dottedMapped = mappedIpv4(address);
-  if (dottedMapped) {
-    return isPublicIpv4(dottedMapped);
-  }
+const isIetfProtocolAssignment = (first: number, second: number): boolean =>
+  first === 8193 && second <= 511;
+
+const isSpecialUseIpv6 = (words: readonly number[]): boolean => {
+  const [first = 0, second = 0, third = 0, fourth = 0] = words;
+  const [last] = words.slice(-1);
+  const isUnspecified = words.every((word) => word === 0);
+  const isLoopback =
+    words.slice(0, 7).every((word) => word === 0) && last === 1;
+  const isGlobalUnicast = first >= 8192 && first <= 16_383;
+  const isDocumentation = first === 8193 && second === 3512;
+  const isBenchmarking = first === 8193 && second === 2 && third === 0;
+  const isOrchidV1 = first === 8193 && second >= 16 && second <= 31;
+  const isOrchidV2 = first === 8193 && second >= 32 && second <= 47;
+  const isSixToFour = first === 8194;
+  const isDiscardOnly =
+    first === 256 && second === 0 && third === 0 && fourth === 0;
+  const isLocalTranslation = first === 100 && second === 65_435 && third === 1;
+  const isDocumentationV4 = first === 16_383 && second <= 4095;
+  return [
+    !isGlobalUnicast,
+    isIetfProtocolAssignment(first, second),
+    isUnspecified,
+    isLoopback,
+    isDocumentation,
+    isBenchmarking,
+    isOrchidV1,
+    isOrchidV2,
+    isSixToFour,
+    isDiscardOnly,
+    isLocalTranslation,
+    isDocumentationV4,
+  ].some(Boolean);
+};
+
+const isPublicIpv6 = (address: string): boolean => {
   const words = parseIpv6Words(address);
   if (!words) {
     return false;
   }
   const mapped = mappedIpv4FromWords(words);
-  if (mapped) {
-    return isPublicIpv4(mapped);
+  return mapped ? isPublicIpv4(mapped) : !isSpecialUseIpv6(words);
+};
+
+export const isPublicIpAddress = (address: string): boolean => {
+  const family = isIP(address);
+  if (family === 4) {
+    return isPublicIpv4(address);
   }
-  const [first = 0, second = 0] = words;
-  const [last] = words.slice(-1);
-  const isUnspecified = words.every((word) => word === 0);
-  const isLoopback =
-    words.slice(0, 7).every((word) => word === 0) && last === 1;
-  return !(
-    isUnspecified ||
-    isLoopback ||
-    (first >= 64_512 && first <= 65_023) ||
-    (first >= 65_152 && first <= 65_215) ||
-    first >= 65_280 ||
-    (first === 8193 && second === 3512)
-  );
+  return family === 6 && isPublicIpv6(address);
 };
 
 const systemResolver: AddressResolver = async (hostname) => {
@@ -169,10 +195,10 @@ export class DnsPinnedOutboundTargetVerifier implements OutboundTargetVerifier {
     this.#resolver = resolver;
   }
 
-  verify = async (
+  createConnectionPlan = async (
     capability: PolicyCapability,
     target: string
-  ): Promise<boolean> => {
+  ): Promise<VerifiedOutboundConnectionPlan | null> => {
     try {
       const url = new URL(target);
       if (
@@ -181,18 +207,88 @@ export class DnsPinnedOutboundTargetVerifier implements OutboundTargetVerifier {
         url.password ||
         !this.#allowedOrigins.get(capability)?.has(url.origin)
       ) {
-        return false;
+        return null;
       }
       const literalFamily = isIP(url.hostname);
-      const addresses = literalFamily
-        ? [{ address: url.hostname, family: literalFamily === 6 ? 6 : 4 }]
+      const addresses: readonly ResolvedAddress[] = literalFamily
+        ? [
+            {
+              address: url.hostname,
+              family: literalFamily === 6 ? (6 as const) : (4 as const),
+            },
+          ]
         : await this.#resolver(url.hostname);
-      return (
-        addresses.length > 0 &&
-        addresses.every(({ address }) => isPublicIpAddress(address))
+      if (
+        addresses.length === 0 ||
+        !addresses.every(({ address }) => isPublicIpAddress(address))
+      ) {
+        return null;
+      }
+      const pinnedAddresses = Object.freeze(
+        addresses.map(({ address, family }) =>
+          Object.freeze({ address, family })
+        )
       );
+      const { hostname } = url;
+      // oxlint-disable promise/prefer-await-to-callbacks -- Node's connect-bound LookupFunction transport primitive is callback-based.
+      const pinnedLookup: LookupFunction = (
+        requestedHostname,
+        options,
+        callback
+      ) => {
+        if (requestedHostname !== hostname) {
+          const error = new Error(
+            "Pinned lookup refused a different hostname"
+          ) as NodeJS.ErrnoException;
+          error.code = "EPERM";
+          callback(error, "", 0);
+          return;
+        }
+        const { all, family: requestedFamilyOption = 0 } = options;
+        const requestedFamily = Number(requestedFamilyOption);
+        const eligible = requestedFamily
+          ? pinnedAddresses.filter(
+              ({ family: addressFamily }) => addressFamily === requestedFamily
+            )
+          : pinnedAddresses;
+        if (eligible.length === 0) {
+          const error = new Error(
+            "Pinned lookup has no verified address for the requested family"
+          ) as NodeJS.ErrnoException;
+          error.code = "ENOTFOUND";
+          callback(error, "", 0);
+          return;
+        }
+        if (all) {
+          callback(
+            null,
+            eligible.map(({ address, family: addressFamily }) => ({
+              address,
+              family: addressFamily,
+            }))
+          );
+          return;
+        }
+        const [selected] = eligible;
+        if (!selected) {
+          callback(new Error("Pinned lookup has no verified address"), "", 0);
+          return;
+        }
+        callback(null, selected.address, selected.family);
+      };
+      // oxlint-enable promise/prefer-await-to-callbacks
+      return Object.freeze({
+        addresses: pinnedAddresses,
+        hostname,
+        lookup: pinnedLookup,
+        origin: url.origin,
+        port: url.port ? Number(url.port) : 443,
+        target: url.href,
+        verifyRedirect: (redirectTarget: string) =>
+          this.createConnectionPlan(capability, redirectTarget),
+      });
     } catch {
-      return false;
+      return null;
     }
   };
 }

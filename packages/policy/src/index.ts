@@ -8,7 +8,10 @@ import type {
   ExecutionClaimResult,
   VerifiedApprovalRecord,
 } from "./execution-approval-repository.js";
-import type { OutboundTargetVerifier } from "./outbound-target-verifier.js";
+import type {
+  OutboundTargetVerifier,
+  VerifiedOutboundConnectionPlan,
+} from "./outbound-target-verifier.js";
 import type { WebhookVerificationRepository } from "./webhook-verification-repository.js";
 
 export {
@@ -35,11 +38,13 @@ export type {
   AddressResolver,
   OutboundTargetVerifier,
   ResolvedAddress,
+  VerifiedOutboundConnectionPlan,
 } from "./outbound-target-verifier.js";
 export { InMemoryWebhookVerificationRepository } from "./webhook-verification-repository.js";
 export type {
   WebhookVerificationReceipt,
   WebhookVerificationRepository,
+  WebhookReceiptConsumptionRequest,
 } from "./webhook-verification-repository.js";
 
 export const POLICY_CAPABILITIES = [
@@ -87,6 +92,7 @@ export interface PolicyContext {
   readonly approvalRepository: ApprovalExecutionRepository;
   readonly authorizedApprovers: ReadonlySet<string>;
   readonly grants: ReadonlySet<PolicyCapability>;
+  readonly expectedWebhookProvider?: string;
   readonly killSwitches?: ReadonlySet<PolicyCapability | "all-writes">;
   readonly now: Date;
   readonly outboundTargetVerifier?: OutboundTargetVerifier;
@@ -106,6 +112,7 @@ export interface PolicyAction {
 export interface PolicyDecision {
   readonly allowed: boolean;
   readonly executionClaim?: ExecutionClaim;
+  readonly outboundConnectionPlan?: VerifiedOutboundConnectionPlan;
   readonly reasonCode: PolicyReasonCode;
   readonly requiredApproval: RequiredApproval;
 }
@@ -146,6 +153,39 @@ const OUTBOUND_CAPABILITIES = new Set<PolicyCapability>([
   "supplier.snapshot.read",
 ]);
 
+const SECRET_KEY_PATTERN =
+  /(?:authorization|cookie|credential|password|passwd|privatekey|secret|token|apikey|clientsecret)/iu;
+const SECRET_VALUE_PATTERNS = [
+  /-----BEGIN (?:[A-Z ]+ )?PRIVATE KEY-----/u,
+  /\b(?:bearer|basic)\s+[a-z0-9+/._~=-]{8,}/iu,
+  /\b(?:sk|rk)_(?:live|test)_[a-z0-9]{12,}\b/iu,
+  /\b(?:gh[opusr]_[a-z0-9]{20,}|github_pat_[a-z0-9_]{20,})\b/iu,
+  /\bxox[baprs]-[a-z0-9-]{10,}\b/iu,
+  /\bAKIA[A-Z0-9]{16}\b/u,
+  /\beyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\b/u,
+  /\b(?:api[_-]?key|client[_-]?secret|password|token)\s*[:=]\s*[^\s,;]{6,}/iu,
+];
+
+const normalizedSecretKey = (key: string): string =>
+  key.replaceAll(/[^a-z0-9]/giu, "");
+
+const containsSecretShape = (value: unknown): boolean => {
+  if (typeof value === "string") {
+    return SECRET_VALUE_PATTERNS.some((pattern) => pattern.test(value));
+  }
+  if (Array.isArray(value)) {
+    return value.some((entry) => containsSecretShape(entry));
+  }
+  if (value === null || typeof value !== "object") {
+    return false;
+  }
+  return Object.entries(value).some(
+    ([key, entry]) =>
+      SECRET_KEY_PATTERN.test(normalizedSecretKey(key)) ||
+      containsSecretShape(entry)
+  );
+};
+
 const deny = (
   reasonCode: PolicyReasonCode,
   requiredApproval: RequiredApproval = "none"
@@ -177,46 +217,56 @@ const validateKnownCapability = (
   return null;
 };
 
+interface UntrustedInputValidation {
+  readonly failure: PolicyDecision | null;
+  readonly outboundConnectionPlan?: VerifiedOutboundConnectionPlan;
+}
+
 const validateUntrustedInput = async (
   context: PolicyContext,
   action: PolicyAction,
   capability: PolicyCapability
-): Promise<PolicyDecision | null> => {
-  if (action.containsSecret) {
-    return deny("SECRET_IN_ACTION");
+): Promise<UntrustedInputValidation> => {
+  const persistableAction = {
+    approvalId: action.approvalId,
+    binding: action.binding,
+    idempotencyKey: action.idempotencyKey,
+    webhookVerificationReceiptId: action.webhookVerificationReceiptId,
+  };
+  if (action.containsSecret || containsSecretShape(persistableAction)) {
+    return { failure: deny("SECRET_IN_ACTION") };
   }
-  if (
-    OUTBOUND_CAPABILITIES.has(capability) &&
-    !(await context.outboundTargetVerifier?.verify(
-      capability,
-      action.binding.resource.target
-    ))
-  ) {
-    return deny("UNSAFE_TARGET");
-  }
-  if (capability === "webhook.receive") {
-    const receipt = action.webhookVerificationReceiptId
-      ? await context.webhookVerificationRepository?.getVerifiedReceipt(
-          action.webhookVerificationReceiptId
-        )
-      : null;
-    const now = context.now.getTime();
-    if (
-      !receipt ||
-      Date.parse(receipt.verifiedAt) > now ||
-      Date.parse(receipt.expiresAt) <= now ||
-      receipt.bindingSha256 !== sha256CanonicalJson(action.binding)
-    ) {
-      return deny("UNTRUSTED_WEBHOOK");
-    }
+  const outboundConnectionPlan = OUTBOUND_CAPABILITIES.has(capability)
+    ? ((await context.outboundTargetVerifier?.createConnectionPlan(
+        capability,
+        action.binding.resource.target
+      )) ?? undefined)
+    : undefined;
+  if (OUTBOUND_CAPABILITIES.has(capability) && !outboundConnectionPlan) {
+    return { failure: deny("UNSAFE_TARGET") };
   }
   if (
     action.untrustedInstructions &&
     (action.binding.stage === "propose" || action.binding.stage === "execute")
   ) {
-    return deny("PROMPT_INJECTION_RISK");
+    return { failure: deny("PROMPT_INJECTION_RISK") };
   }
-  return null;
+  if (capability === "webhook.receive") {
+    const bindingSha256 = sha256CanonicalJson(action.binding);
+    const receipt =
+      action.webhookVerificationReceiptId && context.expectedWebhookProvider
+        ? await context.webhookVerificationRepository?.consumeVerifiedReceipt({
+            bindingSha256,
+            now: context.now,
+            provider: context.expectedWebhookProvider,
+            receiptId: action.webhookVerificationReceiptId,
+          })
+        : null;
+    if (!receipt) {
+      return { failure: deny("UNTRUSTED_WEBHOOK") };
+    }
+  }
+  return { failure: null, outboundConnectionPlan };
 };
 
 const validateTrustedApproval = (
@@ -270,7 +320,8 @@ const claimFailure = (result: ExecutionClaimResult): PolicyDecision => {
 
 const claimApprovedExecution = async (
   context: PolicyContext,
-  action: PolicyAction
+  action: PolicyAction,
+  outboundConnectionPlan?: VerifiedOutboundConnectionPlan
 ): Promise<PolicyDecision> => {
   if (!(action.approvalId && action.idempotencyKey)) {
     return deny("APPROVAL_REQUIRED", "human");
@@ -301,6 +352,7 @@ const claimApprovedExecution = async (
     ? {
         allowed: true,
         executionClaim: result.claim,
+        outboundConnectionPlan,
         reasonCode: "ALLOW",
         requiredApproval: "none",
       }
@@ -336,20 +388,31 @@ export class DefaultPolicyEvaluator implements PolicyEvaluator {
       normalizedAction,
       capability
     );
-    const failure =
-      knownCapabilityFailure ??
-      (await validateUntrustedInput(context, normalizedAction, capability));
-    if (failure) {
-      return failure;
+    if (knownCapabilityFailure) {
+      return knownCapabilityFailure;
+    }
+    const untrustedInput = await validateUntrustedInput(
+      context,
+      normalizedAction,
+      capability
+    );
+    if (untrustedInput.failure) {
+      return untrustedInput.failure;
     }
     if (APPROVAL_REQUIRED_CAPABILITIES.has(capability)) {
       const claimDecision = await claimApprovedExecution(
         context,
-        normalizedAction
+        normalizedAction,
+        untrustedInput.outboundConnectionPlan
       );
       return claimDecision;
     }
-    return { allowed: true, reasonCode: "ALLOW", requiredApproval: "none" };
+    return {
+      allowed: true,
+      outboundConnectionPlan: untrustedInput.outboundConnectionPlan,
+      reasonCode: "ALLOW",
+      requiredApproval: "none",
+    };
   };
 }
 

@@ -7,13 +7,20 @@ export interface WebhookVerificationReceipt {
 }
 
 export interface WebhookVerificationRepository {
-  getVerifiedReceipt: (
-    receiptId: string
+  consumeVerifiedReceipt: (
+    request: WebhookReceiptConsumptionRequest
   ) => Promise<WebhookVerificationReceipt | null>;
 }
 
+export interface WebhookReceiptConsumptionRequest {
+  readonly bindingSha256: string;
+  readonly now: Date;
+  readonly provider: string;
+  readonly receiptId: string;
+}
+
 export class InMemoryWebhookVerificationRepository implements WebhookVerificationRepository {
-  readonly #receipts: ReadonlyMap<string, WebhookVerificationReceipt>;
+  readonly #receipts: Map<string, WebhookVerificationReceipt>;
 
   constructor(receipts: readonly WebhookVerificationReceipt[]) {
     this.#receipts = new Map(
@@ -24,8 +31,27 @@ export class InMemoryWebhookVerificationRepository implements WebhookVerificatio
     );
   }
 
-  getVerifiedReceipt = (
-    receiptId: string
-  ): Promise<WebhookVerificationReceipt | null> =>
-    Promise.resolve(this.#receipts.get(receiptId) ?? null);
+  consumeVerifiedReceipt = (
+    request: WebhookReceiptConsumptionRequest
+  ): Promise<WebhookVerificationReceipt | null> => {
+    const receipt = this.#receipts.get(request.receiptId);
+    const verifiedAt = receipt ? Date.parse(receipt.verifiedAt) : Number.NaN;
+    const expiresAt = receipt ? Date.parse(receipt.expiresAt) : Number.NaN;
+    const now = request.now.getTime();
+    const isValid = Boolean(
+      receipt &&
+      Number.isFinite(now) &&
+      Number.isFinite(verifiedAt) &&
+      Number.isFinite(expiresAt) &&
+      verifiedAt <= now &&
+      expiresAt > now &&
+      receipt.bindingSha256 === request.bindingSha256 &&
+      receipt.provider === request.provider
+    );
+    if (!(receipt && isValid)) {
+      return Promise.resolve(null);
+    }
+    this.#receipts.delete(request.receiptId);
+    return Promise.resolve(receipt);
+  };
 }
