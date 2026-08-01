@@ -1,4 +1,8 @@
-import type { AuditReceipt, JsonValue } from "@sammys/contracts";
+import type {
+  AuditReceipt,
+  ExecutionAuditReceipt,
+  JsonValue,
+} from "@sammys/contracts";
 
 const SENSITIVE_KEY =
   /authorization|cookie|credential|password|private.?key|secret|token/iu;
@@ -21,18 +25,18 @@ export const redactSensitiveValues = (value: JsonValue): JsonValue => {
 };
 
 export interface AuditSink {
-  append: (receipt: AuditReceipt) => Promise<void>;
+  append: (receipt: AuditReceipt | ExecutionAuditReceipt) => Promise<void>;
 }
 
 export class InMemoryAuditSink implements AuditSink {
-  readonly #receipts: AuditReceipt[] = [];
+  readonly #receipts: (AuditReceipt | ExecutionAuditReceipt)[] = [];
 
-  append = (receipt: AuditReceipt): Promise<void> => {
+  append = (receipt: AuditReceipt | ExecutionAuditReceipt): Promise<void> => {
     this.#receipts.push(Object.freeze({ ...receipt }));
     return Promise.resolve();
   };
 
-  readAll(): readonly AuditReceipt[] {
+  readAll(): readonly (AuditReceipt | ExecutionAuditReceipt)[] {
     return this.#receipts.map((receipt) => ({ ...receipt }));
   }
 }

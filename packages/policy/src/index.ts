@@ -1,16 +1,29 @@
-import type { ActionBinding, Approval, Proposal } from "@sammys/contracts";
-import {
-  actionBindingSchema,
-  approvalSchema,
-  proposalSchema,
-} from "@sammys/contracts";
+import type { ActionBinding } from "@sammys/contracts";
+import { actionBindingSchema } from "@sammys/contracts";
 
 import { sha256CanonicalJson } from "./canonical-json.js";
-import type { NonceStore } from "./nonce-store.js";
+import type {
+  ApprovalExecutionRepository,
+  ExecutionClaim,
+  ExecutionClaimResult,
+  VerifiedApprovalRecord,
+} from "./execution-approval-repository.js";
 
+export {
+  createApprovalSignature,
+  HmacApprovalVerifier,
+} from "./approval-verifier.js";
+export type { ApprovalVerifier } from "./approval-verifier.js";
 export { canonicalizeJson, sha256CanonicalJson } from "./canonical-json.js";
-export { InMemoryNonceStore } from "./nonce-store.js";
-export type { NonceStore } from "./nonce-store.js";
+export { InMemoryApprovalExecutionRepository } from "./execution-approval-repository.js";
+export type {
+  ApprovalExecutionRepository,
+  ExecutionClaim,
+  ExecutionClaimRequest,
+  ExecutionClaimResult,
+  ExecutionCompletion,
+  VerifiedApprovalRecord,
+} from "./execution-approval-repository.js";
 
 export const POLICY_CAPABILITIES = [
   "cart.read",
@@ -34,11 +47,13 @@ export type PolicyReasonCode =
   | "ALLOW"
   | "APPROVAL_EXPIRED"
   | "APPROVAL_MISMATCH"
+  | "APPROVAL_NOT_VERIFIED"
   | "APPROVAL_NOT_YET_VALID"
   | "APPROVAL_REQUIRED"
   | "APPROVER_NOT_AUTHORIZED"
   | "CAPABILITY_NOT_GRANTED"
   | "DIRECT_AGENT_EXECUTION_DENIED"
+  | "EXECUTION_CLAIM_FAILED"
   | "GENERIC_CAPABILITY_DENIED"
   | "INVALID_ACTION"
   | "KILL_SWITCH_ACTIVE"
@@ -52,26 +67,26 @@ export type PolicyReasonCode =
 
 export interface PolicyContext {
   readonly actorId: string;
+  readonly approvalRepository: ApprovalExecutionRepository;
   readonly authorizedApprovers: ReadonlySet<string>;
   readonly grants: ReadonlySet<PolicyCapability>;
   readonly killSwitches?: ReadonlySet<PolicyCapability | "all-writes">;
-  readonly nonceStore: NonceStore;
   readonly now: Date;
   readonly principalKind: PrincipalKind;
 }
 
 export interface PolicyAction {
-  readonly approval?: Approval;
+  readonly approvalId?: string;
   readonly binding: ActionBinding;
   readonly containsSecret?: boolean;
-  readonly proposal?: Proposal;
-  readonly targetUrl?: string;
+  readonly idempotencyKey?: string;
   readonly untrustedInstructions?: boolean;
   readonly webhookSignatureVerified?: boolean;
 }
 
 export interface PolicyDecision {
   readonly allowed: boolean;
+  readonly executionClaim?: ExecutionClaim;
   readonly reasonCode: PolicyReasonCode;
   readonly requiredApproval: RequiredApproval;
 }
@@ -105,6 +120,11 @@ const GENERIC_CAPABILITIES = new Set([
 const APPROVAL_REQUIRED_CAPABILITIES = new Set<PolicyCapability>([
   "commerce.workflow.execute",
   "supplier.order.execute",
+]);
+const OUTBOUND_CAPABILITIES = new Set<PolicyCapability>([
+  "supplier.order.execute",
+  "supplier.quote.create",
+  "supplier.snapshot.read",
 ]);
 
 const deny = (
@@ -171,9 +191,8 @@ const validateUntrustedInput = (
     return deny("SECRET_IN_ACTION");
   }
   if (
-    action.targetUrl &&
-    (action.targetUrl !== action.binding.resource.target ||
-      !isSafeTarget(action.targetUrl))
+    OUTBOUND_CAPABILITIES.has(capability) &&
+    !isSafeTarget(action.binding.resource.target)
   ) {
     return deny("UNSAFE_TARGET");
   }
@@ -189,23 +208,12 @@ const validateUntrustedInput = (
   return null;
 };
 
-const parseApprovalEvidence = (
-  action: PolicyAction
-): { readonly approval: Approval; readonly proposal: Proposal } | null => {
-  const approvalResult = approvalSchema.safeParse(action.approval);
-  const proposalResult = proposalSchema.safeParse(action.proposal);
-  if (!(approvalResult.success && proposalResult.success)) {
-    return null;
-  }
-  return { approval: approvalResult.data, proposal: proposalResult.data };
-};
-
-const validateApprovalBinding = (
+const validateTrustedApproval = (
   context: PolicyContext,
   action: PolicyAction,
-  evidence: { readonly approval: Approval; readonly proposal: Proposal }
+  record: VerifiedApprovalRecord
 ): PolicyDecision | null => {
-  const { approval, proposal } = evidence;
+  const { approval, proposal } = record;
   const now = context.now.getTime();
   if (
     Date.parse(approval.approvedAt) > now ||
@@ -222,36 +230,70 @@ const validateApprovalBinding = (
   if (!context.authorizedApprovers.has(approval.actorId)) {
     return deny("APPROVER_NOT_AUTHORIZED", "human");
   }
-  if (Date.parse(approval.approvedAt) < Date.parse(proposal.createdAt)) {
-    return deny("APPROVAL_MISMATCH", "human");
-  }
-  const actionHash = sha256CanonicalJson(action.binding);
-  const proposalHash = sha256CanonicalJson(proposal.binding);
-  const approvalHash = sha256CanonicalJson(approval.binding);
+  const bindingHash = sha256CanonicalJson(action.binding);
   const matches =
     approval.proposalId === proposal.id &&
     approval.proposalVersion === proposal.version &&
     approval.proposalBindingSha256 === proposal.bindingSha256 &&
-    actionHash === proposal.bindingSha256 &&
-    proposalHash === proposal.bindingSha256 &&
-    approvalHash === proposal.bindingSha256;
+    bindingHash === proposal.bindingSha256 &&
+    sha256CanonicalJson(proposal.binding) === proposal.bindingSha256 &&
+    sha256CanonicalJson(approval.binding) === proposal.bindingSha256;
   return matches ? null : deny("APPROVAL_MISMATCH", "human");
 };
 
-const validateAndConsumeApproval = async (
+const claimFailure = (result: ExecutionClaimResult): PolicyDecision => {
+  if (result.status === "replay") {
+    return deny("REPLAY_DETECTED", "human");
+  }
+  if (result.status === "expired") {
+    return deny("APPROVAL_EXPIRED", "human");
+  }
+  if (result.status === "unauthorized-actor") {
+    return deny("APPROVER_NOT_AUTHORIZED", "human");
+  }
+  if (result.status === "mismatch") {
+    return deny("APPROVAL_MISMATCH", "human");
+  }
+  return deny("EXECUTION_CLAIM_FAILED", "human");
+};
+
+const claimApprovedExecution = async (
   context: PolicyContext,
   action: PolicyAction
-): Promise<PolicyDecision | null> => {
-  const evidence = parseApprovalEvidence(action);
-  if (!evidence) {
+): Promise<PolicyDecision> => {
+  if (!(action.approvalId && action.idempotencyKey)) {
     return deny("APPROVAL_REQUIRED", "human");
   }
-  const bindingFailure = validateApprovalBinding(context, action, evidence);
-  if (bindingFailure) {
-    return bindingFailure;
+  const record = await context.approvalRepository.getVerifiedApproval(
+    action.approvalId
+  );
+  if (!record) {
+    return deny("APPROVAL_NOT_VERIFIED", "human");
   }
-  const consumed = await context.nonceStore.consume(evidence.approval.nonce);
-  return consumed ? null : deny("REPLAY_DETECTED", "human");
+  const validationFailure = validateTrustedApproval(context, action, record);
+  if (validationFailure) {
+    return validationFailure;
+  }
+  const bindingSha256 = sha256CanonicalJson(action.binding);
+  const result = await context.approvalRepository.claimExecution({
+    actorId: context.actorId,
+    approvalId: action.approvalId,
+    auditReasonCode: "ALLOW",
+    authorizedApprovers: context.authorizedApprovers,
+    binding: action.binding,
+    bindingSha256,
+    expectedRevision: record.revision,
+    idempotencyKey: action.idempotencyKey,
+    now: context.now,
+  });
+  return result.status === "claimed"
+    ? {
+        allowed: true,
+        executionClaim: result.claim,
+        reasonCode: "ALLOW",
+        requiredApproval: "none",
+      }
+    : claimFailure(result);
 };
 
 export class DefaultPolicyEvaluator implements PolicyEvaluator {
@@ -285,13 +327,11 @@ export class DefaultPolicyEvaluator implements PolicyEvaluator {
       return failure;
     }
     if (APPROVAL_REQUIRED_CAPABILITIES.has(capability)) {
-      const approvalFailure = await validateAndConsumeApproval(
+      const claimDecision = await claimApprovedExecution(
         context,
         normalizedAction
       );
-      if (approvalFailure) {
-        return approvalFailure;
-      }
+      return claimDecision;
     }
     return { allowed: true, reasonCode: "ALLOW", requiredApproval: "none" };
   };

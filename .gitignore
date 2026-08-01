@@ -1,21 +1,46 @@
 # Dependencies
-node_modules
-.pnpm-store
+node_modules/
+.pnpm-store/
 
-# Build outputs
-.next
-.medusa
-dist
-build
-out
-.turbo
-*.tsbuildinfo
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
 
-# Logs
+# Framework and build output
+.medusa/
+.next/
+.turbo/
+build/
+dist/
+out/
+public/generated/
+storybook-static/
+
+# Tests and coverage
+coverage/
+playwright-report/
+test-results/
+
+# Caches and logs
+.cache/
 *.log
+*.tsbuildinfo
+debug.log*
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# OS
+# Local tooling and operating-system files
 .DS_Store
+.idea/
+.vscode/*.local.json
+.claude/settings.local.json
+*.swp
 
-# Env
-.env*.local
+# Hosting
+.vercel/
+.netlify/

@@ -3,4 +3,15 @@ import ultracite from "ultracite/oxfmt";
 
 export default defineConfig({
   ...ultracite,
+  ignorePatterns: [
+    ...(ultracite.ignorePatterns ?? []),
+    "**/.medusa/**",
+    ".next/**",
+    "build/**",
+    "coverage/**",
+    "dist/**",
+    "docs/evidence/**",
+    "out/**",
+    "public/generated/**",
+  ],
 });

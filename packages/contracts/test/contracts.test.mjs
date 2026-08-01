@@ -78,6 +78,7 @@ test("quote and approval time invariants fail closed", () => {
   assert.equal(
     approvalSchema.safeParse({
       actorId: "ryan",
+      approvalId: "2454fd9c-b64b-45a5-a719-d562ccb73c4f",
       approvedAt: "2026-08-01T12:05:00Z",
       binding,
       expiresAt: "2026-08-01T12:00:00Z",
@@ -85,6 +86,11 @@ test("quote and approval time invariants fail closed", () => {
       proposalBindingSha256: "a".repeat(64),
       proposalId: "1454fd9c-b64b-45a5-a719-d562ccb73c4f",
       proposalVersion: "v1",
+      provenance: {
+        issuer: "operator-console",
+        keyId: "approval-key-1",
+        signature: "b".repeat(64),
+      },
       version: "v1",
     }).success,
     false
@@ -103,6 +109,7 @@ test("parsed proposals and approvals are deeply immutable", () => {
   });
   const approval = approvalSchema.parse({
     actorId: "ryan",
+    approvalId: "2454fd9c-b64b-45a5-a719-d562ccb73c4f",
     approvedAt: "2026-08-01T11:59:00Z",
     binding,
     expiresAt: "2026-08-01T12:05:00Z",
@@ -110,6 +117,11 @@ test("parsed proposals and approvals are deeply immutable", () => {
     proposalBindingSha256: proposal.bindingSha256,
     proposalId: proposal.id,
     proposalVersion: proposal.version,
+    provenance: {
+      issuer: "operator-console",
+      keyId: "approval-key-1",
+      signature: "b".repeat(64),
+    },
     version: "v1",
   });
   assert.equal(Object.isFrozen(proposal), true);

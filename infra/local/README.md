@@ -7,11 +7,12 @@ The first invocation generates unique PostgreSQL, Redis, MinIO, JWT, and cookie 
 Every run ID maps to all four explicit isolation dimensions:
 
 - `SAMMYS_POSTGRES_SCHEMA`, also applied as PostgreSQL `search_path` in `DATABASE_URL`;
-- `SAMMYS_REDIS_KEY_PREFIX`;
+- a collision-checked `SAMMYS_REDIS_DB` reservation, selected directly in `REDIS_URL` so Medusa and BullMQ consumers are isolated even when they use fixed key names;
+- `SAMMYS_REDIS_KEY_PREFIX` as defense in depth;
 - `SAMMYS_QUEUE_PREFIX`;
 - `SAMMYS_OBJECT_BUCKET`.
 
-`seed` creates the schema, applies each idempotent file in `migrations/` once using `sammys_schema_migrations`, reruns idempotent hooks in `seeds/`, and creates the bucket. `smoke` performs real writes and reads across two distinct schemas, prefixes, and buckets. `backup-roundtrip` proves PostgreSQL, Redis, and MinIO can all be restored to a pre-mutation marker. Backups and generated state remain under ignored `.context` storage.
+`seed` creates the schema, applies each idempotent file in `migrations/` once using `sammys_schema_migrations`, reruns idempotent hooks in `seeds/`, and creates the bucket. `smoke` performs real writes and reads across two distinct schemas, Redis logical databases, and buckets; it deliberately writes identical unprefixed Medusa cache and BullMQ queue keys in both databases. `backup` captures only the selected PostgreSQL schema, Redis logical database, and MinIO bucket. `backup-roundtrip` proves all three can be restored to a pre-mutation marker. `backup-survival` mutates a second namespace after the first namespace is backed up, restores the first, and proves every second-namespace mutation survived. Backups, database reservations, and generated state remain under ignored `.context` storage.
 
 Commands:
 
@@ -23,6 +24,7 @@ Commands:
 - `scripts/local-stack.sh backup <run-id>`
 - `scripts/local-stack.sh restore <backup-directory>`
 - `scripts/local-stack.sh backup-roundtrip <run-id>`
+- `scripts/local-stack.sh backup-survival <restored-run-id> <survivor-run-id>`
 - `scripts/local-stack.sh down` (containers/network only; preserves volumes)
 - `scripts/local-stack.sh destroy` (explicitly removes this workspace project's volumes)
 

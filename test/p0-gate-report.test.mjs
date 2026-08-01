@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const report = JSON.parse(
-  await readFile("docs/feasibility/p0-gate-report.json", "utf8")
+  await readFile("docs/feasibility/p0-gate-report.json", "utf-8")
 );
 
 test("external proof gaps keep G0, Human Review, and launch effects closed", () => {

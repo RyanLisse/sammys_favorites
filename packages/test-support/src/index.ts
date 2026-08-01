@@ -53,6 +53,7 @@ export const createApprovalFixture = (
 ): Approval =>
   approvalSchema.parse({
     actorId: "operator-1",
+    approvalId: "2454fd9c-b64b-45a5-a719-d562ccb73c4f",
     approvedAt: "2026-08-01T11:59:00Z",
     binding: proposal.binding,
     expiresAt: "2026-08-01T12:05:00Z",
@@ -60,5 +61,10 @@ export const createApprovalFixture = (
     proposalBindingSha256: proposal.bindingSha256,
     proposalId: proposal.id,
     proposalVersion: proposal.version,
+    provenance: {
+      issuer: "operator-console",
+      keyId: "approval-key-1",
+      signature: "b".repeat(64),
+    },
     version: "v1",
   });

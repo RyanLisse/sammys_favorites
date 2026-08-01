@@ -46,10 +46,10 @@ export const moneySchema = z
 
 export const productSchema = z
   .object({
-    id: identifierSchema,
     handle: z.string().min(1).max(200),
-    title: z.string().min(1).max(300),
+    id: identifierSchema,
     status: z.enum(["draft", "active", "archived"]),
+    title: z.string().min(1).max(300),
     version: z.literal(CONTRACT_VERSION),
   })
   .strict()
@@ -159,6 +159,23 @@ export const auditReceiptSchema = z
   .strict()
   .readonly();
 
+export const executionAuditReceiptSchema = z
+  .object({
+    actorId: identifierSchema,
+    approvalId: z.uuid(),
+    bindingSha256: sha256Schema,
+    claimId: identifierSchema,
+    decision: z.literal("allowed"),
+    executionIntentId: identifierSchema,
+    occurredAt: isoTimestampSchema,
+    outboxMessageId: identifierSchema,
+    reasonCode: z.literal("ALLOW"),
+    resourceId: identifierSchema,
+    version: z.literal(CONTRACT_VERSION),
+  })
+  .strict()
+  .readonly();
+
 export const actionBindingSchema = z
   .object({
     actionType: z.string().min(1).max(200),
@@ -199,6 +216,7 @@ export const proposalSchema = z
 export const approvalSchema = z
   .object({
     actorId: identifierSchema,
+    approvalId: z.uuid(),
     approvedAt: isoTimestampSchema,
     binding: actionBindingSchema,
     expiresAt: isoTimestampSchema,
@@ -206,6 +224,14 @@ export const approvalSchema = z
     proposalBindingSha256: sha256Schema,
     proposalId: z.uuid(),
     proposalVersion: z.literal(CONTRACT_VERSION),
+    provenance: z
+      .object({
+        issuer: identifierSchema,
+        keyId: identifierSchema,
+        signature: sha256Schema,
+      })
+      .strict()
+      .readonly(),
     version: z.literal(CONTRACT_VERSION),
   })
   .strict()
@@ -220,6 +246,7 @@ export type ActionBinding = z.infer<typeof actionBindingSchema>;
 export type Approval = z.infer<typeof approvalSchema>;
 export type AuditReceipt = z.infer<typeof auditReceiptSchema>;
 export type Cart = z.infer<typeof cartSchema>;
+export type ExecutionAuditReceipt = z.infer<typeof executionAuditReceiptSchema>;
 export type IntegrationMessage = z.infer<typeof integrationMessageSchema>;
 export type Money = z.infer<typeof moneySchema>;
 export type Product = z.infer<typeof productSchema>;

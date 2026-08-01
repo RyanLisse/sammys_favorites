@@ -4,8 +4,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Sammy's Favorites",
   description: "A clean-room storefront shell",
+  title: "Sammy's Favorites",
 };
 
 type RootLayoutProperties = Readonly<{

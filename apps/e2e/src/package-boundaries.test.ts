@@ -38,6 +38,42 @@ interface WorkspaceManifest {
   manifestPath: string;
 }
 
+interface ApplicationDependencyViolation {
+  dependencyName: string;
+  manifestPath: string;
+  section: (typeof dependencySections)[number];
+}
+
+const findApplicationDependencyViolations = (
+  workspaces: readonly WorkspaceManifest[]
+): ApplicationDependencyViolation[] => {
+  const applicationNames = new Set(
+    workspaces
+      .filter((workspace) => workspace.kind === "apps")
+      .map((workspace) => workspace.manifest.name)
+      .filter((name): name is string => typeof name === "string")
+  );
+  const violations: ApplicationDependencyViolation[] = [];
+
+  for (const workspace of workspaces) {
+    for (const section of dependencySections) {
+      const dependencies = workspace.manifest[section] ?? {};
+
+      for (const dependencyName of Object.keys(dependencies)) {
+        if (applicationNames.has(dependencyName)) {
+          violations.push({
+            dependencyName,
+            manifestPath: workspace.manifestPath,
+            section,
+          });
+        }
+      }
+    }
+  }
+
+  return violations;
+};
+
 const discoverWorkspaceManifests = async (): Promise<WorkspaceManifest[]> => {
   const discovered: WorkspaceManifest[] = [];
 
@@ -56,7 +92,7 @@ const discoverWorkspaceManifests = async (): Promise<WorkspaceManifest[]> => {
         "package.json"
       );
       const manifest = JSON.parse(
-        await readFile(manifestPath, "utf8")
+        await readFile(manifestPath, "utf-8")
       ) as Manifest;
       discovered.push({
         directoryName: directoryEntry.name,
@@ -108,29 +144,38 @@ test("every workspace manifest has the exact unique directory-derived name", asy
 
 test("workspace dependencies never point into applications", async () => {
   const workspaces = await discoverWorkspaceManifests();
-  const applicationNames = new Set(
-    workspaces
-      .filter((workspace) => workspace.kind === "apps")
-      .map((workspace) => workspace.manifest.name)
-      .filter((name): name is string => typeof name === "string")
-  );
+  assert.deepEqual(findApplicationDependencyViolations(workspaces), []);
+});
 
-  for (const workspace of workspaces) {
-    for (const section of dependencySections) {
-      const dependencies = workspace.manifest[section] ?? {};
+test("application dependencies are rejected for every version specifier", () => {
+  const application: WorkspaceManifest = {
+    directoryName: "storefront",
+    kind: "apps",
+    manifest: { name: "@sammys/storefront" },
+    manifestPath: "apps/storefront/package.json",
+  };
 
-      for (const [dependencyName, dependencyVersion] of Object.entries(
-        dependencies
-      )) {
-        const isWorkspaceDependency =
-          dependencyVersion.startsWith("workspace:");
-        assert.equal(
-          isWorkspaceDependency && applicationNames.has(dependencyName),
-          false,
-          `${workspace.manifestPath} ${section}.${dependencyName} points into apps`
-        );
-      }
-    }
+  for (const dependencyVersion of ["*", "latest", "^1.0.0", "workspace:*"]) {
+    const packageWorkspace: WorkspaceManifest = {
+      directoryName: "contracts",
+      kind: "packages",
+      manifest: {
+        dependencies: { "@sammys/storefront": dependencyVersion },
+        name: "@sammys/contracts",
+      },
+      manifestPath: "packages/contracts/package.json",
+    };
+    assert.deepEqual(
+      findApplicationDependencyViolations([application, packageWorkspace]),
+      [
+        {
+          dependencyName: "@sammys/storefront",
+          manifestPath: "packages/contracts/package.json",
+          section: "dependencies",
+        },
+      ],
+      dependencyVersion
+    );
   }
 });
 
@@ -171,7 +216,7 @@ test("atelier and agent-worker contain no imports or re-exports", async () => {
     const sourceFiles = await collectSourceFiles(sourceRoot);
 
     for (const sourceFile of sourceFiles) {
-      const source = await readFile(sourceFile, "utf8");
+      const source = await readFile(sourceFile, "utf-8");
 
       for (const forbiddenPattern of forbiddenSyntax) {
         assert.doesNotMatch(source, forbiddenPattern, sourceFile);

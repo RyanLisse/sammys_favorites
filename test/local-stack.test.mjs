@@ -4,6 +4,8 @@ import { readFile, stat } from "node:fs/promises";
 import test from "node:test";
 import { promisify } from "node:util";
 
+/* oxlint-disable eslint/require-unicode-regexp -- All test patterns intentionally match ASCII config output. */
+
 const execFileAsync = promisify(execFile);
 const workspacePath = process.cwd();
 const stackEnvironment = {
@@ -58,12 +60,21 @@ test("local stack emits explicit isolated resources and ports", async () => {
     environment.SAMMYS_QUEUE_PREFIX,
     `${environment.SAMMYS_TEST_NAMESPACE}:queue:`
   );
+  assert.match(
+    environment.SAMMYS_REDIS_DB,
+    /^(?:[1-9]|[1-9][0-9]{1,2}|10[01][0-9]|102[0-3])$/
+  );
   assert.match(environment.DATABASE_URL, /127\.0\.0\.1:57100/);
   assert.match(
     environment.DATABASE_URL,
     /options=-csearch_path%3Dtest_helsinki_run_42_[a-f0-9]{8}$/
   );
-  assert.match(environment.REDIS_URL, /^redis:\/\/:.+@127\.0\.0\.1:57101\/0$/);
+  assert.match(
+    environment.REDIS_URL,
+    new RegExp(
+      `^redis:\\/\\/:.+@127\\.0\\.0\\.1:57101/${environment.SAMMYS_REDIS_DB}$`
+    )
+  );
   assert.equal(environment.S3_ENDPOINT, "http://127.0.0.1:57102");
   assert.equal(environment.S3_BUCKET, environment.SAMMYS_TEST_NAMESPACE);
   assert.ok(environment.JWT_SECRET.length >= 64);
@@ -91,6 +102,14 @@ test("path and port discriminator prevents same-name workspace collisions", asyn
   );
 });
 
+test("different run namespaces reserve different Redis logical databases", async () => {
+  const first = await readEnvironment(stackEnvironment, "redis-a");
+  const second = await readEnvironment(stackEnvironment, "redis-b");
+
+  assert.notEqual(first.SAMMYS_REDIS_DB, second.SAMMYS_REDIS_DB);
+  assert.notEqual(first.REDIS_URL, second.REDIS_URL);
+});
+
 test("generated credentials are stable, private, and outside tracked config", async () => {
   const first = await readEnvironment();
   const second = await readEnvironment();
@@ -103,14 +122,14 @@ test("generated credentials are stable, private, and outside tracked config", as
   const secretPath = `.context/local-stack/${discriminator}.env`;
   const secretStat = await stat(secretPath);
   assert.equal(secretStat.mode % 0o100, 0);
-  const secretText = await readFile(secretPath, "utf8");
+  const secretText = await readFile(secretPath, "utf-8");
   assert.doesNotMatch(secretText, /local-only|password=sammys/i);
 });
 
 test("Compose images are immutable and platform digests are recorded", async () => {
-  const compose = await readFile("infra/local/compose.yaml", "utf8");
+  const compose = await readFile("infra/local/compose.yaml", "utf-8");
   const digestRecord = JSON.parse(
-    await readFile("infra/local/image-digests.json", "utf8")
+    await readFile("infra/local/image-digests.json", "utf-8")
   );
   const images = [
     ...compose.matchAll(/^\s+image:\s+(?<image>.+@sha256:[a-f0-9]{64})$/gm),
@@ -126,7 +145,7 @@ test("Compose images are immutable and platform digests are recorded", async () 
 });
 
 test("down preserves volumes while destroy is explicit", async () => {
-  const script = await readFile("scripts/local-stack.sh", "utf8");
+  const script = await readFile("scripts/local-stack.sh", "utf-8");
   const downBranch =
     script.match(/\n {2}down\)(?<branch>[\s\S]*?)\n {4};;/)?.groups?.branch ??
     "";
@@ -136,4 +155,14 @@ test("down preserves volumes while destroy is explicit", async () => {
   assert.doesNotMatch(downBranch, /--volumes|-v\b/);
   assert.match(destroyBranch, /--volumes/);
   assert.match(script, /backup-roundtrip/);
+  assert.match(script, /backup-survival/);
+  assert.match(script, /redis-namespace-snapshot\.mjs backup/);
+  assert.match(script, /redis-namespace-snapshot\.mjs restore/);
+});
+
+test("Medusa rejects a Redis URL outside its reserved logical database", async () => {
+  const config = await readFile("apps/commerce/medusa-config.ts", "utf-8");
+  assert.match(config, /redisUrl: isolatedRedisUrl\(\)/);
+  assert.match(config, /requiredEnvironmentVariable\("SAMMYS_REDIS_DB"\)/);
+  assert.match(config, /REDIS_URL must select the logical database reserved/);
 });

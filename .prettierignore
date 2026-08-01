@@ -1,2 +1,28 @@
-docs/evidence/**
-test/rjc-256-conformance.test.mjs
+# Dependencies and package-manager state
+node_modules/
+.pnpm-store/
+
+# Generated and build output
+.medusa/
+.next/
+.turbo/
+build/
+coverage/
+dist/
+out/
+public/generated/
+storybook-static/
+
+# Immutable verification captures
+docs/evidence/
+
+# Test artifacts and caches
+.cache/
+playwright-report/
+test-results/
+*.tsbuildinfo
+
+# Minified and generated assets
+*.min.css
+*.min.js
+*.map

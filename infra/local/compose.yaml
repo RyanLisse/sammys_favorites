@@ -23,7 +23,7 @@ services:
     command:
       - /bin/sh
       - -c
-      - exec redis-server --appendonly yes --requirepass "$${SAMMYS_REDIS_PASSWORD}"
+      - exec redis-server --appendonly yes --databases 1024 --requirepass "$${SAMMYS_REDIS_PASSWORD}"
     environment:
       SAMMYS_REDIS_PASSWORD: ${SAMMYS_REDIS_PASSWORD:?missing generated local-stack environment}
     ports:

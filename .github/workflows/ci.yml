@@ -22,6 +22,18 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: Validate isolated service configuration
         run: node --test test/local-stack.test.mjs
 
@@ -35,6 +47,15 @@ jobs:
           scripts/local-stack.sh health
           scripts/local-stack.sh smoke ci-a ci-b
           scripts/local-stack.sh backup-roundtrip ci-backup
+          scripts/local-stack.sh backup-survival ci-restore ci-survivor
+
+      - name: Verify all four application shells from fresh processes
+        env:
+          CONDUCTOR_PORT: "57100"
+          CONDUCTOR_WORKSPACE_NAME: ci-integration
+          CONDUCTOR_WORKSPACE_PATH: ${{ github.workspace }}
+          SAMMYS_STARTUP_TIMEOUT_SECONDS: "180"
+        run: scripts/verify-shell-startup.sh
 
       - name: Stop local services
         if: always()

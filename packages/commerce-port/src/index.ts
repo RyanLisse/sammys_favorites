@@ -11,8 +11,8 @@ const commandBaseSchema = z.object({
 export const commerceWorkflowCommandSchema = z.discriminatedUnion("type", [
   commandBaseSchema
     .extend({
-      productId: z.string().min(1),
       price: moneySchema,
+      productId: z.string().min(1),
       type: z.literal("catalog.set-price"),
     })
     .strict()

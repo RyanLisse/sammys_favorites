@@ -73,6 +73,52 @@ export SAMMYS_POSTGRES_PORT="$task_base_port"
 export SAMMYS_REDIS_PORT="$((task_base_port + 1))"
 export SAMMYS_MINIO_PORT="$((task_base_port + 2))"
 export SAMMYS_MINIO_CONSOLE_PORT="$((task_base_port + 3))"
+export SAMMYS_REDIS_HOST="127.0.0.1"
+
+task_redis_registry="$task_secret_dir/${task_discriminator}-redis-databases"
+mkdir -p "$task_redis_registry"
+chmod 700 "$task_redis_registry"
+
+allocate_redis_database() {
+  local task_namespace="$1" task_lock="$task_redis_registry/.allocation-lock"
+  local task_attempt task_start task_offset task_candidate task_owner
+  task_start=$((16#$(printf '%s' "$task_namespace" | sha256_text | cut -c1-8) % 1023 + 1))
+
+  for task_attempt in {1..200}; do
+    if mkdir "$task_lock" 2>/dev/null; then
+      break
+    fi
+    sleep 0.05
+  done
+  if [[ ! -d "$task_lock" ]]; then
+    printf 'Timed out waiting for Redis database allocation lock: %s\n' "$task_lock" >&2
+    return 1
+  fi
+
+  for task_offset in {0..1022}; do
+    task_candidate=$(((task_start + task_offset - 1) % 1023 + 1))
+    task_owner=""
+    if [[ -f "$task_redis_registry/db-$task_candidate" ]]; then
+      task_owner="$(<"$task_redis_registry/db-$task_candidate")"
+    fi
+    if [[ -z "$task_owner" ]]; then
+      printf '%s\n' "$task_namespace" >"$task_redis_registry/db-$task_candidate"
+      chmod 600 "$task_redis_registry/db-$task_candidate"
+      export SAMMYS_REDIS_DB="$task_candidate"
+      rmdir "$task_lock"
+      return 0
+    fi
+    if [[ "$task_owner" == "$task_namespace" ]]; then
+      export SAMMYS_REDIS_DB="$task_candidate"
+      rmdir "$task_lock"
+      return 0
+    fi
+  done
+
+  rmdir "$task_lock"
+  printf 'No Redis logical database remains for namespace %s\n' "$task_namespace" >&2
+  return 1
+}
 
 set_namespace() {
   local task_namespace_hash task_run_slug task_namespace_base
@@ -86,6 +132,7 @@ set_namespace() {
   export SAMMYS_REDIS_KEY_PREFIX="${SAMMYS_TEST_NAMESPACE}:"
   export SAMMYS_QUEUE_PREFIX="${SAMMYS_TEST_NAMESPACE}:queue:"
   export SAMMYS_OBJECT_BUCKET="${SAMMYS_TEST_NAMESPACE:0:63}"
+  allocate_redis_database "$SAMMYS_TEST_NAMESPACE"
 }
 
 set_namespace "$task_run_id"
@@ -97,7 +144,7 @@ postgres_exec() {
 }
 
 redis_exec() {
-  "${task_compose[@]}" exec -T redis redis-cli --no-auth-warning -a "$SAMMYS_REDIS_PASSWORD" "$@"
+  "${task_compose[@]}" exec -T redis redis-cli --no-auth-warning -a "$SAMMYS_REDIS_PASSWORD" -n "$SAMMYS_REDIS_DB" "$@"
 }
 
 minio_shell() {
@@ -156,36 +203,69 @@ create_backup() {
   chmod 700 "$task_backup_dir"
   postgres_exec --no-psqlrc -Atc 'SELECT 1' >/dev/null
   "${task_compose[@]}" exec -T postgres pg_dump --clean --if-exists --no-owner --no-privileges \
-    -U "$SAMMYS_POSTGRES_USER" "$SAMMYS_POSTGRES_DB" >"$task_backup_dir/postgres.sql"
-  redis_exec --rdb /data/sammys-backup.rdb >/dev/null
-  "${task_compose[@]}" cp redis:/data/sammys-backup.rdb "$task_backup_dir/redis.rdb"
-  "${task_compose[@]}" cp minio:/data/. "$task_backup_dir/minio"
+    --schema="$SAMMYS_POSTGRES_SCHEMA" -U "$SAMMYS_POSTGRES_USER" "$SAMMYS_POSTGRES_DB" >"$task_backup_dir/postgres.sql"
+  node scripts/redis-namespace-snapshot.mjs backup "$task_backup_dir/redis.json"
+  MINIO_COMMAND='mc mirror "local/$SAMMYS_OBJECT_BUCKET" /backup/minio >/dev/null'
+  export MINIO_COMMAND
+  "${task_compose[@]}" run --rm -T --no-deps --entrypoint /bin/sh \
+    -e SAMMYS_OBJECT_BUCKET="$SAMMYS_OBJECT_BUCKET" -e MINIO_COMMAND="$MINIO_COMMAND" \
+    -v "$task_backup_dir:/backup" minio-init -c \
+    'mc alias set local http://minio:9000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD" >/dev/null && eval "$MINIO_COMMAND"'
   {
     printf 'compose_project=%s\n' "$task_compose_project"
     printf 'created_at=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+    printf 'namespace=%s\n' "$SAMMYS_TEST_NAMESPACE"
+    printf 'postgres_schema=%s\n' "$SAMMYS_POSTGRES_SCHEMA"
+    printf 'redis_database=%s\n' "$SAMMYS_REDIS_DB"
+    printf 'object_bucket=%s\n' "$SAMMYS_OBJECT_BUCKET"
   } >"$task_backup_dir/manifest.txt"
   printf '%s\n' "$task_backup_dir"
 }
 
 restore_backup() {
-  local task_backup_dir task_backup_absolute
+  local task_backup_dir task_backup_absolute task_backup_project task_backup_namespace
+  local task_backup_schema task_backup_redis_database task_backup_bucket task_registered_owner
   task_backup_dir="$1"
   test -f "$task_backup_dir/postgres.sql"
-  test -f "$task_backup_dir/redis.rdb"
+  test -f "$task_backup_dir/redis.json"
   test -d "$task_backup_dir/minio"
+  test -f "$task_backup_dir/manifest.txt"
   task_backup_absolute="$(cd "$task_backup_dir" && pwd)"
+  task_backup_project="$(awk -F= '$1 == "compose_project" { print $2 }' "$task_backup_absolute/manifest.txt")"
+  task_backup_namespace="$(awk -F= '$1 == "namespace" { print $2 }' "$task_backup_absolute/manifest.txt")"
+  task_backup_schema="$(awk -F= '$1 == "postgres_schema" { print $2 }' "$task_backup_absolute/manifest.txt")"
+  task_backup_redis_database="$(awk -F= '$1 == "redis_database" { print $2 }' "$task_backup_absolute/manifest.txt")"
+  task_backup_bucket="$(awk -F= '$1 == "object_bucket" { print $2 }' "$task_backup_absolute/manifest.txt")"
+  if [[ "$task_backup_project" != "$task_compose_project" ]] || \
+    [[ ! "$task_backup_namespace" =~ ^[a-z0-9-]+$ ]] || \
+    [[ ! "$task_backup_schema" =~ ^[a-z0-9_]+$ ]] || \
+    [[ ! "$task_backup_redis_database" =~ ^[0-9]+$ ]] || \
+    [[ ! "$task_backup_bucket" =~ ^[a-z0-9-]+$ ]]; then
+    printf 'Backup manifest does not match this workspace project\n' >&2
+    return 1
+  fi
+  task_registered_owner="$(<"$task_redis_registry/db-$task_backup_redis_database")"
+  if [[ "$task_registered_owner" != "$task_backup_namespace" ]]; then
+    printf 'Backup Redis database reservation does not match its namespace\n' >&2
+    return 1
+  fi
 
-  postgres_exec <"$task_backup_absolute/postgres.sql"
+  export SAMMYS_TEST_NAMESPACE="$task_backup_namespace"
+  export SAMMYS_POSTGRES_SCHEMA="$task_backup_schema"
+  export SAMMYS_REDIS_DB="$task_backup_redis_database"
+  export SAMMYS_REDIS_KEY_PREFIX="${task_backup_namespace}:"
+  export SAMMYS_QUEUE_PREFIX="${task_backup_namespace}:queue:"
+  export SAMMYS_OBJECT_BUCKET="$task_backup_bucket"
 
-  "${task_compose[@]}" stop redis minio >/dev/null
+  postgres_exec -c "DROP SCHEMA IF EXISTS \"$SAMMYS_POSTGRES_SCHEMA\" CASCADE;" >/dev/null
+  postgres_exec <"$task_backup_absolute/postgres.sql" >/dev/null
+  node scripts/redis-namespace-snapshot.mjs restore "$task_backup_absolute/redis.json"
+  MINIO_COMMAND='mc rm --recursive --force "local/$SAMMYS_OBJECT_BUCKET" >/dev/null 2>&1 || true; mc mb --ignore-existing "local/$SAMMYS_OBJECT_BUCKET" >/dev/null; mc mirror /backup/minio "local/$SAMMYS_OBJECT_BUCKET" >/dev/null'
+  export MINIO_COMMAND
   "${task_compose[@]}" run --rm -T --no-deps --entrypoint /bin/sh \
-    -v "$task_backup_absolute:/backup:ro" redis -c \
-    'rm -rf /data/appendonlydir /data/dump.rdb && cp /backup/redis.rdb /data/dump.rdb'
-  "${task_compose[@]}" run --rm -T --no-deps --entrypoint /bin/sh \
-    -v "$task_backup_absolute:/backup:ro" minio -c \
-    'rm -rf /data/* /data/.[!.]* /data/..?* && cp -R /backup/minio/. /data/'
-  "${task_compose[@]}" start redis minio >/dev/null
-  wait_for_health
+    -e SAMMYS_OBJECT_BUCKET="$SAMMYS_OBJECT_BUCKET" -e MINIO_COMMAND="$MINIO_COMMAND" \
+    -v "$task_backup_absolute:/backup:ro" minio-init -c \
+    'mc alias set local http://minio:9000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD" >/dev/null && eval "$MINIO_COMMAND"'
 }
 
 write_isolation_markers() {
@@ -226,8 +306,9 @@ case "$task_command" in
     printf 'SAMMYS_POSTGRES_SCHEMA=%s\n' "$SAMMYS_POSTGRES_SCHEMA"
     printf 'SAMMYS_REDIS_KEY_PREFIX=%s\n' "$SAMMYS_REDIS_KEY_PREFIX"
     printf 'SAMMYS_QUEUE_PREFIX=%s\n' "$SAMMYS_QUEUE_PREFIX"
+    printf 'SAMMYS_REDIS_DB=%s\n' "$SAMMYS_REDIS_DB"
     printf 'DATABASE_URL=postgres://%s:%s@127.0.0.1:%s/%s?options=-csearch_path%%3D%s\n' "$SAMMYS_POSTGRES_USER" "$SAMMYS_POSTGRES_PASSWORD" "$SAMMYS_POSTGRES_PORT" "$SAMMYS_POSTGRES_DB" "$SAMMYS_POSTGRES_SCHEMA"
-    printf 'REDIS_URL=redis://:%s@127.0.0.1:%s/0\n' "$SAMMYS_REDIS_PASSWORD" "$SAMMYS_REDIS_PORT"
+    printf 'REDIS_URL=redis://:%s@127.0.0.1:%s/%s\n' "$SAMMYS_REDIS_PASSWORD" "$SAMMYS_REDIS_PORT" "$SAMMYS_REDIS_DB"
     printf 'S3_ENDPOINT=http://127.0.0.1:%s\n' "$SAMMYS_MINIO_PORT"
     printf 'S3_ACCESS_KEY=%s\n' "$SAMMYS_MINIO_USER"
     printf 'S3_SECRET_KEY=%s\n' "$SAMMYS_MINIO_PASSWORD"
@@ -243,30 +324,41 @@ case "$task_command" in
     task_a_namespace="$SAMMYS_TEST_NAMESPACE"
     task_a_schema="$SAMMYS_POSTGRES_SCHEMA"
     task_a_redis_prefix="$SAMMYS_REDIS_KEY_PREFIX"
+    task_a_redis_database="$SAMMYS_REDIS_DB"
     task_a_bucket="$SAMMYS_OBJECT_BUCKET"
     set_namespace "$task_second_run_id"
     "$0" seed "$task_second_run_id"
     task_b_namespace="$SAMMYS_TEST_NAMESPACE"
     task_b_schema="$SAMMYS_POSTGRES_SCHEMA"
     task_b_redis_prefix="$SAMMYS_REDIS_KEY_PREFIX"
+    task_b_redis_database="$SAMMYS_REDIS_DB"
     task_b_bucket="$SAMMYS_OBJECT_BUCKET"
     [[ "$task_a_namespace" != "$task_b_namespace" ]]
+    [[ "$task_a_redis_database" != "$task_b_redis_database" ]]
 
     set_namespace "$task_run_id"
     write_isolation_markers "value-$task_a_namespace"
+    redis_exec set "medusa:cache:shared-key" "medusa-$task_a_namespace" >/dev/null
+    redis_exec lpush "bull:events-queue:wait" "queue-$task_a_namespace" >/dev/null
     set_namespace "$task_second_run_id"
     write_isolation_markers "value-$task_b_namespace"
+    redis_exec set "medusa:cache:shared-key" "medusa-$task_b_namespace" >/dev/null
+    redis_exec lpush "bull:events-queue:wait" "queue-$task_b_namespace" >/dev/null
 
     [[ "$(postgres_exec -Atc "SELECT fixture_value FROM \"$task_a_schema\".sammys_health_fixture WHERE fixture_key = 'isolation';")" == "value-$task_a_namespace" ]]
     [[ "$(postgres_exec -Atc "SELECT fixture_value FROM \"$task_b_schema\".sammys_health_fixture WHERE fixture_key = 'isolation';")" == "value-$task_b_namespace" ]]
-    [[ "$(redis_exec get "${task_a_redis_prefix}isolation")" == "value-$task_a_namespace" ]]
-    [[ "$(redis_exec get "${task_b_redis_prefix}isolation")" == "value-$task_b_namespace" ]]
     set_namespace "$task_run_id"
+    [[ "$(redis_exec get "${task_a_redis_prefix}isolation")" == "value-$task_a_namespace" ]]
+    [[ "$(redis_exec get "medusa:cache:shared-key")" == "medusa-$task_a_namespace" ]]
+    [[ "$(redis_exec lindex "bull:events-queue:wait" 0)" == "queue-$task_a_namespace" ]]
     [[ "$(read_minio_marker)" == "value-$task_a_namespace" ]]
     set_namespace "$task_second_run_id"
+    [[ "$(redis_exec get "${task_b_redis_prefix}isolation")" == "value-$task_b_namespace" ]]
+    [[ "$(redis_exec get "medusa:cache:shared-key")" == "medusa-$task_b_namespace" ]]
+    [[ "$(redis_exec lindex "bull:events-queue:wait" 0)" == "queue-$task_b_namespace" ]]
     [[ "$(read_minio_marker)" == "value-$task_b_namespace" ]]
-    printf 'Isolation smoke passed for %s and %s (schemas %s/%s, Redis prefixes %s/%s, buckets %s/%s)\n' \
-      "$task_a_namespace" "$task_b_namespace" "$task_a_schema" "$task_b_schema" "$task_a_redis_prefix" "$task_b_redis_prefix" "$task_a_bucket" "$task_b_bucket"
+    printf 'Isolation smoke passed for %s and %s (schemas %s/%s, Redis DBs %s/%s, prefixes %s/%s, buckets %s/%s)\n' \
+      "$task_a_namespace" "$task_b_namespace" "$task_a_schema" "$task_b_schema" "$task_a_redis_database" "$task_b_redis_database" "$task_a_redis_prefix" "$task_b_redis_prefix" "$task_a_bucket" "$task_b_bucket"
     ;;
   backup)
     create_backup
@@ -285,6 +377,39 @@ case "$task_command" in
     [[ "$(redis_exec get "${SAMMYS_REDIS_KEY_PREFIX}isolation")" == "$task_roundtrip_before" ]]
     [[ "$(read_minio_marker)" == "$task_roundtrip_before" ]]
     printf 'Backup/restore round trip passed: %s\n' "$task_roundtrip_backup"
+    ;;
+  backup-survival)
+    task_survival_second_run_id="${3:-survivor-b}"
+    "$0" seed "$task_run_id"
+    "$0" seed "$task_survival_second_run_id"
+
+    set_namespace "$task_run_id"
+    task_survival_a_namespace="$SAMMYS_TEST_NAMESPACE"
+    write_isolation_markers "before-$task_survival_a_namespace"
+    redis_exec set "medusa:cache:shared-key" "before-$task_survival_a_namespace" >/dev/null
+    task_survival_backup="$(create_backup)"
+
+    set_namespace "$task_survival_second_run_id"
+    task_survival_b_namespace="$SAMMYS_TEST_NAMESPACE"
+    write_isolation_markers "survives-$task_survival_b_namespace"
+    redis_exec set "medusa:cache:shared-key" "survives-$task_survival_b_namespace" >/dev/null
+    redis_exec lpush "bull:events-queue:wait" "survives-$task_survival_b_namespace" >/dev/null
+
+    set_namespace "$task_run_id"
+    write_isolation_markers "after-$task_survival_a_namespace"
+    redis_exec set "medusa:cache:shared-key" "after-$task_survival_a_namespace" >/dev/null
+    restore_backup "$task_survival_backup"
+    [[ "$(postgres_exec -Atc "SELECT fixture_value FROM \"$SAMMYS_POSTGRES_SCHEMA\".sammys_health_fixture WHERE fixture_key = 'isolation';")" == "before-$task_survival_a_namespace" ]]
+    [[ "$(redis_exec get "medusa:cache:shared-key")" == "before-$task_survival_a_namespace" ]]
+    [[ "$(read_minio_marker)" == "before-$task_survival_a_namespace" ]]
+
+    set_namespace "$task_survival_second_run_id"
+    [[ "$(postgres_exec -Atc "SELECT fixture_value FROM \"$SAMMYS_POSTGRES_SCHEMA\".sammys_health_fixture WHERE fixture_key = 'isolation';")" == "survives-$task_survival_b_namespace" ]]
+    [[ "$(redis_exec get "medusa:cache:shared-key")" == "survives-$task_survival_b_namespace" ]]
+    [[ "$(redis_exec lindex "bull:events-queue:wait" 0)" == "survives-$task_survival_b_namespace" ]]
+    [[ "$(read_minio_marker)" == "survives-$task_survival_b_namespace" ]]
+    printf 'Namespace restore preserved concurrent namespace %s while restoring %s: %s\n' \
+      "$task_survival_b_namespace" "$task_survival_a_namespace" "$task_survival_backup"
     ;;
   *)
     printf 'Unknown command: %s\n' "$task_command" >&2

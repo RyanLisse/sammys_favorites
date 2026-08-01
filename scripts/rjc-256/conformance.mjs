@@ -1,13 +1,13 @@
 import { execFile } from "node:child_process";
 import { readFile } from "node:fs/promises";
-import { join, resolve } from "node:path";
+import nodePath from "node:path";
 import { promisify } from "node:util";
 
 const execFileAsync = promisify(execFile);
-const root = resolve(import.meta.dirname, "../..");
+const root = nodePath.resolve(import.meta.dirname, "../..");
 
 export const readJson = async (path) =>
-  JSON.parse(await readFile(join(root, path), "utf8"));
+  JSON.parse(await readFile(nodePath.join(root, path), "utf-8"));
 
 export const trackedFiles = async () => {
   const { stdout } = await execFileAsync(
@@ -15,7 +15,7 @@ export const trackedFiles = async () => {
     ["ls-files", "-z", "--cached", "--others", "--exclude-standard"],
     {
       cwd: root,
-      encoding: "utf8",
+      encoding: "utf-8",
     }
   );
   return stdout.split("\0").filter(Boolean);
@@ -25,7 +25,7 @@ export const packageManifests = async () => {
   const tracked = await trackedFiles();
   const files = tracked.filter((path) => path.endsWith("package.json"));
   return Promise.all(
-    files.map(async (path) => ({ path, manifest: await readJson(path) }))
+    files.map(async (path) => ({ manifest: await readJson(path), path }))
   );
 };
 
@@ -66,7 +66,7 @@ export const scanProductionProvenance = async () => {
   for (const path of await productionFiles()) {
     let contents;
     try {
-      contents = await readFile(join(root, path), "utf8");
+      contents = await readFile(nodePath.join(root, path), "utf-8");
     } catch {
       continue;
     }

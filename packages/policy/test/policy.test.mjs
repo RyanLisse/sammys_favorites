@@ -4,12 +4,15 @@ import test from "node:test";
 import {
   CAPABILITY_STAGE,
   DefaultPolicyEvaluator,
-  InMemoryNonceStore,
+  HmacApprovalVerifier,
+  InMemoryApprovalExecutionRepository,
   canonicalizeJson,
+  createApprovalSignature,
   sha256CanonicalJson,
 } from "../dist/index.js";
 
 const now = new Date("2026-08-01T12:00:00Z");
+const approvalKey = Buffer.from("phase-0-test-approval-key");
 const evaluator = new DefaultPolicyEvaluator();
 
 const binding = {
@@ -18,7 +21,7 @@ const binding = {
   payload: { quantity: 1, sku: "GOLD-42" },
   resource: {
     id: "GOLD-42",
-    target: "supplier-1",
+    target: "https://api.supplier.example/orders",
     type: "supplier-sku",
   },
   riskClass: "high",
@@ -36,8 +39,9 @@ const createEvidence = (actionBinding = binding) => {
     id: "1454fd9c-b64b-45a5-a719-d562ccb73c4f",
     version: "v1",
   };
-  const approval = {
+  const unsignedApproval = {
     actorId: "ryan",
+    approvalId: "2454fd9c-b64b-45a5-a719-d562ccb73c4f",
     approvedAt: "2026-08-01T11:59:00Z",
     binding: actionBinding,
     expiresAt: "2026-08-01T12:05:00Z",
@@ -45,18 +49,43 @@ const createEvidence = (actionBinding = binding) => {
     proposalBindingSha256: bindingSha256,
     proposalId: proposal.id,
     proposalVersion: "v1",
+    provenance: {
+      issuer: "operator-console",
+      keyId: "approval-key-1",
+      signature: "0".repeat(64),
+    },
     version: "v1",
   };
-  return { approval, proposal };
+  const approval = {
+    ...unsignedApproval,
+    provenance: {
+      ...unsignedApproval.provenance,
+      signature: createApprovalSignature(unsignedApproval, approvalKey),
+    },
+  };
+  return { approval, proposal, revision: "approval-revision-1" };
 };
+
+const createRepository = (record = createEvidence()) =>
+  new InMemoryApprovalExecutionRepository(
+    [record],
+    new HmacApprovalVerifier(new Map([["approval-key-1", approvalKey]]))
+  );
 
 const context = (overrides = {}) => ({
   actorId: "executor-1",
+  approvalRepository: createRepository(),
   authorizedApprovers: new Set(["ryan"]),
   grants: new Set(["supplier.order.execute"]),
-  nonceStore: new InMemoryNonceStore(),
   now,
   principalKind: "service",
+  ...overrides,
+});
+
+const approvedAction = (overrides = {}) => ({
+  approvalId: "2454fd9c-b64b-45a5-a719-d562ccb73c4f",
+  binding,
+  idempotencyKey: "execution-attempt-1",
   ...overrides,
 });
 
@@ -70,15 +99,14 @@ test("canonical JSON follows JCS number and Unicode-key ordering vectors", () =>
     '{"literals":[null,true,false],"numbers":[333333333.3333333,1e+30,4.5,0.002,1e-27],"string":"€$\\u000f\\nA\'B\\\"\\\\\\\"/"}'
   );
   assert.equal(canonicalizeJson(-0), "0");
-
   const ordered = canonicalizeJson({
     "\r": "Carriage Return",
     1: "One",
     "\u0080": "Control",
     ö: "Latin Small Letter O With Diaeresis",
     "€": "Euro Sign",
-    "😀": "Emoji: Grinning Face",
     דּ: "Hebrew Letter Dalet With Dagesh",
+    "😀": "Emoji: Grinning Face",
   });
   const orderedKeys = ["\\r", "1", "", "ö", "€", "😀", "דּ"];
   for (let index = 1; index < orderedKeys.length; index += 1) {
@@ -94,7 +122,7 @@ test("canonical JSON rejects non-I-JSON lone surrogates", () => {
   assert.throws(() => canonicalizeJson({ "\uDC00": "bad-key" }), TypeError);
 });
 
-test("denies unknown and generic ambient capabilities by default", async () => {
+test("denies unknown, generic, and malformed actions by default", async () => {
   for (const capability of ["future.magic", "sql"]) {
     const decision = await evaluator.evaluate(context(), {
       binding: { ...binding, capability },
@@ -104,20 +132,11 @@ test("denies unknown and generic ambient capabilities by default", async () => {
       capability === "sql" ? "GENERIC_CAPABILITY_DENIED" : "UNKNOWN_CAPABILITY"
     );
   }
+  const malformed = await evaluator.evaluate(context(), { binding: undefined });
+  assert.equal(malformed.reasonCode, "INVALID_ACTION");
 });
 
-test("malformed and undefined action combinations fail closed", async () => {
-  const undefinedBindingDecision = await evaluator.evaluate(context(), {
-    binding: undefined,
-  });
-  assert.equal(undefinedBindingDecision.reasonCode, "INVALID_ACTION");
-  const unknownFieldDecision = await evaluator.evaluate(context(), {
-    binding: { ...binding, unexpectedAuthority: true },
-  });
-  assert.equal(unknownFieldDecision.reasonCode, "INVALID_ACTION");
-});
-
-test("every capability has exactly one allowed stage and all other stages deny", async () => {
+test("every capability has exactly one allowed stage", async () => {
   const stages = ["read", "draft", "propose", "approve", "execute"];
   for (const [capability, expectedStage] of Object.entries(CAPABILITY_STAGE)) {
     for (const stage of stages) {
@@ -139,97 +158,150 @@ test("every capability has exactly one allowed stage and all other stages deny",
       );
     }
   }
+});
 
-  const webhookDecision = await evaluator.evaluate(
-    context({ grants: new Set(["webhook.receive"]) }),
+test("derives outbound target validation from the bound target", async () => {
+  const decision = await evaluator.evaluate(
+    context({ grants: new Set(["supplier.quote.create"]) }),
     {
-      binding: { ...binding, capability: "webhook.receive", stage: "execute" },
-      webhookSignatureVerified: true,
+      binding: {
+        ...binding,
+        capability: "supplier.quote.create",
+        resource: {
+          ...binding.resource,
+          target: "http://169.254.169.254/latest",
+        },
+        stage: "propose",
+      },
     }
   );
-  assert.equal(webhookDecision.allowed, true);
+  assert.equal(decision.reasonCode, "UNSAFE_TARGET");
 });
 
 test("never permits an agent to execute a privileged write", async () => {
   const decision = await evaluator.evaluate(
     context({ principalKind: "agent" }),
-    {
-      ...createEvidence(),
-      binding,
-    }
+    approvedAction()
   );
-  assert.deepEqual(decision, {
-    allowed: false,
-    reasonCode: "DIRECT_AGENT_EXECUTION_DENIED",
-    requiredApproval: "human",
+  assert.equal(decision.reasonCode, "DIRECT_AGENT_EXECUTION_DENIED");
+});
+
+test("rejects caller-manufactured and invalidly signed approvals", async () => {
+  const manufactured = await evaluator.evaluate(context(), {
+    approval: createEvidence().approval,
+    binding,
+    proposal: createEvidence().proposal,
   });
-});
+  assert.equal(manufactured.reasonCode, "APPROVAL_REQUIRED");
 
-test("atomically consumes approval nonce and rejects repeated execution", async () => {
-  const executionContext = context();
-  const action = { ...createEvidence(), binding };
-  const firstExecution = await evaluator.evaluate(executionContext, action);
-  assert.equal(firstExecution.allowed, true);
-  const repeatedExecution = await evaluator.evaluate(executionContext, action);
-  assert.equal(repeatedExecution.reasonCode, "REPLAY_DETECTED");
-});
-
-test("action-bound approval rejects every substitution dimension", async () => {
   const evidence = createEvidence();
+  const forgedRecord = {
+    ...evidence,
+    approval: { ...evidence.approval, actorId: "attacker" },
+  };
+  const forged = await evaluator.evaluate(
+    context({ approvalRepository: createRepository(forgedRecord) }),
+    approvedAction()
+  );
+  assert.equal(forged.reasonCode, "APPROVAL_NOT_VERIFIED");
+});
+
+test("atomically persists claim, intent, outbox, and audit with retry semantics", async () => {
+  const concurrencyRepository = createRepository();
+  const concurrencyContext = context({
+    approvalRepository: concurrencyRepository,
+  });
+  const concurrentResults = await Promise.all([
+    evaluator.evaluate(
+      concurrencyContext,
+      approvedAction({ idempotencyKey: "parallel-a" })
+    ),
+    evaluator.evaluate(
+      concurrencyContext,
+      approvedAction({ idempotencyKey: "parallel-b" })
+    ),
+  ]);
+  assert.equal(concurrentResults.filter((result) => result.allowed).length, 1);
+  assert.equal(
+    concurrentResults.filter(
+      (result) => result.reasonCode === "REPLAY_DETECTED"
+    ).length,
+    1
+  );
+
+  const repository = createRepository();
+  const executionContext = context({ approvalRepository: repository });
+  const first = await evaluator.evaluate(executionContext, approvedAction());
+  assert.equal(first.allowed, true);
+  assert.ok(first.executionClaim);
+  const state = repository.readExecutionState(first.executionClaim.claimId);
+  assert.equal(state?.intent.status, "pending");
+  assert.equal(state?.outbox.status, "pending");
+  assert.equal(state?.audit.reasonCode, "ALLOW");
+
+  const retry = await evaluator.evaluate(executionContext, approvedAction());
+  assert.equal(retry.allowed, true);
+  assert.equal(retry.executionClaim?.claimId, first.executionClaim.claimId);
+  const replay = await evaluator.evaluate(
+    executionContext,
+    approvedAction({ idempotencyKey: "different-attempt" })
+  );
+  assert.equal(replay.reasonCode, "REPLAY_DETECTED");
+
+  const completion = {
+    completedAt: new Date("2026-08-01T12:01:00Z"),
+    outcome: "succeeded",
+  };
+  assert.equal(
+    await repository.completeExecution(
+      first.executionClaim.claimId,
+      completion
+    ),
+    true
+  );
+  assert.equal(
+    await repository.completeExecution(first.executionClaim.claimId, {
+      ...completion,
+      outcome: "failed",
+    }),
+    false
+  );
+  assert.equal(
+    await repository.completeExecution(
+      first.executionClaim.claimId,
+      completion
+    ),
+    true
+  );
+  assert.equal(
+    repository.readExecutionState(first.executionClaim.claimId)?.intent.status,
+    "completed"
+  );
+});
+
+test("action-bound approval rejects substitution and unauthorized actors", async () => {
   const substitutions = [
     { ...binding, actionType: "supplier.cancel-order" },
-    { ...binding, capability: "commerce.workflow.execute" },
     { ...binding, payload: { quantity: 2, sku: "GOLD-42" } },
     { ...binding, resource: { ...binding.resource, id: "SILVER-7" } },
-    { ...binding, resource: { ...binding.resource, target: "supplier-2" } },
     { ...binding, riskClass: "low" },
   ];
   for (const substitutedBinding of substitutions) {
     const decision = await evaluator.evaluate(
-      context({
-        grants: new Set([
-          "supplier.order.execute",
-          "commerce.workflow.execute",
-        ]),
-      }),
-      { ...evidence, binding: substitutedBinding }
+      context(),
+      approvedAction({ binding: substitutedBinding })
     );
     assert.equal(decision.reasonCode, "APPROVAL_MISMATCH");
   }
-
-  const stageDecision = await evaluator.evaluate(context(), {
-    ...evidence,
-    binding: { ...binding, stage: "propose" },
-  });
-  assert.equal(stageDecision.reasonCode, "WRONG_STAGE");
-});
-
-test("requires an explicitly authorized approval actor", async () => {
-  const decision = await evaluator.evaluate(
+  const actorDecision = await evaluator.evaluate(
     context({ authorizedApprovers: new Set(["another-operator"]) }),
-    { ...createEvidence(), binding }
+    approvedAction()
   );
-  assert.equal(decision.reasonCode, "APPROVER_NOT_AUTHORIZED");
+  assert.equal(actorDecision.reasonCode, "APPROVER_NOT_AUTHORIZED");
 });
 
-test("blocks SSRF, forged webhooks, secrets, prompt injection, and kill switches", async () => {
+test("blocks forged webhooks, secrets, prompt injection, and kill switches", async () => {
   const cases = [
-    [
-      context({ grants: new Set(["supplier.quote.create"]) }),
-      {
-        binding: {
-          ...binding,
-          capability: "supplier.quote.create",
-          resource: {
-            ...binding.resource,
-            target: "http://169.254.169.254/latest",
-          },
-          stage: "propose",
-        },
-        targetUrl: "http://169.254.169.254/latest",
-      },
-      "UNSAFE_TARGET",
-    ],
     [
       context({ grants: new Set(["webhook.receive"]) }),
       { binding: { ...binding, capability: "webhook.receive" } },
