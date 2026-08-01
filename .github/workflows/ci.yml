@@ -178,7 +178,7 @@ jobs:
         run: pnpm --filter "$WORKSPACE_NAME" exec node -e 'const manifest = require("./package.json"); if (manifest.name !== process.env.WORKSPACE_NAME) process.exit(1)'
 
       - name: Check workspace types
-        run: pnpm --filter "${{ matrix.workspace }}" run --if-present check-types
+        run: pnpm exec turbo run check-types --filter="${{ matrix.workspace }}"
 
       - name: Build workspace shell
-        run: pnpm --filter "${{ matrix.workspace }}" run --if-present build
+        run: pnpm exec turbo run build --filter="${{ matrix.workspace }}"

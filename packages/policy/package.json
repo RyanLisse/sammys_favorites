@@ -17,7 +17,7 @@
     "build": "tsc -p tsconfig.json",
     "check-types": "tsc -p tsconfig.json --noEmit",
     "test": "pnpm run build && node --test test/*.test.mjs",
-    "test:postgres": "pnpm run build && test -n \"$POLICY_TEST_DATABASE_URL\" && node --test test/postgres-repository.test.mjs",
+    "test:postgres": "pnpm --filter @sammys/policy... run build && test -n \"$POLICY_TEST_DATABASE_URL\" && node --test test/postgres-repository.test.mjs",
     "clean": "rm -rf dist"
   },
   "dependencies": {

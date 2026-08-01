@@ -4,10 +4,17 @@ pre-commit:
       glob:
         - "**/*.js"
         - "**/*.mjs"
+        - "**/*.jsx"
         - "**/*.ts"
         - "**/*.tsx"
+      exclude: "docs/evidence/**"
+      run: pnpm exec ultracite fix {staged_files}
+      stage_fixed: true
+    - name: oxfmt-assets
+      glob:
         - "**/*.json"
+        - "**/*.jsonc"
         - "**/*.css"
       exclude: "docs/evidence/**"
-      run: pnpm dlx ultracite fix {staged_files}
+      run: pnpm exec oxfmt --write {staged_files}
       stage_fixed: true
