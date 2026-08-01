@@ -1,0 +1,212 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  supply-chain:
+    name: Frozen lockfile and advisory verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.1
+          cache: pnpm
+
+      - name: Install the exact reviewed lockfile
+        run: pnpm install --frozen-lockfile --trust-lockfile --network-concurrency=4
+
+      - name: Reject high and critical advisories
+        run: pnpm audit --audit-level high
+
+  policy-postgres:
+    name: Policy PostgreSQL durability
+    needs: supply-chain
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17.6-alpine@sha256:ef257d85f76e48da1c64832459b59fcaba1a4dac97bf5d7450c77753542eee94
+        env:
+          POSTGRES_DB: sammys_policy_test
+          POSTGRES_PASSWORD: sammys_policy_test
+          POSTGRES_USER: sammys_policy_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U sammys_policy_test -d sammys_policy_test" --health-interval 2s --health-timeout 3s --health-retries 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.1
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline --network-concurrency=4
+
+      - name: Run PostgreSQL policy durability tests
+        env:
+          POLICY_TEST_DATABASE_URL: postgresql://sammys_policy_test:sammys_policy_test@127.0.0.1:5432/sammys_policy_test
+        run: pnpm --filter @sammys/policy test:postgres
+
+  integration-services:
+    name: Real local services
+    needs: supply-chain
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.1
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline --network-concurrency=4
+
+      - name: Validate isolated service configuration
+        run: node --test test/local-stack.test.mjs
+
+      - name: Start and verify PostgreSQL, Redis, and MinIO
+        env:
+          CONDUCTOR_PORT: "57100"
+          CONDUCTOR_WORKSPACE_NAME: ci-integration
+          CONDUCTOR_WORKSPACE_PATH: ${{ github.workspace }}
+        run: |
+          scripts/local-stack.sh up
+          scripts/local-stack.sh health
+          scripts/local-stack.sh smoke ci-a ci-b
+          scripts/local-stack.sh backup-roundtrip ci-backup
+          scripts/local-stack.sh backup-survival ci-restore ci-survivor
+
+      - name: Verify all four application shells from fresh processes
+        env:
+          CONDUCTOR_PORT: "57100"
+          CONDUCTOR_WORKSPACE_NAME: ci-integration
+          CONDUCTOR_WORKSPACE_PATH: ${{ github.workspace }}
+          SAMMYS_STARTUP_TIMEOUT_SECONDS: "180"
+        run: scripts/verify-shell-startup.sh
+
+      - name: Stop local services
+        if: always()
+        env:
+          CONDUCTOR_PORT: "57100"
+          CONDUCTOR_WORKSPACE_NAME: ci-integration
+          CONDUCTOR_WORKSPACE_PATH: ${{ github.workspace }}
+        run: scripts/local-stack.sh down
+
+  quality:
+    name: Quality gates
+    needs: supply-chain
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.1
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline --network-concurrency=4
+
+      - name: Verify build-script policy
+        run: pnpm ignored-builds
+
+      - name: Check formatting and lint
+        run: pnpm check
+
+      - name: Check types
+        run: pnpm check-types
+
+      - name: Run tests and package-boundary checks
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build --force
+
+  workspace-matrix:
+    name: Workspace ${{ matrix.workspace }}
+    needs: supply-chain
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        workspace:
+          - "@sammys/agent-worker"
+          - "@sammys/atelier"
+          - "@sammys/commerce"
+          - "@sammys/e2e"
+          - "@sammys/storefront"
+          - "@sammys/commerce-port"
+          - "@sammys/contracts"
+          - "@sammys/observability"
+          - "@sammys/policy"
+          - "@sammys/supplier-gateway"
+          - "@sammys/test-support"
+          - "@sammys/typescript-config"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.18.1
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --trust-lockfile --prefer-offline --network-concurrency=4
+
+      - name: Verify exact workspace manifest
+        env:
+          WORKSPACE_NAME: ${{ matrix.workspace }}
+        run: pnpm --filter "$WORKSPACE_NAME" exec node -e 'const manifest = require("./package.json"); if (manifest.name !== process.env.WORKSPACE_NAME) process.exit(1)'
+
+      - name: Check workspace types
+        run: pnpm exec turbo run check-types --filter="${{ matrix.workspace }}"
+
+      - name: Build workspace shell
+        run: pnpm exec turbo run build --filter="${{ matrix.workspace }}"

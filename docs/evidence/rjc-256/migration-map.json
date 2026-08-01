@@ -1,96 +1,39 @@
 {
-  "schema_version": 1,
-  "upstream_commit": "10b5d4b0623123737854a3cb02d54f6e32a1fb9e",
-  "surfaces": [
+  "schema_version": 2,
+  "strategy": "clean-room",
+  "historical_upstream_is_implementation_input": false,
+  "targets": [
     {
-      "source_path": "apps/api",
-      "source_package": "@starter/api",
-      "workspace_member_at_pin": true,
-      "observed_version_context": "Medusa packages 2.11.3; API build tooling React and React DOM 18.3.1",
-      "disposition": "retain/adapt",
-      "target_or_follow_up": "@sammys/commerce",
-      "reason": "Retain the Medusa backend reference; rename and product-boundary work begins only in RJC-257."
+      "target": "@sammys/commerce",
+      "source": "official Medusa documentation and packages",
+      "disposition": "independently scaffold"
     },
     {
-      "source_path": "apps/web",
-      "source_package": "@starter/web",
-      "workspace_member_at_pin": true,
-      "observed_version_context": "Next 15.5.6 with web React and React DOM 19.1.1",
-      "disposition": "retain/adapt",
-      "target_or_follow_up": "@sammys/storefront",
-      "reason": "Retain the storefront reference while deferring rename, feature work, and source transfer to RJC-257."
+      "target": "@sammys/storefront",
+      "source": "official Next.js documentation and packages",
+      "disposition": "independently scaffold"
     },
     {
-      "source_path": "apps/mobile",
-      "source_package": "@starter/mobile",
-      "workspace_member_at_pin": true,
-      "observed_version_context": "Historical mobile application at the pinned revision",
-      "disposition": "park",
-      "target_or_follow_up": "park outside the initial Sammy workspace",
-      "reason": "Mobile is outside the initial foundation scope."
+      "target": "@sammys/atelier",
+      "source": "Sammy-owned requirements and shared TypeScript policy",
+      "disposition": "independently scaffold"
     },
     {
-      "source_path": "apps/docs",
-      "source_package": "@starter/docs",
-      "workspace_member_at_pin": true,
-      "observed_version_context": "Historical docs runtime application at the pinned revision",
-      "disposition": "drop runtime; rewrite useful guidance as Markdown",
-      "target_or_follow_up": "repository Markdown documentation",
-      "reason": "A second runtime Next application has no initial product need."
+      "target": "@sammys/agent-worker",
+      "source": "Sammy-owned requirements and shared TypeScript policy",
+      "disposition": "independently scaffold"
     },
     {
-      "source_path": "packages/eslint-config",
-      "source_package": "@starter/eslint-config",
-      "workspace_member_at_pin": true,
-      "observed_version_context": "Shared lint configuration at the pinned revision",
-      "disposition": "retain/adapt",
-      "target_or_follow_up": "rename under @sammys/* after configuration review",
-      "reason": "Retain shared lint policy subject to compatibility and product-boundary review."
-    },
-    {
-      "source_path": "packages/typescript-config",
-      "source_package": "@starter/typescript-config",
-      "workspace_member_at_pin": true,
-      "observed_version_context": "Shared TypeScript configuration at the pinned revision",
-      "disposition": "retain/adapt",
-      "target_or_follow_up": "rename under @sammys/* after strictness review",
-      "reason": "Retain shared TypeScript policy subject to compatibility and strictness review."
-    },
-    {
-      "source_path": "packages/ui",
-      "source_package": "@starter/ui",
-      "workspace_member_at_pin": true,
-      "observed_version_context": "Starter UI package at the pinned revision",
-      "disposition": "rewrite",
-      "target_or_follow_up": "Sammy-owned visual system in a later product ticket",
-      "reason": "Starter UI is not the Sammy visual or product source of truth."
-    },
-    {
-      "source_path": "packages/template",
-      "source_package": "@starter/template",
-      "workspace_member_at_pin": true,
-      "observed_version_context": "Medusa plugin template at the pinned revision",
-      "disposition": "drop",
-      "target_or_follow_up": "none",
-      "reason": "The plugin template is not a required production boundary."
-    },
-    {
-      "source_path": "plugins/brands",
-      "source_package": "@starter/brands",
-      "workspace_member_at_pin": false,
-      "observed_version_context": "Package-local MIT declaration and Medusa 2.11.2; outside the root apps/* and packages/* workspace at the pin",
-      "disposition": "rewrite later",
-      "target_or_follow_up": "Sammy-owned brand domain after the RJC-256/RJC-257 foundation",
-      "reason": "Brand is relevant, but the out-of-workspace plugin feature code and its 2.11.2 context must not be copied."
-    },
-    {
-      "source_path": "plugins/elastic-search",
-      "source_package": "@starter/elastic-search",
-      "workspace_member_at_pin": false,
-      "observed_version_context": "Package-local MIT declaration and Medusa 2.11.2; outside the root apps/* and packages/* workspace at the pin",
-      "disposition": "drop/defer",
-      "target_or_follow_up": "future search-provider decision if product demand requires it",
-      "reason": "Search-provider infrastructure is not required for the initial foundation."
+      "target": "@sammys/typescript-config",
+      "source": "official TypeScript documentation",
+      "disposition": "independently author"
     }
-  ]
+  ],
+  "excluded": [
+    "306 source paths and package identities",
+    "306 dependency manifests and lockfile",
+    "306 configuration and generated files",
+    "306 build output"
+  ],
+  "rollback": "remove any file with uncertain provenance and independently recreate it from official sources"
 }

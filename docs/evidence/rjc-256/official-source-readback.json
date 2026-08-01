@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "retrieved_at": "2026-08-01T10:49:05Z",
+  "method": "HTTPS GET with redirect following, two bounded retries, 10 second connect timeout, and 30 second total timeout",
+  "records": [
+    {
+      "name": "node-release-schedule",
+      "url": "https://raw.githubusercontent.com/nodejs/Release/main/schedule.json",
+      "http_status": 200,
+      "bytes": 3255,
+      "sha256": "1cf0432ceb9dfde7f1fd4cce43206519942cfdfad5a26039c2f4bb20fde8549c"
+    },
+    {
+      "name": "pnpm-11.18.0",
+      "url": "https://registry.npmjs.org/pnpm/11.18.0",
+      "http_status": 200,
+      "bytes": 3107,
+      "sha256": "9d1ce540099c8ad61e4ce9eb17dfd6341ccd57a29e473cfdb36ee28c0ae49573"
+    },
+    {
+      "name": "turbo-2.10.7",
+      "url": "https://registry.npmjs.org/turbo/2.10.7",
+      "http_status": 200,
+      "bytes": 2198,
+      "sha256": "98e156d607b5239b6686c3d3bf42aca29a7f0e7d8877a3987f03184b004c8fd6"
+    },
+    {
+      "name": "next-16.2.12",
+      "url": "https://registry.npmjs.org/next/16.2.12",
+      "http_status": 200,
+      "bytes": 3084,
+      "sha256": "387d1a599437fec2bb6fd7658d1fdf13aa2d3e64137da460f5f16812bfa3c95b"
+    },
+    {
+      "name": "medusa-2.18.0",
+      "url": "https://registry.npmjs.org/%40medusajs%2Fmedusa/2.18.0",
+      "http_status": 200,
+      "bytes": 4965,
+      "sha256": "d5993059345137737abd97e080efb53048dc53e536f0cb31017ecf6fe7f24106"
+    },
+    {
+      "name": "vite-6.4.3",
+      "url": "https://registry.npmjs.org/vite/6.4.3",
+      "http_status": 200,
+      "bytes": 5412,
+      "sha256": "419907eba71cf9341b8148fd3fd25ba4301a4dd230f956fa240bf6190366a0fd"
+    },
+    {
+      "name": "eslint-9.39.5",
+      "url": "https://registry.npmjs.org/eslint/9.39.5",
+      "http_status": 200,
+      "bytes": 7014,
+      "sha256": "7b7df524d9c631c135fcc81c1a736779e3845b3b3d3dcad97211165d28a808fd"
+    },
+    {
+      "name": "emittery-0.13.1",
+      "url": "https://registry.npmjs.org/emittery/0.13.1",
+      "http_status": 200,
+      "bytes": 2935,
+      "sha256": "2275b1d0d1bb76da43111a7a1e8d30f44d1b56fa76e44dc884fa329cecb873ee"
+    }
+  ],
+  "audit": {
+    "command": "pnpm audit --json",
+    "exit_code": 1,
+    "result_sha256": "484dc95c1de6ae87a93ea8638c590390d40966ae400466b2a396bbc4f2307856",
+    "critical": 0,
+    "high": 0,
+    "moderate": 3,
+    "advisories": [
+      "GHSA-wrjc-x8rr-h8h6",
+      "GHSA-jjmj-jmhj-qwj2",
+      "GHSA-337j-9hxr-rhxg"
+    ]
+  }
+}

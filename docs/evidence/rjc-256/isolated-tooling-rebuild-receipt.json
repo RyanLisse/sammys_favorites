@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "strategy": "isolated-clean-room-rebuild",
+  "recorded_at": "2026-08-01T12:37:17Z",
+  "builder_task": "isolated_tooling_rebuilder",
+  "implementation_commit": "61cd83872e1ed54d54eb2d6ff3c06a9a7832f22b",
+  "implementation_tree": "895ca38582b745b3d5a8cc387f2899a07f7108b1",
+  "path_content_manifest_sha256": "8a565cb93df8110e782c0fe9ca8650e187c3ed16a3a3aa235c18f505d3e7831d",
+  "recreated_paths": [
+    ".claude/CLAUDE.md",
+    ".claude/settings.json",
+    ".gitignore",
+    ".prettierignore",
+    ".vscode/settings.json",
+    "AGENTS.md",
+    "lefthook.yml",
+    "oxfmt.config.ts",
+    "oxlint.config.ts"
+  ],
+  "constraints": {
+    "read_prior_contents": false,
+    "read_repository_history": false,
+    "read_upstream_checkout": false,
+    "read_unrelated_repository_files": false
+  },
+  "source_basis": [
+    "Ultracite official README and current configuration generator source",
+    "Oxc official Oxfmt configuration documentation",
+    "Oxc official Oxlint configuration documentation",
+    "Lefthook official run, staged-file, glob, and stage_fixed documentation",
+    "Claude Code official settings documentation",
+    "Bundled Conductor workspace guidance",
+    "Sammy-owned engineering requirements"
+  ],
+  "verification_readback": [
+    "both JSON files parsed successfully",
+    "Lefthook YAML parsed successfully",
+    "Ultracite check passed for Oxfmt and Oxlint configuration",
+    "all nine recreated files were present and non-empty"
+  ],
+  "post_rebuild_adjustments": [
+    {
+      "commit": "a3d98589f5c115d8587dbe4651267607c75115c7",
+      "path": "lefthook.yml",
+      "reason": "Exclude immutable evidence because a documentation-only commit otherwise invoked Ultracite with an empty eligible file set.",
+      "source_basis": "Lefthook exclude configuration and observed fail-closed pre-commit output"
+    }
+  ],
+  "limitation": "This receipt records the isolated builder constraints and exact recreated path contents. It is supporting provenance evidence, not cryptographic proof of human authorship or legal clearance."
+}

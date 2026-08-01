@@ -1,41 +1,35 @@
-# ADR 0001: Upstream baseline and direct-use risk
+# ADR 0001: Clean-room foundation and historical upstream research
 
-- Status: Selected for RJC-256; owner-authored Linear confirmation remains pending
-- Date: 2026-07-31
-- Upstream: `https://github.com/306-Technologies/306-starter-monorepo`
-- Revision: `10b5d4b0623123737854a3cb02d54f6e32a1fb9e`
+- Status: Accepted; supersedes the proposed direct-use path
+- Date: 2026-08-01
+- Historical research subject: `306-Technologies/306-starter-monorepo`
+- Historical research revision: `10b5d4b0623123737854a3cb02d54f6e32a1fb9e`
 
 ## Decision
 
-For RJC-256, select product-owner direct-use risk acceptance for the exact upstream revision above. This decision authorizes repository-native evidence and a bounded, isolated compatibility spike only. Production scaffolding and feature-source reuse are outside RJC-256 and must not begin before RJC-257.
+Sammy's Favorites uses a **clean-room foundation**. The production repository is scaffolded independently from official pnpm, Turborepo, Next.js, and Medusa documentation and published packages. It must not reuse 306 source code, dependency manifests or lockfiles, configuration, generated files, or build output.
 
-The upstream root is `UNLICENSED`. Inspection at the pin found no root `LICENSE*` or `COPYING*` file, and GitHub reported no detected repository license on 2026-07-31. Ryan's acceptance is **not upstream permission**, is **not an upstream license**, and is **not legal clearance**. The unresolved reuse risk remains visible even if the technical spike succeeds.
+The pinned 306 revision remains recorded only so the earlier technical research has honest provenance. It is not a baseline, dependency, template, or approved source. No owner risk-acceptance comment is required because direct use is no longer an option selected by this ADR.
 
-Ryan Lisse is the business-risk owner. Ryan Lisse is also the engineering-maintenance owner for the selected version baseline and advisory follow-up. The basis currently recorded is his Linear assignment and his instruction that he takes “all responsibility.” Closure remains gated on a comment authored from Ryan's own Linear identity that confirms both roles and replaces the original permission-or-clean-room criterion for this ticket.
+The upstream root was marked `UNLICENSED`; inspection found no root `LICENSE*` or `COPYING*` file and GitHub reported no detected repository license. Nothing in this ADR claims upstream permission, a license grant, or legal clearance.
+
+Ryan Lisse is the accountable decision and rollback coordinator for this clean-room foundation. That accountability covers maintaining this decision, coordinating provenance review, and ordering removal and independent recreation when provenance is uncertain. It does not constitute legal approval, upstream permission, or specialist legal clearance.
 
 ## Drivers
 
-- RJC-257 needs one exact, reproducible upstream reference rather than a moving branch or abbreviated commit.
-- The public repository's root `UNLICENSED` status must not be represented as a grant of reuse rights.
-- The historical Node, pnpm, Turbo, and Next tuple includes obsolete or security-affected values and cannot be promoted unchanged.
-- The API and web surfaces are useful technical references, while mobile, docs, template, UI, and the two out-of-workspace plugins need explicit dispositions.
-- The decision must remain reversible without laundering copied provenance.
-
-## Alternatives
-
-1. **Clean-room baseline from official sources.** Independently create the scaffold using official Medusa and Next documentation and generators. This remains the executable rollback.
-2. **Wait for written upstream permission.** Pause direct reuse until 306 Technologies supplies explicit terms covering the pinned repository.
-3. **Adopt the starter unchanged.** Rejected: it would conceal the unresolved license status and promote an insecure historical toolchain.
+- The product needs an independently maintainable foundation with clear provenance.
+- An `UNLICENSED` public repository must not be treated as reusable source.
+- Version choices must be justified by official sources and verified against the actual Sammy manifests, rather than inherited from a historical lockfile.
+- Research evidence must remain auditable without becoming an implementation input.
 
 ## Consequences
 
-- Historical observations remain facts; they are stored separately from the selected production-reference matrix.
-- The bounded spike must use Node `24.18.0`, pnpm `11.18.0`, Turbo `2.10.8`, Next `15.5.21`, web React/React DOM `19.1.2`, and Medusa `2.11.3`.
-- Medusa `2.11.3` is a compatibility bridge, not a claim that it is current or production-approved.
-- No upstream production feature source, dependency tree, or build output may be copied into this repository in RJC-256.
-- Ryan's owner-authored Linear confirmation, the isolated spike, audit disposition, and conformance gates remain mandatory before closure.
-- If the owner withdraws acceptance, upstream objects, review rejects the risk posture, or the pinned starter fails the spike, activate the clean-room rollback: supersede this direct-use decision and recreate the scaffold from official Medusa and Next sources without retaining copied starter code.
+- Only `@sammys/*` workspace identities are permitted.
+- Production manifests and source must not refer to the 306 repository, pin, or `@starter/*` packages.
+- Historical captures and superseded conformance lineages under `docs/evidence/rjc-256/` are non-normative research records. They may describe the rejected direct-use investigation but may not be consumed by builds, installs, generators, or runtime code.
+- RJC-257 may consume only the clean-room version matrix and target map. It must create or retain Sammy-owned code sourced from official documentation and package APIs.
+- Any future proposal to reuse upstream material requires a new ADR and written permission or applicable license terms. It cannot silently reverse this decision.
 
-## Follow-up
+## Supersession and rollback
 
-RJC-257 may consume only the approved version matrix and migration map after RJC-256 closes. Any later written permission or license is new evidence; it must not rewrite this historical decision.
+This decision supersedes all earlier direct-use proposals and owner-confirmation gates. If provenance cannot be demonstrated for a file, remove and independently recreate it from official sources; do not attempt to justify it using the old research record.

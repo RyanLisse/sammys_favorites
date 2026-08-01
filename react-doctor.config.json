@@ -5,7 +5,11 @@
     "overrides": [
       {
         "files": ["apps/commerce/**"],
-        "rules": ["deslop/unused-dependency", "deslop/unused-dev-dependency", "deslop/unused-file"]
+        "rules": [
+          "deslop/unused-dependency",
+          "deslop/unused-dev-dependency",
+          "deslop/unused-file"
+        ]
       }
     ]
   }

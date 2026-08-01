@@ -1,0 +1,77 @@
+name: ${SAMMYS_COMPOSE_PROJECT:?run scripts/local-stack.sh to configure the project}
+
+services:
+  postgres:
+    image: postgres:17.6-alpine@sha256:ef257d85f76e48da1c64832459b59fcaba1a4dac97bf5d7450c77753542eee94
+    environment:
+      POSTGRES_DB: ${SAMMYS_POSTGRES_DB:?missing generated local-stack environment}
+      POSTGRES_PASSWORD: ${SAMMYS_POSTGRES_PASSWORD:?missing generated local-stack environment}
+      POSTGRES_USER: ${SAMMYS_POSTGRES_USER:?missing generated local-stack environment}
+    ports:
+      - "${SAMMYS_POSTGRES_PORT:?missing allocated PostgreSQL port}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
+
+  redis:
+    image: redis:7.4.5-alpine@sha256:bb186d083732f669da90be8b0f975a37812b15e913465bb14d845db72a4e3e08
+    command:
+      - /bin/sh
+      - -c
+      - exec redis-server --appendonly yes --databases 1024 --requirepass "$${SAMMYS_REDIS_PASSWORD}"
+    environment:
+      SAMMYS_REDIS_PASSWORD: ${SAMMYS_REDIS_PASSWORD:?missing generated local-stack environment}
+    ports:
+      - "${SAMMYS_REDIS_PORT:?missing allocated Redis port}:6379"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'redis-cli --no-auth-warning -a "$$SAMMYS_REDIS_PASSWORD" ping | grep -q PONG',
+        ]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - redis-data:/data
+
+  minio:
+    image: minio/minio:RELEASE.2025-09-07T16-13-09Z@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: ${SAMMYS_MINIO_USER:?missing generated local-stack environment}
+      MINIO_ROOT_PASSWORD: ${SAMMYS_MINIO_PASSWORD:?missing generated local-stack environment}
+    ports:
+      - "${SAMMYS_MINIO_PORT:?missing allocated MinIO port}:9000"
+      - "${SAMMYS_MINIO_CONSOLE_PORT:?missing allocated MinIO console port}:9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    volumes:
+      - minio-data:/data
+
+  minio-init:
+    image: minio/mc:RELEASE.2025-08-13T08-35-41Z@sha256:a7fe349ef4bd8521fb8497f55c6042871b2ae640607cf99d9bede5e9bdf11727
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - >-
+        mc alias set local http://minio:9000 "$$MINIO_ROOT_USER" "$$MINIO_ROOT_PASSWORD" && mc mb --ignore-existing "local/$$SAMMYS_OBJECT_BUCKET"
+    environment:
+      MINIO_ROOT_USER: ${SAMMYS_MINIO_USER:?missing generated local-stack environment}
+      MINIO_ROOT_PASSWORD: ${SAMMYS_MINIO_PASSWORD:?missing generated local-stack environment}
+      SAMMYS_OBJECT_BUCKET: ${SAMMYS_OBJECT_BUCKET:?missing explicit object bucket}
+
+volumes:
+  postgres-data:
+  redis-data:
+  minio-data:

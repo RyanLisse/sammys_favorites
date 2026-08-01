@@ -1,35 +1,29 @@
 {
   "name": "@sammys/commerce",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "medusa build",
-    "dev": "medusa develop",
+    "build": "MEDUSA_BUILD=true medusa build",
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "dev": "medusa develop --port ${COMMERCE_PORT:-9000}",
     "start": "medusa start",
-    "check-types": "tsc --noEmit"
+    "test": "node --test"
   },
   "dependencies": {
-    "@medusajs/admin-sdk": "2.18.0",
-    "@medusajs/cli": "2.18.0",
     "@medusajs/framework": "2.18.0",
-    "@medusajs/medusa": "2.18.0"
+    "@medusajs/medusa": "2.18.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   },
   "devDependencies": {
-    "@medusajs/admin-shared": "2.18.0",
-    "@medusajs/dashboard": "2.18.0",
-    "@medusajs/draft-order": "2.18.0",
-    "@medusajs/test-utils": "2.18.0",
+    "@medusajs/cli": "2.18.0",
     "@sammys/typescript-config": "workspace:*",
-    "@types/node": "^22.20.1",
-    "@types/react": "18.3.31",
-    "@types/react-dom": "18.3.7",
-    "picomatch": "3.0.2",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
-    "ts-node": "^10.9.2",
-    "typescript": "5.9.3",
-    "vite": "5.4.21"
+    "@types/node": "^24.10.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "ts-node": "10.9.2",
+    "typescript": "5.9.3"
   },
   "engines": {
     "node": ">=24"

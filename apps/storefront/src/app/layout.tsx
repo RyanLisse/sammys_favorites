@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
-import type { JSX } from "react";
+import type { ReactNode } from "react";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
+  description: "A clean-room storefront shell",
   title: "Sammy's Favorites",
-  description: "Sammy's Favorites storefront",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>): JSX.Element {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
-}
+type RootLayoutProperties = Readonly<{
+  children: ReactNode;
+}>;
+
+const RootLayout = ({ children }: RootLayoutProperties) => (
+  <html lang="en">
+    <body>{children}</body>
+  </html>
+);
+
+export default RootLayout;

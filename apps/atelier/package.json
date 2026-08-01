@@ -5,18 +5,16 @@
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check-types": "tsc -p tsconfig.json --noEmit",
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
     "start": "node dist/index.js",
-    "check-types": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@sammys/typescript-config": "workspace:*"
+    "test": "node --test"
   },
   "devDependencies": {
     "@sammys/typescript-config": "workspace:*",
-    "@types/node": "^22.20.1",
-    "tsx": "^4.19.0",
+    "@types/node": "^24.10.0",
+    "tsx": "^4.20.6",
     "typescript": "5.9.3"
   },
   "engines": {

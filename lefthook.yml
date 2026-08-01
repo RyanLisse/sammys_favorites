@@ -1,18 +1,23 @@
 pre-commit:
   jobs:
-    - run: pnpm exec oxlint --fix {staged_files}
+    - name: ultracite
       glob:
         - "**/*.js"
+        - "**/*.mjs"
         - "**/*.jsx"
         - "**/*.ts"
         - "**/*.tsx"
-    - run: pnpm exec oxfmt --write {staged_files}
+      exclude: "docs/evidence/**"
+      run: pnpm exec ultracite fix {staged_files}
+      stage_fixed: true
+    - name: oxfmt-assets
       glob:
-        - "**/*.js"
-        - "**/*.jsx"
-        - "**/*.ts"
-        - "**/*.tsx"
+        - "*.json"
+        - "*.jsonc"
+        - "*.css"
         - "**/*.json"
         - "**/*.jsonc"
         - "**/*.css"
+      exclude: "docs/evidence/**"
+      run: pnpm exec oxfmt --write {staged_files}
       stage_fixed: true

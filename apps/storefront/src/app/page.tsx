@@ -1,12 +1,11 @@
-import type { JSX } from "react";
+const HomePage = () => (
+  <main>
+    <p className="eyebrow">Sammy&apos;s Favorites</p>
+    <h1>Storefront shell is ready.</h1>
+    <p>
+      Commerce experiences will arrive here after the clean-room foundation.
+    </p>
+  </main>
+);
 
-export default function HomePage(): JSX.Element {
-  return (
-    <main className="page">
-      <section className="hero">
-        <h1>Sammy&apos;s Favorites</h1>
-        <p>Storefront scaffold</p>
-      </section>
-    </main>
-  );
-}
+export default HomePage;

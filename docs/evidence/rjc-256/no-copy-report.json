@@ -1,0 +1,42 @@
+{
+  "comparison": "SHA-256 exact match for every active tracked file and normalized-line Jaccard >= 0.8 for text files",
+  "exact_matches": [],
+  "generated_at": "2026-08-01T15:29:02.246Z",
+  "high_similarity_matches": [],
+  "passed": true,
+  "schema_version": 2,
+  "scope": {
+    "excluded": [
+      "docs/evidence/** (immutable evidence and historical research)",
+      "pnpm-lock.yaml (generated dependency resolution)",
+      "apps/storefront/next-env.d.ts (framework generated)",
+      "**/*.tsbuildinfo (compiler generated)"
+    ],
+    "included": "all tracked files in the target tree"
+  },
+  "similarity_threshold": 0.8,
+  "sources": [
+    {
+      "commit": "10b5d4b0623123737854a3cb02d54f6e32a1fb9e",
+      "file_count": 131,
+      "kind": "pinned-upstream",
+      "repository": "https://github.com/306-Technologies/306-starter-monorepo",
+      "tree": "36a3fe5dd2c318faf232e15bc6ea190bc246a6e5"
+    },
+    {
+      "commit": "cf901921a132be19f4bdc53fcdebb011bca16350",
+      "file_count": 43,
+      "kind": "superseded-scaffold",
+      "repository": "this repository",
+      "tree": "deb5153e9ccee1e1d3aa2b8821888af59bb58275"
+    }
+  ],
+  "target": {
+    "active_file_count": 102,
+    "commit": "f809076d9314aa971444d9f7a797c8cd71288a67",
+    "committed_at": "2026-08-01T17:28:44+02:00",
+    "content_manifest_algorithm": "for each path sorted lexicographically: UTF-8 path, NUL, ASCII byte length, NUL, raw content, NUL",
+    "content_manifest_sha256": "48b70e34e4a13a2e77c961404d3ab35f3f5c9f697c79e470d8e7b05854776479",
+    "tree": "c78c5dcf2e3691e99b2faa3b3536ca44ade1cebb"
+  }
+}
