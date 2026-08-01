@@ -18,6 +18,8 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "test": "turbo run test",
     "test:e2e": "turbo run test --filter=@sammys/e2e",
+    "qlty-check": "qlty check --all",
+    "qlty-fmt": "qlty fmt",
     "prepare": "lefthook install"
   },
   "devDependencies": {
