@@ -1,12 +1,12 @@
 pre-commit:
   jobs:
-    - run: oxlint --fix {staged_files}
+    - run: pnpm exec oxlint --fix {staged_files}
       glob:
         - "**/*.js"
         - "**/*.jsx"
         - "**/*.ts"
         - "**/*.tsx"
-    - run: oxfmt --write {staged_files}
+    - run: pnpm exec oxfmt --write {staged_files}
       glob:
         - "**/*.js"
         - "**/*.jsx"
