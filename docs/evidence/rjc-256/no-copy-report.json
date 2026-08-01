@@ -1,7 +1,7 @@
 {
   "comparison": "SHA-256 exact match for every active tracked file and normalized-line Jaccard >= 0.8 for text files",
   "exact_matches": [],
-  "generated_at": "2026-08-01T12:27:25.406Z",
+  "generated_at": "2026-08-01T15:05:31.853Z",
   "high_similarity_matches": [],
   "passed": true,
   "schema_version": 2,
@@ -32,11 +32,11 @@
     }
   ],
   "target": {
-    "active_file_count": 91,
-    "commit": "a3d98589f5c115d8587dbe4651267607c75115c7",
-    "committed_at": "2026-08-01T14:26:52+02:00",
+    "active_file_count": 101,
+    "commit": "a4cdd26033c4c241d20f729e93a2fe118fe31c68",
+    "committed_at": "2026-08-01T17:05:17+02:00",
     "content_manifest_algorithm": "for each path sorted lexicographically: UTF-8 path, NUL, ASCII byte length, NUL, raw content, NUL",
-    "content_manifest_sha256": "69c0381f83b8f879896251ca23cf803f4ed2f435be84adc0dabc5710ae65a6af",
-    "tree": "4abbb7f003c759efda3ee68d152b768d9848eda5"
+    "content_manifest_sha256": "26e3b8cd5e1e3ddaa06d777f3fcc13d35b1e3a355bf5898638f63d79a6ac436d",
+    "tree": "08ab340106befabc116c1207466d30e169974cd4"
   }
 }
