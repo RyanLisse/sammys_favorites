@@ -13,6 +13,8 @@ The pinned 306 revision remains recorded only so the earlier technical research 
 
 The upstream root was marked `UNLICENSED`; inspection found no root `LICENSE*` or `COPYING*` file and GitHub reported no detected repository license. Nothing in this ADR claims upstream permission, a license grant, or legal clearance.
 
+Ryan Lisse is the accountable decision and rollback coordinator for this clean-room foundation. That accountability covers maintaining this decision, coordinating provenance review, and ordering removal and independent recreation when provenance is uncertain. It does not constitute legal approval, upstream permission, or specialist legal clearance.
+
 ## Drivers
 
 - The product needs an independently maintainable foundation with clear provenance.

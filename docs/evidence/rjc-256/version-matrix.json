@@ -2,7 +2,7 @@
   "schema_version": 3,
   "strategy": "clean-room",
   "selected": {
-    "node_runtime": "24.18.0",
+    "node_runtime": "24.18.1",
     "node_engine": ">=24",
     "pnpm": "11.18.0",
     "turbo": "2.10.7",
@@ -26,7 +26,7 @@
     "other_packages": "official npm registry metadata and peer dependency compatibility"
   },
   "security_disposition": {
-    "emittery": "0.13.1 is an explicit transitive override; the lockfile must resolve exactly that version.",
+    "emittery": "0.13.1 is an explicit transitive override declared in pnpm-workspace.yaml; the lockfile must resolve exactly that version.",
     "audit_at_2026-08-01T10:49:05Z": {
       "critical": 0,
       "high": 0,

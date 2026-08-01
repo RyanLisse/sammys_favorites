@@ -51,6 +51,9 @@ test("the ADR preserves provenance while prohibiting all implementation reuse", 
     "official pnpm, Turborepo, Next.js, and Medusa",
     "UNLICENSED",
     "supersedes all earlier direct-use proposals",
+    "Ryan Lisse",
+    "decision and rollback coordinator",
+    "does not constitute legal approval",
   ]) {
     assert.match(adr, new RegExp(phrase, "iu"));
   }
@@ -76,11 +79,37 @@ test("selected versions match the independently scaffolded manifests", async () 
     nodePath.join(rootDirectory, "pnpm-lock.yaml"),
     "utf-8"
   );
+  const workspace = await readFile(
+    nodePath.join(rootDirectory, "pnpm-workspace.yaml"),
+    "utf-8"
+  );
+  const runtimePinContents = await readFile(
+    nodePath.join(rootDirectory, ".node-version"),
+    "utf-8"
+  );
+  const runtimePin = runtimePinContents.trim();
+  const ciWorkflow = await readFile(
+    nodePath.join(rootDirectory, ".github/workflows/ci.yml"),
+    "utf-8"
+  );
 
   assert.equal(matrix.strategy, "clean-room");
   assert.equal(matrix.historical_upstream_versions_are_candidates, false);
   assert.equal(process.version, `v${matrix.selected.node_runtime}`);
+  assert.equal(runtimePin, matrix.selected.node_runtime);
   assert.equal(root.engines.node, matrix.selected.node_engine);
+  const ciNodeVersions = [
+    ...ciWorkflow.matchAll(/^\s+node-version:\s*(?<version>[^\s#]+)\s*$/gmu),
+  ].map((match) => match.groups?.version);
+  const ciSetupNodeSteps = [
+    ...ciWorkflow.matchAll(/^\s+uses:\s*actions\/setup-node@/gmu),
+  ];
+  assert.ok(ciSetupNodeSteps.length > 0);
+  assert.equal(ciNodeVersions.length, ciSetupNodeSteps.length);
+  assert.deepEqual(
+    new Set(ciNodeVersions),
+    new Set([matrix.selected.node_runtime])
+  );
   assert.match(
     root.packageManager,
     new RegExp(`^pnpm@${matrix.selected.pnpm.replaceAll(".", "\\.")}`, "u")
@@ -116,6 +145,13 @@ test("selected versions match the independently scaffolded manifests", async () 
   assert.match(
     lockfile,
     new RegExp(`^  emittery@${matrix.selected.emittery_override}:`, "mu")
+  );
+  assert.match(
+    workspace,
+    new RegExp(
+      `^  emittery: ${matrix.selected.emittery_override.replaceAll(".", "\\.")}$`,
+      "mu"
+    )
   );
   assert.deepEqual(
     matrix.security_disposition["audit_at_2026-08-01T10:49:05Z"],
