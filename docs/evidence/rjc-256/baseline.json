@@ -1,51 +1,36 @@
 {
-  "schema_version": 1,
-  "classification": "repository_fact_and_owner_decision",
-  "upstream_url": "https://github.com/306-Technologies/306-starter-monorepo",
-  "commit": "10b5d4b0623123737854a3cb02d54f6e32a1fb9e",
-  "commit_verification": "10b5d4b0623123737854a3cb02d54f6e32a1fb9e",
-  "commit_metadata": {
-    "subject": "fix installation issues",
-    "source": "detached-checkout inspection recorded in the approved RJC-256 PRD",
-    "retrieved_at": "2026-07-31T00:00:00Z"
-  },
-  "license": {
-    "root_package_license": "UNLICENSED",
-    "root_license_files": [],
-    "root_license_file_patterns_checked": [
-      "LICENSE*",
-      "COPYING*"
-    ],
-    "github_license_detected": false,
-    "package_local_license_not_root_license": true,
-    "source": "pinned upstream root package.json, pinned root tree, and GitHub repository license detection recorded in the approved RJC-256 PRD",
-    "retrieved_at": "2026-07-31T00:00:00Z"
-  },
-  "owner_decision": {
-    "classification": "owner_decision",
-    "type": "product-owner direct-use risk acceptance",
-    "upstream_permission": false,
-    "upstream_license": false,
-    "legal_clearance": false,
-    "unresolved_legal_status": true,
-    "scope": "RJC-256 evidence and isolated compatibility spike only",
-    "owner_comment_status": "pending required Ryan-authored Linear confirmation"
-  },
-  "ownership": {
-    "business_risk_owner": "Ryan Lisse",
-    "engineering_maintenance_owner": "Ryan Lisse",
-    "linear_assignment": {
-      "source": "RJC-256 Linear assignment to Ryan Lisse recorded in the approved RJC-256 PRD",
-      "retrieved_at": "2026-07-31T00:00:00Z"
-    },
-    "all_responsibility_instruction": {
-      "source": "Ryan Lisse instruction that he takes all responsibility, recorded in the approved RJC-256 PRD",
-      "retrieved_at": "2026-07-31T00:00:00Z"
-    },
-    "owner_confirmation": {
-      "status": "pending",
-      "source": "required owner-authored Linear confirmation gate defined by the approved RJC-256 PRD; no confirmation claimed by this baseline artifact",
-      "retrieved_at": "2026-07-31T00:00:00Z"
+  "schema_version": 2,
+  "classification": "clean_room_decision",
+  "decision": "clean-room",
+  "status": "accepted",
+  "effective_at": "2026-08-01T00:00:00Z",
+  "historical_research": {
+    "upstream_url": "https://github.com/306-Technologies/306-starter-monorepo",
+    "commit": "10b5d4b0623123737854a3cb02d54f6e32a1fb9e",
+    "use": "provenance for historical research evidence only",
+    "normative": false,
+    "implementation_input": false,
+    "license": {
+      "root_package_license": "UNLICENSED",
+      "root_license_files": [],
+      "github_license_detected": false,
+      "upstream_permission": false,
+      "legal_clearance": false
     }
-  }
+  },
+  "prohibited_reuse": [
+    "source code",
+    "dependency manifests and lockfiles",
+    "configuration",
+    "generated files",
+    "build output"
+  ],
+  "allowed_sources": [
+    "official pnpm documentation and registry package",
+    "official Turborepo documentation and registry package",
+    "official Next.js documentation and registry packages",
+    "official Medusa documentation and registry packages"
+  ],
+  "owner_direct_use_confirmation_required": false,
+  "supersedes": "all direct-use proposals and owner-confirmation gates recorded by earlier RJC-256 research lineages"
 }

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "strategy": "clean-room",
+  "authorship_readback": {
+    "scaffold_commit": "cf901921a132be19f4bdc53fcdebb011bca16350",
+    "author": "Ryan Lisse <ryan.lisse@gmail.com>",
+    "authored_at": "2026-08-01T12:07:12+02:00",
+    "subject": "scaffold RJC-257 monorepo with Ultracite/Oxlint tooling and verified matrix",
+    "changed_path_inventory_sha256": "caaaef01c781ae4e26fc08177d15aad5810b4ba719fd0a8cf125249b1b1ef372"
+  },
+  "independent_source_basis": [
+    "official Medusa documentation and @medusajs packages",
+    "official Next.js documentation and packages",
+    "official pnpm and Turborepo documentation and packages",
+    "Sammy-owned requirements"
+  ],
+  "automated_readback": [
+    "all workspace package names use @sammys/*",
+    "production files contain no historical repository identity or pinned revision",
+    "manifests contain no @starter/* package references",
+    "selected direct and resolved versions match manifests, runtime, and lockfile"
+  ],
+  "limitation": "Git authorship alone cannot prove independent creation. The claim is supported by the recorded source basis plus repeatable negative provenance and version readback checks; uncertain files must be removed and recreated."
+}

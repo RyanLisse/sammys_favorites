@@ -1,0 +1,127 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  integration-services:
+    name: Real local services
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate isolated service configuration
+        run: node --test test/local-stack.test.mjs
+
+      - name: Start and verify PostgreSQL, Redis, and MinIO
+        env:
+          CONDUCTOR_PORT: "57100"
+          CONDUCTOR_WORKSPACE_NAME: ci-integration
+          CONDUCTOR_WORKSPACE_PATH: ${{ github.workspace }}
+        run: |
+          scripts/local-stack.sh up
+          scripts/local-stack.sh health
+          scripts/local-stack.sh smoke ci-a ci-b
+          scripts/local-stack.sh backup-roundtrip ci-backup
+
+      - name: Stop local services
+        if: always()
+        env:
+          CONDUCTOR_PORT: "57100"
+          CONDUCTOR_WORKSPACE_NAME: ci-integration
+          CONDUCTOR_WORKSPACE_PATH: ${{ github.workspace }}
+        run: scripts/local-stack.sh down
+
+  quality:
+    name: Quality gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify build-script policy
+        run: pnpm ignored-builds
+
+      - name: Check formatting and lint
+        run: pnpm check
+
+      - name: Check types
+        run: pnpm check-types
+
+      - name: Run tests and package-boundary checks
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build --force
+
+  workspace-matrix:
+    name: Workspace ${{ matrix.workspace }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace:
+          - "@sammys/agent-worker"
+          - "@sammys/atelier"
+          - "@sammys/commerce"
+          - "@sammys/e2e"
+          - "@sammys/storefront"
+          - "@sammys/commerce-port"
+          - "@sammys/contracts"
+          - "@sammys/observability"
+          - "@sammys/policy"
+          - "@sammys/supplier-gateway"
+          - "@sammys/test-support"
+          - "@sammys/typescript-config"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify exact workspace manifest
+        env:
+          WORKSPACE_NAME: ${{ matrix.workspace }}
+        run: pnpm --filter "$WORKSPACE_NAME" exec node -e 'const manifest = require("./package.json"); if (manifest.name !== process.env.WORKSPACE_NAME) process.exit(1)'
+
+      - name: Check workspace types
+        run: pnpm --filter "${{ matrix.workspace }}" run --if-present check-types
+
+      - name: Build workspace shell
+        run: pnpm --filter "${{ matrix.workspace }}" run --if-present build

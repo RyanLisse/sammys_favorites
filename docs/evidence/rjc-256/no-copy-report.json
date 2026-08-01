@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "compared_at": "2026-08-01T11:45:00Z",
+  "current_scope": "clean-room scaffold working tree",
+  "upstream_repository": "https://github.com/306-Technologies/306-starter-monorepo",
+  "upstream_commit": "10b5d4b0623123737854a3cb02d54f6e32a1fb9e",
+  "current_file_count": 31,
+  "upstream_file_count": 131,
+  "exact_matches": [],
+  "high_similarity_matches": [],
+  "similarity_threshold": 0.8,
+  "passed": true,
+  "command": "node scripts/rjc-256/verify-no-upstream-copy.mjs <detached-upstream-checkout>"
+}
