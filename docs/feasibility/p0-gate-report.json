@@ -3,6 +3,10 @@
   "asOf": "2026-08-01",
   "issueStatus": "human_review",
   "overall": "at_risk",
+  "evidenceArtifacts": {
+    "providerMatrix": "docs/feasibility/provider-evidence-matrix.md",
+    "complianceMatrix": "docs/feasibility/compliance-evidence-matrix.md"
+  },
   "gates": {
     "G0": {
       "status": "blocked_external",
@@ -62,7 +66,7 @@
       "status": "blocked_external",
       "sourceObservations": [
         {
-          "url": "https://developers.facebook.com/docs/whatsapp/cloud-api/get-started",
+          "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/get-started",
           "retrievedAt": "2026-08-01",
           "prerequisites": [
             "Meta business portfolio",
@@ -78,7 +82,7 @@
           "finding": "The setup flow depends on business assets and granted app permissions; no repository artifact proves ownership, review, or a production-capable token."
         },
         {
-          "url": "https://developers.facebook.com/docs/whatsapp/cloud-api/webhooks",
+          "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/webhooks/overview",
           "retrievedAt": "2026-08-01",
           "prerequisites": [
             "HTTPS callback",
@@ -101,7 +105,7 @@
       "fallback": "Use authenticated Atelier workflows and manual customer communication; no automated WhatsApp delivery."
     },
     "chatSdk": {
-      "status": "documented_not_integrated",
+      "status": "documented_beta_not_integrated",
       "sourceObservations": [
         {
           "url": "https://chat-sdk.dev/docs",
@@ -115,10 +119,23 @@
             "only provider permissions required by the selected inbound/outbound adapter"
           ],
           "finding": "Chat SDK is an implementation framework, not evidence of Meta entitlement, channel ownership, webhook authenticity, or successful provider delivery."
+        },
+        {
+          "url": "https://chat-sdk.dev/adapters/official/whatsapp",
+          "retrievedAt": "2026-08-01",
+          "prerequisites": [
+            "Meta access token, app secret, phone-number ID, and verify token",
+            "explicit Graph API version supported by both the pinned adapter and current Meta API"
+          ],
+          "scopesOrPermissions": [
+            "Meta permissions and assets remain provider-owned prerequisites"
+          ],
+          "finding": "The official WhatsApp adapter is Beta and documents Graph API v21.0 as its default; a pinned adapter and explicitly selected compatible Meta Graph version still require proof."
         }
       ],
       "requiredEvidence": [
         "pinned package and adapter versions",
+        "explicit Graph API compatibility decision",
         "inbound and outbound fixture conformance",
         "duplicate, replay, attachment-size, and provider-status tests"
       ],
@@ -137,10 +154,11 @@
             "supplier/program eligibility"
           ],
           "scopesOrPermissions": [
-            "listing and exact-SKU read APIs",
-            "fresh freight/quote capability",
-            "order placement API",
-            "order detail and logistics tracking APIs"
+            "aliexpress.ds.product.get",
+            "aliexpress.ds.freight.query",
+            "aliexpress.ds.order.create",
+            "aliexpress.trade.ds.order.get",
+            "aliexpress.ds.order.tracking.get"
           ],
           "finding": "The portal is the authority for the exact API list granted to an approved application; public reachability does not establish application approval, API grants, rate limits, ordering eligibility, or test facilities."
         }
@@ -159,6 +177,8 @@
     "accountableCoordinator": "Ryan Lisse",
     "specialistSignoff": "pending",
     "notLegalAdvice": true,
+    "allRowsGreen": false,
+    "nextCriticalReviewDate": "2026-08-10",
     "topics": [
       "GPSR economic operator, traceability, warnings, and online-offer information",
       "exact-SKU materials and Dutch hallmark obligations",
@@ -166,6 +186,10 @@
       "VAT, IOSS, duties, and importer-of-record",
       "packaging and EPR",
       "supplier address handoff and privacy processors"
+    ],
+    "timeSensitiveFindings": [
+      "Dutch government guidance records that the low-value e-commerce import-duty exemption ended on 2026-07-01",
+      "EU Packaging and Packaging Waste Regulation applies from 2026-08-12"
     ]
   },
   "deliveryPolicy": {

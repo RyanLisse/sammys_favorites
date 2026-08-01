@@ -43,5 +43,22 @@ test("coordination ownership is not confused with specialist approval", () => {
   assert.equal(report.compliance.accountableCoordinator, "Ryan Lisse");
   assert.equal(report.compliance.specialistSignoff, "pending");
   assert.equal(report.compliance.notLegalAdvice, true);
+  assert.equal(report.compliance.allRowsGreen, false);
+  assert.equal(report.compliance.nextCriticalReviewDate, "2026-08-10");
   assert.ok(report.compliance.topics.length >= 6);
+  assert.equal(report.compliance.timeSensitiveFindings.length, 2);
+  assert.match(report.compliance.timeSensitiveFindings[0], /2026-07-01/u);
+  assert.match(report.compliance.timeSensitiveFindings[1], /2026-08-12/u);
+});
+
+test("CI report links the detailed provider and compliance evidence gaps", async () => {
+  const [providerMatrix, complianceMatrix] = await Promise.all([
+    readFile(report.evidenceArtifacts.providerMatrix, "utf-8"),
+    readFile(report.evidenceArtifacts.complianceMatrix, "utf-8"),
+  ]);
+  assert.match(providerMatrix, /G0.*blocked_external/su);
+  assert.match(providerMatrix, /Chat SDK.*Beta/su);
+  assert.match(providerMatrix, /aliexpress\.ds\.order\.create/u);
+  assert.match(complianceMatrix, /No row below is green/u);
+  assert.match(complianceMatrix, /specialist sign-off pending/u);
 });
