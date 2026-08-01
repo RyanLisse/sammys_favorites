@@ -1,0 +1,12 @@
+{
+  "$schema": "https://react.doctor/schema/config.json",
+  "ignore": {
+    "files": ["**/.medusa/**", "**/medusa-config.js", "**/medusa-config.ts"],
+    "overrides": [
+      {
+        "files": ["apps/commerce/**"],
+        "rules": ["deslop/unused-dependency", "deslop/unused-dev-dependency", "deslop/unused-file"]
+      }
+    ]
+  }
+}
