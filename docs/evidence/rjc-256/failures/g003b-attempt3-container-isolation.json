@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "capture_kind": "sanitized_docker_inspect_readback",
+  "container_name": "rjc256-g003b-attempt3-acquire",
+  "image_platform_manifest_digest": "sha256:9b02ede55039f443ad57453a741813c6cd105873f0f66fee95d25529e1ba0533",
+  "user": "node",
+  "process_command": [
+    "env",
+    "-i",
+    "PATH=/usr/local/bin:/usr/bin:/bin",
+    "CI=1",
+    "HOME=/home/node",
+    "COREPACK_HOME=/home/node/.corepack",
+    "PNPM_HOME=/home/node/.pnpm",
+    "npm_config_update_notifier=false",
+    "npm_config_fund=false",
+    "bash",
+    "-s"
+  ],
+  "network_mode": "bridge",
+  "mounts": [],
+  "binds": null,
+  "cap_drop": ["ALL"],
+  "security_opt": ["no-new-privileges"],
+  "resource_limits": {
+    "pids": 512,
+    "memory_bytes": 6442450944,
+    "nano_cpus": 4000000000
+  },
+  "final_state": {
+    "status": "exited",
+    "running": false,
+    "oom_killed": false,
+    "dead": false,
+    "exit_code": 1,
+    "started_at": "2026-07-31T23:49:54.412141302Z",
+    "finished_at": "2026-07-31T23:51:39.441020544Z"
+  },
+  "sanitization": {
+    "container_id_removed": true,
+    "credentials_or_tokens_present": false,
+    "proxy_values_present": false,
+    "host_paths_present": false
+  }
+}

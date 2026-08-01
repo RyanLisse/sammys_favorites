@@ -1,0 +1,15 @@
+{
+  "name": "@sammys/e2e",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "test": "node --test src/**/*.test.ts"
+  },
+  "devDependencies": {
+    "@sammys/typescript-config": "workspace:*",
+    "@types/node": "^22.20.1",
+    "typescript": "5.9.3"
+  }
+}

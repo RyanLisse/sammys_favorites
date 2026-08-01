@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "goal_id": "G003b-latest-compatible-reproducibility-spike",
+  "attempt": 5,
+  "classification": "discarded_preflight_implementation_error",
+  "terminal_acquisition_failure": false,
+  "container": {
+    "name": "rjc256-g003b-attempt5-acquire",
+    "id": "a23e7328c82482fe0b0b75a9391bb12c5411f17657e1d73ea727d132a941081a",
+    "created_at": "2026-08-01T03:17:06.211136792Z",
+    "started_at": "2026-08-01T03:17:46.908545214Z",
+    "stopped_at": "2026-08-01T03:19:17.133555047Z",
+    "image_digest": "sha256:9b02ede55039f443ad57453a741813c6cd105873f0f66fee95d25529e1ba0533",
+    "pid1": ["docker-entrypoint.sh", "/usr/bin/tail", "-f", "/dev/null"],
+    "mounts": [],
+    "network_mode": "bridge",
+    "memory_bytes": 6442450944,
+    "nano_cpus": 4000000000,
+    "pids_limit": 512,
+    "cap_drop": ["ALL"],
+    "security_opt": ["no-new-privileges:true"],
+    "user": "1000:1000",
+    "oom_killed": false,
+    "preserved": true
+  },
+  "cause": "The host mktemp input staging directory retained mode 0700 when copied. UID 1000 could not traverse it, and cap-drop ALL correctly prevented an in-container chmod or chown repair.",
+  "proof": {
+    "sealed_inputs_copied_before_launch": true,
+    "preflight_started": false,
+    "clone_started": false,
+    "registry_request_started": false,
+    "corepack_prepare_started": false,
+    "pnpm_started": false,
+    "canonical_lock_invocation_started": false,
+    "fetch_started": false,
+    "offline_started": false,
+    "build_started": false
+  },
+  "disposition": "Preserve this stopped container. Fix host-staged directory and file modes before copy, then use one new fresh no-mount -v2 container. The single canonical attempt-5 command remains unconsumed."
+}

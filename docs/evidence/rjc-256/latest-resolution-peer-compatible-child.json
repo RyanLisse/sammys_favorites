@@ -1,0 +1,2586 @@
+{
+  "schema_version": 3,
+  "kind": "content_addressed_peer_compatible_child_snapshot",
+  "resolver_policy_version": "rjc-256-peer-compatible-v3",
+  "snapshot_family_id": "root:sha256:5e0716ac0f66d63284d886effb782a810d3708af33550bb9ca2fefca5853a508",
+  "parent_snapshot_id": "sha256:7a654c2a5d29a85cbd0de3dd8e093485c8199a6aca790fea0dbd7d645457002c",
+  "parent_snapshot": {
+    "path": "latest-resolution.json",
+    "snapshot_id": "sha256:7a654c2a5d29a85cbd0de3dd8e093485c8199a6aca790fea0dbd7d645457002c",
+    "t0": "2026-07-31T22:58:40.544Z",
+    "resolution_byte_sha256": "sha256:9c5de9de182e71e6af2f3a1d9946ed5c688e86218d457b983e05544bbf7ad099",
+    "registry_snapshot_byte_sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+    "node_release_snapshot_byte_sha256": "sha256:98809dc6302861c594967fc473d93b736ba767533d1bc5149c484274e5f093b4"
+  },
+  "t0": "2026-07-31T22:58:40.544Z",
+  "seal_time": "2026-08-01T01:23:37.958Z",
+  "registry_base_url": "https://registry.npmjs.org",
+  "registry_snapshot_sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+  "node_release_snapshot_sha256": "sha256:98809dc6302861c594967fc473d93b736ba767533d1bc5149c484274e5f093b4",
+  "package_manager": {
+    "name": "pnpm",
+    "selected_version": "11.18.0",
+    "status": "exact_latest",
+    "allowed_tag": "latest",
+    "packument_digest": "sha256:0596946af2868019575a55335d67e8841e1731463ed6ee15c2c577d786959e67"
+  },
+  "strict_peer_dependencies": true,
+  "selection_policy": "Keep exact latest stable packages unless attempt-4 strict peer evidence proves incompatibility; then choose the highest stable compatible version published no later than parent T0.",
+  "manifest_allowlist": {
+    "root": [
+      "packageManager",
+      "engines.node",
+      "devDependencies.@types/node",
+      "devDependencies.eslint",
+      "devDependencies.prettier",
+      "devDependencies.turbo",
+      "devDependencies.typescript"
+    ],
+    "api": [
+      "dependencies.@medusajs/admin-sdk",
+      "dependencies.@medusajs/cli",
+      "dependencies.@medusajs/framework",
+      "dependencies.@medusajs/medusa",
+      "devDependencies.@medusajs/test-utils",
+      "devDependencies.@swc/core",
+      "devDependencies.@swc/jest",
+      "devDependencies.@types/jest",
+      "devDependencies.@types/node",
+      "devDependencies.@types/react",
+      "devDependencies.@types/react-dom",
+      "devDependencies.jest",
+      "devDependencies.picomatch",
+      "devDependencies.prop-types",
+      "devDependencies.react",
+      "devDependencies.react-dom",
+      "devDependencies.ts-node",
+      "devDependencies.typescript",
+      "devDependencies.vite",
+      "devDependencies.yalc",
+      "engines.node"
+    ],
+    "web": [
+      "dependencies.next",
+      "dependencies.react",
+      "dependencies.react-dom",
+      "devDependencies.@starter/eslint-config",
+      "devDependencies.@starter/typescript-config",
+      "devDependencies.@types/node",
+      "devDependencies.@types/react",
+      "devDependencies.@types/react-dom",
+      "devDependencies.eslint",
+      "devDependencies.typescript"
+    ],
+    "eslint": [
+      "devDependencies.@eslint/js",
+      "devDependencies.@next/eslint-plugin-next",
+      "devDependencies.eslint",
+      "devDependencies.eslint-config-prettier",
+      "devDependencies.eslint-plugin-only-warn",
+      "devDependencies.eslint-plugin-react",
+      "devDependencies.eslint-plugin-react-hooks",
+      "devDependencies.eslint-plugin-turbo",
+      "devDependencies.globals",
+      "devDependencies.typescript",
+      "devDependencies.typescript-eslint"
+    ],
+    "typescript_config": []
+  },
+  "registry_package_inventory": [
+    {
+      "package_name": "@eslint/js",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "@medusajs/admin-sdk",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "@medusajs/cli",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "@medusajs/framework",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "@medusajs/medusa",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "@medusajs/test-utils",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "@next/eslint-plugin-next",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "@swc/core",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "@swc/jest",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "@types/jest",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "@types/node",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "@types/react",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "@types/react-dom",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "eslint",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "eslint-config-prettier",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "eslint-plugin-only-warn",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "eslint-plugin-react",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "eslint-plugin-react-hooks",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "eslint-plugin-turbo",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "globals",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "jest",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "next",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "picomatch",
+      "source": {
+        "kind": "bounded_late_metadata_extension",
+        "path": "captures/picomatch-late-metadata-extension.json",
+        "sha256": "sha256:127303ce5377b3c542a92bdad434e36d65097f382ca02cf9128d2836bc8852b9",
+        "parent_cutoff": "2026-07-31T22:58:40.544Z",
+        "retrieved_at": "2026-08-01T01:14:50Z",
+        "post_parent_t0": true
+      }
+    },
+    {
+      "package_name": "prettier",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "prop-types",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "react",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "react-dom",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "ts-node",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "turbo",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "typescript",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "typescript-eslint",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "vite",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    },
+    {
+      "package_name": "yalc",
+      "source": {
+        "kind": "parent_registry_snapshot",
+        "path": "captures/registry-snapshot.jsonl",
+        "sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+        "cutoff": "2026-07-31T22:58:40.544Z"
+      }
+    }
+  ],
+  "declarations": [
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "dependencies",
+      "package_name": "@medusajs/admin-sdk",
+      "context": "api-runtime",
+      "selected_version": "2.18.0",
+      "status": "exact_latest",
+      "registry_record": "@medusajs/admin-sdk",
+      "integrity": "sha512-jRpxiplY+c5HAI3NlBMxyXwhooaLO30cb08+j4+Z38cbunwctiP/+y9PUvTVCQffGx4/GcsgbG7hWWGC1JCVZg=="
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "dependencies",
+      "package_name": "@medusajs/cli",
+      "context": "api-runtime",
+      "selected_version": "2.18.0",
+      "status": "exact_latest",
+      "registry_record": "@medusajs/cli",
+      "integrity": "sha512-APxe0MlLc6GTCHgRNHdG2IRkbUUtvs8hXR+2tq/4vFkZ6qLYmXD6oGNiaG6fnmTeGYTtXshWHK5i2KDWpF5mGg=="
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "dependencies",
+      "package_name": "@medusajs/framework",
+      "context": "api-runtime",
+      "selected_version": "2.18.0",
+      "status": "exact_latest",
+      "registry_record": "@medusajs/framework",
+      "integrity": "sha512-hOZKZZwrwMF487awbXEsCpbD0q+pkBUM8mBKywNAIIwYrttI9ea17JwBaXyVsUjx9p0hSrO3TLMS/gSaK27/Xg=="
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "dependencies",
+      "package_name": "@medusajs/medusa",
+      "context": "api-runtime",
+      "selected_version": "2.18.0",
+      "status": "exact_latest",
+      "registry_record": "@medusajs/medusa",
+      "integrity": "sha512-4sDiLOiZ8gj4s8gNyfKYuNOQxSGraY52XN0rKSPy9BnlvieXi22lkMLYq8Umb5HV696BIvQX95Nb4qdJVGhArQ=="
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@medusajs/test-utils",
+      "context": "api-tooling",
+      "selected_version": "2.18.0",
+      "status": "exact_latest",
+      "registry_record": "@medusajs/test-utils",
+      "integrity": "sha512-KKp1OYG3Ks7MIOiOYMn5d7BkPYs3VRbLJ5m8ScFF+fl5amib+x+W1fPkqtd1bU43Z+y2co0vPPCbjQWnnafWHQ=="
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@swc/core",
+      "context": "api-tooling",
+      "selected_version": "1.15.47",
+      "status": "exact_latest",
+      "registry_record": "@swc/core",
+      "integrity": "sha512-FbsO5JcfOjfH38W/rohBRBweJeERsAuIP4f377lmkmxTcq9exjtx4SkRuZY5CdfhR2CBVwDIJegBpJDffwNsOg=="
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@swc/jest",
+      "context": "api-tooling",
+      "selected_version": "0.2.39",
+      "status": "exact_latest",
+      "registry_record": "@swc/jest",
+      "integrity": "sha512-eyokjOwYd0Q8RnMHri+8/FS1HIrIUKK/sRrFp8c1dThUOfNeCWbLmBP1P5VsKdvmkd25JaH+OKYwEYiAYg9YAA=="
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@types/jest",
+      "context": "api-tooling",
+      "selected_version": "30.0.0",
+      "status": "exact_latest",
+      "registry_record": "@types/jest",
+      "integrity": "sha512-XTYugzhuwqWjws0CVz8QpM36+T+Dz5mTEBKhNs/esGLnCIlGdRy+Dq78NRjd7ls7r8BC8ZRMOrKlkO1hU0JOwA=="
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@types/node",
+      "context": "api-tooling",
+      "selected_version": "24.13.3",
+      "status": "compatibility_exception",
+      "registry_record": "@types/node",
+      "integrity": "sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==",
+      "maintenance_owner": "Ryan Lisse",
+      "review": "Architect APPROVE then Critic APPROVE",
+      "exception": {
+        "rejected_latest": "26.1.2",
+        "rejected_latest_integrity": "sha512-Vu4a5UFA9rIIFJ7rB/Vaafh9lrCQszopTCx6KjFboXTGQbPNasehVR5TEiithSDGyd1DEiUByggTZsg8jukeIg==",
+        "higher_eligible_candidates": [
+          {
+            "version": "25.0.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.3",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.4",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.5",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.6",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.7",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.8",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.9",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.10",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.1.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.2.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.2.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.2.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.2.3",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.3",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.4",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.5",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.4.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.5.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.5.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.5.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.6.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.6.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.6.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.7.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.8.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.3",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.4",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.5",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.0.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.0.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.1.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.1.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.1.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          }
+        ],
+        "constraint_or_failure": "Node 24 runtime/API surface",
+        "commands": [
+          "sealed registry metadata constraint intersection"
+        ],
+        "transcript_digests": [
+          "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+        ],
+        "highest_compatible_proof": true
+      }
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@types/react-dom",
+      "context": "api-tooling",
+      "selected_version": "18.3.7",
+      "status": "compatibility_exception",
+      "registry_record": "@types/react-dom",
+      "integrity": "sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==",
+      "maintenance_owner": "Ryan Lisse",
+      "review": "Architect APPROVE then Critic APPROVE",
+      "exception": {
+        "rejected_latest": "19.2.4",
+        "rejected_latest_integrity": "sha512-Bsc+QHgp+P/F02XDzNCY9jnZNCUuLki36KT7VKrTXXLdHf+vHMNZnW1rVu5DNW/rCK+fya3DATySbLM4yhtKUw==",
+        "higher_eligible_candidates": [
+          {
+            "version": "19.0.0",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.0.1",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.0.2",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.0.3",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.0.4",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.0.5",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.0.6",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.1.0",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.1.1",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.1.2",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.1.3",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.1.4",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.1.5",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.1.6",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.1.7",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.1.8",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.1.9",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.1.10",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.1.11",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.2.0",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.2.1",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.2.2",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.2.3",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          },
+          {
+            "version": "19.2.4",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+          }
+        ],
+        "constraint_or_failure": "Medusa API tooling React 18 peer context",
+        "commands": [
+          "sealed registry metadata constraint intersection"
+        ],
+        "transcript_digests": [
+          "sha256:4ba7cb627a9474033df518ac4208aa0ec9a6914b9d4812127503d58bc5f9dc40"
+        ],
+        "highest_compatible_proof": true
+      }
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@types/react",
+      "context": "api-tooling",
+      "selected_version": "18.3.31",
+      "status": "compatibility_exception",
+      "registry_record": "@types/react",
+      "integrity": "sha512-vfEqpXTvwT91yhmwdfouStN2hSKwTvyRs8qpLfADyrq/kxDw0hZM7Wk9Ug1FELj8hIby+S/+kQCSRFF32nv2Qw==",
+      "maintenance_owner": "Ryan Lisse",
+      "review": "Architect APPROVE then Critic APPROVE",
+      "exception": {
+        "rejected_latest": "19.2.18",
+        "rejected_latest_integrity": "sha512-AnzbBERsrLKtk2XSfTbYRLjQPdy116Sty4q+T+Bp3IC4l6jNBvreVPAHmpq9qhXQM7CXZPjLVmGMw9sy+hxQ3w==",
+        "higher_eligible_candidates": [
+          {
+            "version": "19.0.0",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.1",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.2",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.3",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.4",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.5",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.6",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.7",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.8",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.9",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.10",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.11",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.12",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.13",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.0.14",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.0",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.1",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.2",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.3",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.4",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.5",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.6",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.7",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.8",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.9",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.10",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.11",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.12",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.13",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.14",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.15",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.16",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.1.17",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.0",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.1",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.2",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.3",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.4",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.5",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.6",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.7",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.8",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.9",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.10",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.11",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.12",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.13",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.14",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.15",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.16",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.17",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          },
+          {
+            "version": "19.2.18",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+          }
+        ],
+        "constraint_or_failure": "Medusa API tooling React 18 peer context",
+        "commands": [
+          "sealed registry metadata constraint intersection"
+        ],
+        "transcript_digests": [
+          "sha256:f8b9536c1ce003135c99a89adedc0ececda42a208ab553d92cf59bf8f0d4a6dd"
+        ],
+        "highest_compatible_proof": true
+      }
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "jest",
+      "context": "api-tooling",
+      "selected_version": "30.4.2",
+      "status": "exact_latest",
+      "registry_record": "jest",
+      "integrity": "sha512-Yi1jqNC/Oq0N4hBgNH/YvBpP1P57QqundgytzYqy3yqAa7NZPNjSoi4SGbRAXDMdBzNE6xBCi5U7RgfrvMEUVQ=="
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "picomatch",
+      "context": "api-tooling",
+      "selected_version": "3.0.2",
+      "status": "compatibility_exception",
+      "registry_record": "picomatch",
+      "integrity": "sha512-cfDHL6LStTEKlNilboNtobT/kEa30PtAf2Q1OgszfrG/rpVl1xaFWT9ktfkS306GmHgmnad1Sw4wabhlvFtsTw==",
+      "compatibility_exception": {
+        "added_direct_provider": true,
+        "required_by": "fdir@6.1.1",
+        "required_peer_range": "3.x",
+        "purpose": "Provide fdir@6.1.1 its declared optional 3.x peer in the API workspace while packages that require picomatch 4 retain their own dependency edges.",
+        "highest_stable_compatible": true,
+        "late_metadata_extension_path": "captures/picomatch-late-metadata-extension.json",
+        "probe_result_path": "captures/picomatch-direct-provider-probe.result.json",
+        "pnpm_override_used": false,
+        "architect_review_status": "pending"
+      }
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "prop-types",
+      "context": "api-tooling",
+      "selected_version": "15.8.1",
+      "status": "exact_latest",
+      "registry_record": "prop-types",
+      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "react-dom",
+      "context": "api-tooling",
+      "selected_version": "18.3.1",
+      "status": "compatibility_exception",
+      "registry_record": "react-dom",
+      "integrity": "sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==",
+      "maintenance_owner": "Ryan Lisse",
+      "review": "Architect APPROVE then Critic APPROVE",
+      "exception": {
+        "rejected_latest": "19.2.8",
+        "rejected_latest_integrity": "sha512-rVprimfGBG3DR+Tq0IQG2DT5PxKth1WIGDmj5yPmlzr4YBe7uyE+Du4oVqTDXZSHGGGXRtTJEGSSePyQCMBglQ==",
+        "higher_eligible_candidates": [
+          {
+            "version": "19.0.0",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.0.1",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.0.2",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.0.3",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.0.4",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.0.5",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.0.6",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.0.7",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.0.8",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.1.0",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.1.1",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.1.2",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.1.3",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.1.4",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.1.5",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.1.6",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.1.7",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.1.8",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.1.9",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.2.0",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.2.1",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.2.2",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.2.3",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.2.4",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.2.5",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.2.6",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.2.7",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          },
+          {
+            "version": "19.2.8",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+          }
+        ],
+        "constraint_or_failure": "Medusa API tooling React 18 peer context",
+        "commands": [
+          "sealed registry metadata constraint intersection"
+        ],
+        "transcript_digests": [
+          "sha256:f3915c64039234daa0e5a6d5d5841dc7fe6d89a93e8325cae42a1c84d5165755"
+        ],
+        "highest_compatible_proof": true
+      }
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "react",
+      "context": "api-tooling",
+      "selected_version": "18.3.1",
+      "status": "compatibility_exception",
+      "registry_record": "react",
+      "integrity": "sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==",
+      "maintenance_owner": "Ryan Lisse",
+      "review": "Architect APPROVE then Critic APPROVE",
+      "exception": {
+        "rejected_latest": "19.2.8",
+        "rejected_latest_integrity": "sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw==",
+        "higher_eligible_candidates": [
+          {
+            "version": "19.0.0",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.0.1",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.0.2",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.0.3",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.0.4",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.0.5",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.0.6",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.0.7",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.0.8",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.1.0",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.1.1",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.1.2",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.1.3",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.1.4",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.1.5",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.1.6",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.1.7",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.1.8",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.1.9",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.2.0",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.2.1",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.2.2",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.2.3",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.2.4",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.2.5",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.2.6",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.2.7",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          },
+          {
+            "version": "19.2.8",
+            "rejection_proof": "API Medusa React 18 peer context",
+            "evidence_digest": "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+          }
+        ],
+        "constraint_or_failure": "Medusa API tooling React 18 peer context",
+        "commands": [
+          "sealed registry metadata constraint intersection"
+        ],
+        "transcript_digests": [
+          "sha256:fa1159baab03df0544c85d39eb2ae5ebca4a352012f55a42e078cdeff8265fa2"
+        ],
+        "highest_compatible_proof": true
+      }
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "ts-node",
+      "context": "api-tooling",
+      "selected_version": "10.9.2",
+      "status": "exact_latest",
+      "registry_record": "ts-node",
+      "integrity": "sha512-f0FFpIdcHgn8zcPSbf1dRevwt047YMnaiJM3u2w2RewrB+fob/zePZcrOyQoLMMO7aBIddLcQIEK5dYjkLnGrQ=="
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "typescript",
+      "context": "api-tooling",
+      "selected_version": "5.9.3",
+      "status": "compatibility_exception",
+      "registry_record": "typescript",
+      "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
+      "compatibility_exception": {
+        "replaced_version": "6.0.3",
+        "selected_version": "5.9.3",
+        "reason": "Highest stable version below 6 in the sealed snapshot; satisfies cva and typescript-eslint.",
+        "selection_evidence": "sealed parent registry snapshot",
+        "research_path": "captures/peer-compatibility-research.json",
+        "architect_review_status": "pending"
+      }
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "vite",
+      "context": "api-tooling",
+      "selected_version": "5.4.21",
+      "status": "compatibility_exception",
+      "registry_record": "vite",
+      "integrity": "sha512-o5a9xKjbtuhY6Bi5S3+HvbRERmouabWbyUcpXXUA1u+GNUKoROi9byOJ8M0nHbHYHkYICiMlqxkg1KkYmm25Sw==",
+      "compatibility_exception": {
+        "replaced_version": "8.2.0",
+        "selected_version": "5.4.21",
+        "reason": "Exact minimum and highest stable 5.x in the sealed snapshot; satisfies the Medusa 2.18.0 Vite peer.",
+        "selection_evidence": "sealed parent registry snapshot",
+        "research_path": "captures/peer-compatibility-research.json",
+        "architect_review_status": "pending"
+      }
+    },
+    {
+      "manifest_path": "apps/api/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "yalc",
+      "context": "api-tooling",
+      "selected_version": "1.0.0-pre.53",
+      "status": "prerelease_only_exception",
+      "registry_record": "yalc",
+      "integrity": "sha512-tpNqBCpTXplnduzw5XC+FF8zNJ9L/UXmvQyyQj7NKrDNavbJtHvzmZplL5ES/RCnjX7JR7W9wz5GVDXVP3dHUQ==",
+      "maintenance_owner": "Ryan Lisse",
+      "review": "Architect APPROVE then Critic APPROVE",
+      "prerelease_proof": {
+        "complete_eligible_version_scan": [
+          "1.0.0-pre.0",
+          "1.0.0-pre.1",
+          "1.0.0-pre.10",
+          "1.0.0-pre.11",
+          "1.0.0-pre.12",
+          "1.0.0-pre.13",
+          "1.0.0-pre.14",
+          "1.0.0-pre.15",
+          "1.0.0-pre.16",
+          "1.0.0-pre.17",
+          "1.0.0-pre.18",
+          "1.0.0-pre.19",
+          "1.0.0-pre.2",
+          "1.0.0-pre.20",
+          "1.0.0-pre.21",
+          "1.0.0-pre.22",
+          "1.0.0-pre.23",
+          "1.0.0-pre.24",
+          "1.0.0-pre.25",
+          "1.0.0-pre.26",
+          "1.0.0-pre.27",
+          "1.0.0-pre.28",
+          "1.0.0-pre.29",
+          "1.0.0-pre.3",
+          "1.0.0-pre.30",
+          "1.0.0-pre.31",
+          "1.0.0-pre.32",
+          "1.0.0-pre.33",
+          "1.0.0-pre.34",
+          "1.0.0-pre.35",
+          "1.0.0-pre.36",
+          "1.0.0-pre.37",
+          "1.0.0-pre.38",
+          "1.0.0-pre.39",
+          "1.0.0-pre.4",
+          "1.0.0-pre.40",
+          "1.0.0-pre.41",
+          "1.0.0-pre.42",
+          "1.0.0-pre.43",
+          "1.0.0-pre.44",
+          "1.0.0-pre.45",
+          "1.0.0-pre.46",
+          "1.0.0-pre.47",
+          "1.0.0-pre.48",
+          "1.0.0-pre.49",
+          "1.0.0-pre.5",
+          "1.0.0-pre.50",
+          "1.0.0-pre.51",
+          "1.0.0-pre.52",
+          "1.0.0-pre.53",
+          "1.0.0-pre.6",
+          "1.0.0-pre.7",
+          "1.0.0-pre.8",
+          "1.0.0-pre.9"
+        ],
+        "no_eligible_stable_candidate": true,
+        "captured_latest": "1.0.0-pre.53",
+        "response_digest": "sha256:d6954994bc2fe36cfd43217ccc160855d1c034ff486a2b47bdb8e4c6a29ace92",
+        "reason": "retained Medusa developer workflow declaration"
+      }
+    },
+    {
+      "manifest_path": "apps/web/package.json",
+      "dependency_section": "dependencies",
+      "package_name": "next",
+      "context": "storefront-runtime",
+      "selected_version": "16.2.12",
+      "status": "exact_latest",
+      "registry_record": "next",
+      "integrity": "sha512-iD59eYQWmbFcEbX7v/acG5DRym9iw1DdaPoD0WTA920naWsE25wShzJW4+UvAs8MK9EC2kBfIH6vtto1H1PHGw=="
+    },
+    {
+      "manifest_path": "apps/web/package.json",
+      "dependency_section": "dependencies",
+      "package_name": "react-dom",
+      "context": "storefront-runtime",
+      "selected_version": "19.2.8",
+      "status": "exact_latest",
+      "registry_record": "react-dom",
+      "integrity": "sha512-rVprimfGBG3DR+Tq0IQG2DT5PxKth1WIGDmj5yPmlzr4YBe7uyE+Du4oVqTDXZSHGGGXRtTJEGSSePyQCMBglQ=="
+    },
+    {
+      "manifest_path": "apps/web/package.json",
+      "dependency_section": "dependencies",
+      "package_name": "react",
+      "context": "storefront-runtime",
+      "selected_version": "19.2.8",
+      "status": "exact_latest",
+      "registry_record": "react",
+      "integrity": "sha512-PWaYA1L/q9u2u7xYQi+Y3L3Yfnie7XyLeaJICV1MGD6LprsBxcAqGjYyr0eY3p+QdsA+x/Irkt4Qif8D63+Sbw=="
+    },
+    {
+      "manifest_path": "apps/web/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@types/node",
+      "context": "storefront-tooling",
+      "selected_version": "24.13.3",
+      "status": "compatibility_exception",
+      "registry_record": "@types/node",
+      "integrity": "sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==",
+      "maintenance_owner": "Ryan Lisse",
+      "review": "Architect APPROVE then Critic APPROVE",
+      "exception": {
+        "rejected_latest": "26.1.2",
+        "rejected_latest_integrity": "sha512-Vu4a5UFA9rIIFJ7rB/Vaafh9lrCQszopTCx6KjFboXTGQbPNasehVR5TEiithSDGyd1DEiUByggTZsg8jukeIg==",
+        "higher_eligible_candidates": [
+          {
+            "version": "25.0.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.3",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.4",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.5",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.6",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.7",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.8",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.9",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.10",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.1.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.2.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.2.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.2.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.2.3",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.3",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.4",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.5",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.4.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.5.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.5.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.5.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.6.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.6.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.6.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.7.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.8.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.3",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.4",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.5",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.0.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.0.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.1.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.1.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.1.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          }
+        ],
+        "constraint_or_failure": "Node 24 runtime/API surface",
+        "commands": [
+          "sealed registry metadata constraint intersection"
+        ],
+        "transcript_digests": [
+          "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+        ],
+        "highest_compatible_proof": true
+      }
+    },
+    {
+      "manifest_path": "apps/web/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@types/react-dom",
+      "context": "storefront-tooling",
+      "selected_version": "19.2.4",
+      "status": "exact_latest",
+      "registry_record": "@types/react-dom",
+      "integrity": "sha512-Bsc+QHgp+P/F02XDzNCY9jnZNCUuLki36KT7VKrTXXLdHf+vHMNZnW1rVu5DNW/rCK+fya3DATySbLM4yhtKUw=="
+    },
+    {
+      "manifest_path": "apps/web/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@types/react",
+      "context": "storefront-tooling",
+      "selected_version": "19.2.18",
+      "status": "exact_latest",
+      "registry_record": "@types/react",
+      "integrity": "sha512-AnzbBERsrLKtk2XSfTbYRLjQPdy116Sty4q+T+Bp3IC4l6jNBvreVPAHmpq9qhXQM7CXZPjLVmGMw9sy+hxQ3w=="
+    },
+    {
+      "manifest_path": "apps/web/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "eslint",
+      "context": "storefront-tooling",
+      "selected_version": "9.39.5",
+      "status": "compatibility_exception",
+      "registry_record": "eslint",
+      "integrity": "sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==",
+      "compatibility_exception": {
+        "replaced_version": "10.8.0",
+        "selected_version": "9.39.5",
+        "reason": "Highest stable 9.x in the sealed snapshot; satisfies eslint-plugin-react and typescript-eslint.",
+        "selection_evidence": "sealed parent registry snapshot maintenance tag",
+        "research_path": "captures/peer-compatibility-research.json",
+        "architect_review_status": "pending"
+      }
+    },
+    {
+      "manifest_path": "apps/web/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "typescript",
+      "context": "storefront-tooling",
+      "selected_version": "5.9.3",
+      "status": "compatibility_exception",
+      "registry_record": "typescript",
+      "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
+      "compatibility_exception": {
+        "replaced_version": "6.0.3",
+        "selected_version": "5.9.3",
+        "reason": "Highest stable version below 6 in the sealed snapshot; satisfies cva and typescript-eslint.",
+        "selection_evidence": "sealed parent registry snapshot",
+        "research_path": "captures/peer-compatibility-research.json",
+        "architect_review_status": "pending"
+      }
+    },
+    {
+      "manifest_path": "package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@types/node",
+      "context": "root-tooling",
+      "selected_version": "24.13.3",
+      "status": "compatibility_exception",
+      "registry_record": "@types/node",
+      "integrity": "sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==",
+      "maintenance_owner": "Ryan Lisse",
+      "review": "Architect APPROVE then Critic APPROVE",
+      "exception": {
+        "rejected_latest": "26.1.2",
+        "rejected_latest_integrity": "sha512-Vu4a5UFA9rIIFJ7rB/Vaafh9lrCQszopTCx6KjFboXTGQbPNasehVR5TEiithSDGyd1DEiUByggTZsg8jukeIg==",
+        "higher_eligible_candidates": [
+          {
+            "version": "25.0.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.3",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.4",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.5",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.6",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.7",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.8",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.9",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.0.10",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.1.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.2.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.2.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.2.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.2.3",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.3",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.4",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.3.5",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.4.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.5.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.5.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.5.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.6.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.6.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.6.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.7.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.8.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.3",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.4",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "25.9.5",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.0.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.0.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.1.0",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.1.1",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          },
+          {
+            "version": "26.1.2",
+            "rejection_proof": "outside Node 24 runtime major",
+            "evidence_digest": "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+          }
+        ],
+        "constraint_or_failure": "Node 24 runtime/API surface",
+        "commands": [
+          "sealed registry metadata constraint intersection"
+        ],
+        "transcript_digests": [
+          "sha256:d83d7cf17a7910275b3ed46cd38aa28921779abf6312d75f10a019f964ac33d2"
+        ],
+        "highest_compatible_proof": true
+      }
+    },
+    {
+      "manifest_path": "package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "eslint",
+      "context": "root-tooling",
+      "selected_version": "9.39.5",
+      "status": "compatibility_exception",
+      "registry_record": "eslint",
+      "integrity": "sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==",
+      "compatibility_exception": {
+        "replaced_version": "10.8.0",
+        "selected_version": "9.39.5",
+        "reason": "Highest stable 9.x in the sealed snapshot; satisfies eslint-plugin-react and typescript-eslint.",
+        "selection_evidence": "sealed parent registry snapshot maintenance tag",
+        "research_path": "captures/peer-compatibility-research.json",
+        "architect_review_status": "pending"
+      }
+    },
+    {
+      "manifest_path": "package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "prettier",
+      "context": "root-tooling",
+      "selected_version": "3.9.6",
+      "status": "exact_latest",
+      "registry_record": "prettier",
+      "integrity": "sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g=="
+    },
+    {
+      "manifest_path": "package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "turbo",
+      "context": "root-tooling",
+      "selected_version": "2.10.8",
+      "status": "exact_latest",
+      "registry_record": "turbo",
+      "integrity": "sha512-9+8YX5QOkGXzZxcIykTHgaooRHGMWO+jfdyRK0o+rN0U7hBIig2MrJ8r/aNzIPDPhdA73SGb0O+tIztaModTMg=="
+    },
+    {
+      "manifest_path": "package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "typescript",
+      "context": "root-tooling",
+      "selected_version": "5.9.3",
+      "status": "compatibility_exception",
+      "registry_record": "typescript",
+      "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
+      "compatibility_exception": {
+        "replaced_version": "6.0.3",
+        "selected_version": "5.9.3",
+        "reason": "Highest stable version below 6 in the sealed snapshot; satisfies cva and typescript-eslint.",
+        "selection_evidence": "sealed parent registry snapshot",
+        "research_path": "captures/peer-compatibility-research.json",
+        "architect_review_status": "pending"
+      }
+    },
+    {
+      "manifest_path": "packages/eslint-config/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@eslint/js",
+      "context": "shared-eslint-tooling",
+      "selected_version": "9.39.5",
+      "status": "compatibility_exception",
+      "registry_record": "@eslint/js",
+      "integrity": "sha512-QywQuszQh77pIXCsq998c8hbhSTI/azTty1Z6N53dmAudKHhy573j3yvRLsX2BSp8YpLtoCEG8E9DJe+8zUh4A==",
+      "compatibility_exception": {
+        "replaced_version": "10.0.1",
+        "selected_version": "9.39.5",
+        "reason": "Matches the selected ESLint major; @eslint/js 10.0.1 declares ESLint ^10.0.0.",
+        "selection_evidence": "sealed parent registry snapshot maintenance tag",
+        "research_path": "captures/peer-compatibility-research.json",
+        "architect_review_status": "pending"
+      }
+    },
+    {
+      "manifest_path": "packages/eslint-config/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "@next/eslint-plugin-next",
+      "context": "shared-eslint-tooling",
+      "selected_version": "16.2.12",
+      "status": "exact_latest",
+      "registry_record": "@next/eslint-plugin-next",
+      "integrity": "sha512-uF2z/qAK2q7B5/6CpnFcBRX6jOq5iCO+Uqh1UkJhXljX1JwLarLYhhoJadO6dPb6moTprOKewMXheBcbIoSbug=="
+    },
+    {
+      "manifest_path": "packages/eslint-config/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "eslint-config-prettier",
+      "context": "shared-eslint-tooling",
+      "selected_version": "10.1.8",
+      "status": "exact_latest",
+      "registry_record": "eslint-config-prettier",
+      "integrity": "sha512-82GZUjRS0p/jganf6q1rEO25VSoHH0hKPCTrgillPjdI/3bgBhAE1QzHrHTizjpRvy6pGAvKjDJtk2pF9NDq8w=="
+    },
+    {
+      "manifest_path": "packages/eslint-config/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "eslint-plugin-only-warn",
+      "context": "shared-eslint-tooling",
+      "selected_version": "1.2.1",
+      "status": "exact_latest",
+      "registry_record": "eslint-plugin-only-warn",
+      "integrity": "sha512-j37hwfaQDEOfkZ1Dpvu/HnWLavlzQxQxfbrU/9Jb4R9qzrE1eTYuRJyrxq7LzLRI8miG5FOV6veoUVhx7AI84w=="
+    },
+    {
+      "manifest_path": "packages/eslint-config/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "eslint-plugin-react-hooks",
+      "context": "shared-eslint-tooling",
+      "selected_version": "7.1.1",
+      "status": "exact_latest",
+      "registry_record": "eslint-plugin-react-hooks",
+      "integrity": "sha512-f2I7Gw6JbvCexzIInuSbZpfdQ44D7iqdWX01FKLvrPgqxoE7oMj8clOfto8U6vYiz4yd5oKu39rRSVOe1zRu0g=="
+    },
+    {
+      "manifest_path": "packages/eslint-config/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "eslint-plugin-react",
+      "context": "shared-eslint-tooling",
+      "selected_version": "7.37.5",
+      "status": "exact_latest",
+      "registry_record": "eslint-plugin-react",
+      "integrity": "sha512-Qteup0SqU15kdocexFNAJMvCJEfa2xUKNV4CC1xsVMrIIqEy3SQ/rqyxCWNzfrd3/ldy6HMlD2e0JDVpDg2qIA=="
+    },
+    {
+      "manifest_path": "packages/eslint-config/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "eslint-plugin-turbo",
+      "context": "shared-eslint-tooling",
+      "selected_version": "2.10.8",
+      "status": "exact_latest",
+      "registry_record": "eslint-plugin-turbo",
+      "integrity": "sha512-D6/FZUlP5IkZl/Wahoyi9q/UYFnyuh0cyqf3x5aHJNTmlu+bC6+h03cNPzPoQS7708ts54KYreUZW+FdRG5BWg=="
+    },
+    {
+      "manifest_path": "packages/eslint-config/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "eslint",
+      "context": "shared-eslint-tooling",
+      "selected_version": "9.39.5",
+      "status": "compatibility_exception",
+      "registry_record": "eslint",
+      "integrity": "sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw==",
+      "compatibility_exception": {
+        "replaced_version": "10.8.0",
+        "selected_version": "9.39.5",
+        "reason": "Highest stable 9.x in the sealed snapshot; satisfies eslint-plugin-react and typescript-eslint.",
+        "selection_evidence": "sealed parent registry snapshot maintenance tag",
+        "research_path": "captures/peer-compatibility-research.json",
+        "architect_review_status": "pending"
+      }
+    },
+    {
+      "manifest_path": "packages/eslint-config/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "globals",
+      "context": "shared-eslint-tooling",
+      "selected_version": "17.8.0",
+      "status": "exact_latest",
+      "registry_record": "globals",
+      "integrity": "sha512-Zz/LMDZScFmkakeL2cTHzf+PbWKdpU3uclqkZT7TjDG58j5WPt0PpA+n9uPI24fZtlw07q0OtEi84K+umsRzqQ=="
+    },
+    {
+      "manifest_path": "packages/eslint-config/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "typescript-eslint",
+      "context": "shared-eslint-tooling",
+      "selected_version": "8.65.0",
+      "status": "exact_latest",
+      "registry_record": "typescript-eslint",
+      "integrity": "sha512-/ggrHAwyjENDusvyxbuqxAC2dTnZg/Z8F+fgQtYIz+L6n/9HfSlEZcFGV/NsMNa6CkGk0xUjUAFwC0vHOflvIA=="
+    },
+    {
+      "manifest_path": "packages/eslint-config/package.json",
+      "dependency_section": "devDependencies",
+      "package_name": "typescript",
+      "context": "shared-eslint-tooling",
+      "selected_version": "5.9.3",
+      "status": "compatibility_exception",
+      "registry_record": "typescript",
+      "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
+      "compatibility_exception": {
+        "replaced_version": "6.0.3",
+        "selected_version": "5.9.3",
+        "reason": "Highest stable version below 6 in the sealed snapshot; satisfies cva and typescript-eslint.",
+        "selection_evidence": "sealed parent registry snapshot",
+        "research_path": "captures/peer-compatibility-research.json",
+        "architect_review_status": "pending"
+      }
+    }
+  ],
+  "compatibility_changes": {
+    "replacement_count": 9,
+    "addition_count": 1,
+    "configuration_change_count": 0,
+    "declaration_replacements": [
+      {
+        "manifest_path": "apps/api/package.json",
+        "dependency_section": "devDependencies",
+        "package_name": "vite",
+        "from": "8.2.0",
+        "to": "5.4.21",
+        "integrity": "sha512-o5a9xKjbtuhY6Bi5S3+HvbRERmouabWbyUcpXXUA1u+GNUKoROi9byOJ8M0nHbHYHkYICiMlqxkg1KkYmm25Sw=="
+      },
+      {
+        "manifest_path": "apps/api/package.json",
+        "dependency_section": "devDependencies",
+        "package_name": "typescript",
+        "from": "6.0.3",
+        "to": "5.9.3",
+        "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="
+      },
+      {
+        "manifest_path": "apps/web/package.json",
+        "dependency_section": "devDependencies",
+        "package_name": "typescript",
+        "from": "6.0.3",
+        "to": "5.9.3",
+        "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="
+      },
+      {
+        "manifest_path": "package.json",
+        "dependency_section": "devDependencies",
+        "package_name": "typescript",
+        "from": "6.0.3",
+        "to": "5.9.3",
+        "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="
+      },
+      {
+        "manifest_path": "packages/eslint-config/package.json",
+        "dependency_section": "devDependencies",
+        "package_name": "typescript",
+        "from": "6.0.3",
+        "to": "5.9.3",
+        "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="
+      },
+      {
+        "manifest_path": "apps/web/package.json",
+        "dependency_section": "devDependencies",
+        "package_name": "eslint",
+        "from": "10.8.0",
+        "to": "9.39.5",
+        "integrity": "sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw=="
+      },
+      {
+        "manifest_path": "package.json",
+        "dependency_section": "devDependencies",
+        "package_name": "eslint",
+        "from": "10.8.0",
+        "to": "9.39.5",
+        "integrity": "sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw=="
+      },
+      {
+        "manifest_path": "packages/eslint-config/package.json",
+        "dependency_section": "devDependencies",
+        "package_name": "eslint",
+        "from": "10.8.0",
+        "to": "9.39.5",
+        "integrity": "sha512-DgZS62aPLXKlnxILS/AYCoRvHaZeXceIzlXPkkGGzJWSow1aEk0lbTlxUSlyjC8jcaKxAdOnTDz+o1JFSBsyjw=="
+      },
+      {
+        "manifest_path": "packages/eslint-config/package.json",
+        "dependency_section": "devDependencies",
+        "package_name": "@eslint/js",
+        "from": "10.0.1",
+        "to": "9.39.5",
+        "integrity": "sha512-QywQuszQh77pIXCsq998c8hbhSTI/azTty1Z6N53dmAudKHhy573j3yvRLsX2BSp8YpLtoCEG8E9DJe+8zUh4A=="
+      }
+    ],
+    "declaration_additions": [
+      {
+        "manifest_path": "apps/api/package.json",
+        "dependency_section": "devDependencies",
+        "package_name": "picomatch",
+        "version": "3.0.2",
+        "integrity": "sha512-cfDHL6LStTEKlNilboNtobT/kEa30PtAf2Q1OgszfrG/rpVl1xaFWT9ktfkS306GmHgmnad1Sw4wabhlvFtsTw==",
+        "purpose": "Provide fdir@6.1.1 its declared optional 3.x peer in the API workspace while packages that require picomatch 4 retain their own dependency edges.",
+        "context": "api-tooling",
+        "direct_api_devdependency": true,
+        "pnpm_override_used": false
+      }
+    ],
+    "fixed_package_versions": {
+      "vite": "5.4.21",
+      "typescript": "5.9.3",
+      "eslint": "9.39.5",
+      "@eslint/js": "9.39.5",
+      "picomatch": "3.0.2"
+    },
+    "preserved_exact_versions": {
+      "node": "24.18.1",
+      "pnpm": "11.18.0",
+      "next": "16.2.12",
+      "react": "19.2.8",
+      "react_dom": "19.2.8",
+      "medusa": "2.18.0"
+    },
+    "configuration_changes": []
+  },
+  "late_metadata_extensions": [
+    {
+      "package_name": "picomatch",
+      "path": "captures/picomatch-late-metadata-extension.json",
+      "sha256": "sha256:127303ce5377b3c542a92bdad434e36d65097f382ca02cf9128d2836bc8852b9",
+      "raw_packument_path": "captures/picomatch-late-metadata.packument.json",
+      "raw_packument_sha256": "sha256:574b1d399f007b7aa461e11b79303252df824129bb43322eaf8ffb219920792f",
+      "response_headers_path": "captures/picomatch-late-metadata.response-headers.txt",
+      "response_headers_sha256": "sha256:4826ed7bee7547a8e5b7e8f83b326d4dd73ea944278633370c2eb09995296c9c",
+      "response_etag": "\"ec9d3fc6a907363901b36c1d043e6ccf\"",
+      "retrieved_at": "2026-08-01T01:14:50Z",
+      "post_parent_t0": true,
+      "version_count_published_by_parent_t0": 33,
+      "selected_version": "3.0.2",
+      "selected_is_highest_stable_compatible": true
+    }
+  ],
+  "direct_provider_probes": [
+    {
+      "kind": "pnpm_strict_peer_direct_provider_probe",
+      "path": "captures/picomatch-direct-provider-probe.result.json",
+      "sha256": "sha256:7f7b59747bbe020063a3e5b2421e939a6468763fbf9136f0262c88feec2712fe",
+      "checksums_path": "captures/picomatch-direct-provider-probe.sha256",
+      "checksums_sha256": "sha256:7eccd9695f8fa9e0688d609e482e1d76d6a5ea40b0fcca5963d308796ffde34c",
+      "runtime": {
+        "node": "24.18.1",
+        "pnpm": "11.18.0",
+        "corepack_entrypoint": "/usr/local/lib/node_modules/corepack/dist/corepack.js",
+        "corepack_entrypoint_sha256": "3655bc798f300951f2070fee411b337d626b0c3ae80c2d24c46ccac4595d4bf9",
+        "strict_peer_dependencies": true,
+        "engine_strict": true,
+        "watchdog_seconds": 600,
+        "kill_grace_seconds": 30
+      },
+      "isolation": {
+        "id": "3f411023d770eb480cb08654c36176922c27b94c11c48f9a5ef04e8667dd3ba4",
+        "image_digest": "sha256:9b02ede55039f443ad57453a741813c6cd105873f0f66fee95d25529e1ba0533",
+        "platform": "linux/arm64/v8",
+        "user": "1000:1000",
+        "started_at": "2026-08-01T01:17:48.68695209Z",
+        "finished_at": "2026-08-01T01:17:51.125525966Z",
+        "exit_code": 0,
+        "oom_killed": false,
+        "mounts": [],
+        "docker_socket_present": false,
+        "cap_drop": [
+          "ALL"
+        ],
+        "no_new_privileges": true,
+        "memory_bytes": 4294967296,
+        "nano_cpus": 4000000000,
+        "pids_limit": 512
+      },
+      "assertions": {
+        "root_visible_picomatch": "4.0.5",
+        "api_direct_picomatch": "3.0.2",
+        "fdir": "6.1.1",
+        "resolved_peer_snapshot": "fdir@6.1.1(picomatch@3.0.2)",
+        "both_picomatch_majors_coexist": true,
+        "strict_peer_error": false,
+        "direct_api_devdependency_required": true,
+        "pnpm_override_used": false
+      },
+      "outputs": {
+        "transcript": {
+          "path": "captures/picomatch-direct-provider-probe.transcript.log",
+          "sha256": "sha256:40f9663151267af1fd4f2753366098ef020e7dbcc24b72524e31aff84a9abc69"
+        },
+        "lock": {
+          "path": "captures/picomatch-direct-provider-probe.lock.yaml",
+          "sha256": "sha256:993058335b7ed213e1b0464d2e91a649b17258b7f0e4fc64b31da111bfd35279"
+        },
+        "lock_excerpt": {
+          "path": "captures/picomatch-direct-provider-probe.lock-excerpt.txt",
+          "sha256": "sha256:584611a555e75f858fea016ab0a2d34d93d4841beb0cf2be2c862bff80540803"
+        }
+      }
+    }
+  ],
+  "configuration_policy": {
+    "picomatch_provider": "apps/api/package.json devDependencies.picomatch",
+    "direct_api_devdependency_required": true,
+    "pnpm_override_allowed": false,
+    "pnpm_override_used": false
+  },
+  "retry_history": [],
+  "review_gate": {
+    "status": "pending",
+    "required_sequence": [
+      "Architect APPROVE",
+      "Critic APPROVE"
+    ],
+    "architect_review": null,
+    "critic_review": null,
+    "attempt_5_authorized": false
+  },
+  "snapshot_id": "sha256:038e13ce9feeca3afc4fa559d8ccf8790ac5f39bf13e560d512953ad269d22b2"
+}

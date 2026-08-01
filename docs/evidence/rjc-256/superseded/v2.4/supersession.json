@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "lineage": "v2.4",
+  "status": "superseded_without_green",
+  "statement": "superseded before first Green",
+  "v2_4_green_exists": false,
+  "superseded_at": "2026-08-01T02:52:22Z",
+  "reason": "critic_required_node_heap_flag_to_be_exactly_once_and_argv_bound",
+  "archived_test": {
+    "path": "docs/evidence/rjc-256/superseded/v2.4/rjc-256-conformance.test.mjs",
+    "sha256": "f471865c07b73f6b8384e5f59616deffbdf3d414e2a0b557c1597252ac84a50c",
+    "git_blob": "c9f3da95f44850f4320e68d5647ac603926fbcf2"
+  },
+  "original_red": {
+    "metadata_path": "docs/evidence/rjc-256/red-v2-4-run.json",
+    "metadata_sha256": "979c5c55de7e68c220cf41574f877002effe2d58664124143c39e6fb666170e1",
+    "transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-4-conformance.log",
+    "transcript_sha256": "09105a8b48cf1a3835108e3ab7e9ffd5b02b64b52162a7aa7af7a829583a221c",
+    "exit_code": 1
+  },
+  "archived_evidence_manifest": {
+    "path": "docs/evidence/rjc-256/superseded/v2.4/v2-4-evidence.sha256",
+    "sha256": "705233099acfef7fc2ed3d3cf534787c46b1f0e278aded48330b9222e0ff5103"
+  },
+  "archived_test_runs": {
+    "path": "docs/evidence/rjc-256/superseded/v2.4/test-runs.json",
+    "sha256": "0e95e9c7a9beb858e0847015545d7cefddbab205769e0ff98369764b0446512f"
+  },
+  "active_successor_lineage": "v2.5",
+  "attempt_5_started": false
+}

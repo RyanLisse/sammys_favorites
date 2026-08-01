@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "lineage": "v2.2",
+  "status": "superseded_without_green",
+  "statement": "superseded before first Green",
+  "v2_2_green_exists": false,
+  "superseded_at": "2026-08-01T01:46:31Z",
+  "reason": "critic_required_child_effective_downstream_bindings_and_override_failure_probe",
+  "archived_test": {
+    "path": "docs/evidence/rjc-256/superseded/v2.2/rjc-256-conformance.test.mjs",
+    "sha256": "0a88c3cc1a433eadfbcf3f006dff68d28e2a5afab1fd8eb9feece9b8a1b0601b",
+    "git_blob": "6692b977de601a7c9c359c254bef1c6e538c40aa"
+  },
+  "original_red": {
+    "metadata_path": "docs/evidence/rjc-256/red-v2-2-run.json",
+    "metadata_sha256": "afc4f4b99aa14694b52e1d795d00ab911345a3e140bbf8a6b045751b4307726f",
+    "transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-2-conformance.log",
+    "transcript_sha256": "a389af7deb80fe01161e1038bd6d99422fa8cbeb321fb6b062fe9e0132de595a",
+    "exit_code": 1
+  },
+  "original_evidence_manifest": {
+    "path": "docs/evidence/rjc-256/v2-2-evidence.sha256",
+    "sha256": "ff27fdf1d759d4c11237385ea36864f7b0995514bd8cd4cd48638030a9835e0b"
+  },
+  "archived_test_runs": {
+    "path": "docs/evidence/rjc-256/superseded/v2.2/test-runs.json",
+    "sha256": "c12ab8038e55a8f3bcb3ab02b4f512f472359cebef3060d9ec4acb2a3aa666e8"
+  },
+  "active_successor_lineage": "v2.3",
+  "owner_decision_language": "product-owner direct-use risk acceptance; not upstream permission, not an upstream license, and not legal clearance"
+}

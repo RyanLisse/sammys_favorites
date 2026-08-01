@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "lineage": "v2.3",
+  "status": "superseded_without_green",
+  "statement": "superseded before first Green",
+  "v2_3_green_exists": false,
+  "superseded_at": "2026-08-01T02:21:11Z",
+  "reason": "critic_required_semantic_transformation_validation_and_transitive_child_hash_bindings",
+  "archived_test": {
+    "path": "docs/evidence/rjc-256/superseded/v2.3/rjc-256-conformance.test.mjs",
+    "sha256": "8babb29ce8e24cefd27bd4dc2660112a538c0f4de830b3988459e75aea51a3f2",
+    "git_blob": "3e37b736033cf0fa2c3da16161538c8147351d19"
+  },
+  "original_red": {
+    "metadata_path": "docs/evidence/rjc-256/red-v2-3-run.json",
+    "metadata_sha256": "cb86cb6979bec8984424468ba988eb4d28be7d597ba5520e54084ab4070812a9",
+    "transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-3-conformance.log",
+    "transcript_sha256": "e4c0db833ad92b7856f09e5b1d6accd677e837860339bb507de70170eec4c106",
+    "exit_code": 1
+  },
+  "archived_evidence_manifest": {
+    "path": "docs/evidence/rjc-256/superseded/v2.3/v2-3-evidence.sha256",
+    "sha256": "5c9ab27836c88b9d201d4800735d2fd330e4f51ca095f51df84ede3915dbb4d7"
+  },
+  "archived_test_runs": {
+    "path": "docs/evidence/rjc-256/superseded/v2.3/test-runs.json",
+    "sha256": "232c2d08342a62f9be7e8c0e4be4af3e889daf85a3083f7cdc798ea43d930286"
+  },
+  "active_successor_lineage": "v2.4",
+  "attempt_5_started": false,
+  "owner_decision_language": "product-owner direct-use risk acceptance; not upstream permission, not an upstream license, and not legal clearance"
+}

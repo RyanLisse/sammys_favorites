@@ -1,0 +1,70 @@
+{
+  "schema_version": 2,
+  "lineage": "v2.9",
+  "phase": "red",
+  "command": "NO_COLOR=1 node --test test/rjc-256-conformance.test.mjs; sanitize absolute repository path into transcripts/red-v2-9-conformance.log",
+  "node_version": "v24.18.0",
+  "started_at_utc": "2026-08-01T05:27:32Z",
+  "completed_at_utc": "2026-08-01T05:27:36Z",
+  "exit_code": 1,
+  "test_file": "test/rjc-256-conformance.test.mjs",
+  "test_sha256": "d30bfe7a7860e3196c57bd24db383def8d734555f562508615200ee3bef1a59c",
+  "test_git_blob": "3ca7323bb6a0448b6d3ba3679a4da6fa32b1b1b9",
+  "transcript": "transcripts/red-v2-9-conformance.log",
+  "transcript_sha256": "87366be13a21f9900ef7c4da2a21474006bf4813b7f28a7bf1bf1a6d7d00eecb",
+  "transcript_sanitization": {
+    "complete": true,
+    "replacement": "absolute repository path replaced with <REPO>",
+    "secrets_observed": false
+  },
+  "result": {
+    "tests": 96,
+    "passed": 79,
+    "failed": 17,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "named_canonical_cases": 80,
+    "named_canonical_passed": 63,
+    "named_canonical_failed": 17,
+    "semantic_mutation_groups_passed": 16,
+    "unilateral_consensus_mutations_rejected": 21,
+    "paired_program_comutations_rejected": 5,
+    "manifest_mutations_rejected": 10,
+    "missing_artifact_classes": 25
+  },
+  "named_case_vector": [
+    "V201", "V202", "V203", "V204", "V205", "V206", "V207", "V208", "V209", "V210",
+    "V211", "V212", "V213", "V214", "V215", "V216", "V217", "V218", "V219", "V220",
+    "V221", "V222", "V223", "V224", "V225", "V226", "V227", "V228", "V229", "V230",
+    "V231", "V232", "V233", "V234", "V235", "V236", "V237", "V238", "V239", "V240",
+    "V241", "V242", "V243", "V244", "V245", "V246", "V247", "V248", "V249", "V250",
+    "V251", "V252", "V253", "V254", "V255", "V256", "V257", "V258", "V259", "V260",
+    "V261", "V262", "V263", "V264", "V265", "V266", "V267", "V268", "V269", "V270",
+    "V271", "V272", "V273", "V274", "V275", "V276", "V277", "V278", "V279", "V280"
+  ],
+  "failed_canonical_cases": [
+    "V201", "V205", "V215", "V216", "V217", "V218", "V219", "V220", "V221",
+    "V222", "V223", "V224", "V228", "V254", "V256", "V263", "V264"
+  ],
+  "iteration_10_boundaries": {
+    "v275_v2_8_archive_read_verification": "passed",
+    "v276_canonical_manifest_consensus_fixture": "passed",
+    "v277_paired_program_comutations": 5,
+    "v278_manifest_mutations": 10,
+    "v279_actual_manifest_leaf_and_state_binding": "passed",
+    "v280_ralplan_state_gate": "passed"
+  },
+  "prior_review_transition": {
+    "architect_artifact_sha256": "131b1d729bf311f612267ef0b0202368e63bc82f51822cc03aeb52d50088b88e",
+    "architect_sequence_index": 1,
+    "architect_verdict": "revise",
+    "reviewed_amendment_sha256": "0ebb8fdb89c2f5cdb02e763e112eadcea67f31f7d21b4fe0be091ed09c7cb1f4",
+    "preserved_as_prior_history": true
+  },
+  "active_lineage": true,
+  "green_exists": false,
+  "attempt_6_authorized": false,
+  "attempt_6_started": false,
+  "review_gate_status": "pending_architect_then_critic"
+}

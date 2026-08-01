@@ -1,0 +1,16 @@
+d30bfe7a7860e3196c57bd24db383def8d734555f562508615200ee3bef1a59c  ../../../test/rjc-256-conformance.test.mjs
+4ef9ea2728f76896b4d19f0e55717371cf72e22395c60f8228d21d1f47f1d8a6  red-v2-9-run.json
+87366be13a21f9900ef7c4da2a21474006bf4813b7f28a7bf1bf1a6d7d00eecb  transcripts/red-v2-9-conformance.log
+40b987cde81be833b2826f1d1a6093487d1db858c875498c0b493db2a862d3bc  test-runs.json
+4e97bb4a060fe03f2edd20ff79eb1c22d8076f8a992f78e62797bbe92278ad66  ../../../.omx/plans/rjc-256-peer-compatibility-amendment.md
+131b1d729bf311f612267ef0b0202368e63bc82f51822cc03aeb52d50088b88e  ../../../.omx/plans/rjc-256-peer-compatibility-architect-review-cycle8.md
+4ba8fa6177acb82bd39ad3874c59c64675f1ff654ae7021b69bf994ee0f1bd21  ../../../.omx/scripts/rjc-256-attempt6-consensus-gate.mjs
+fbe45b3f2545426a07810117aad55000cd33f07914aefb8029bb8cef430eb427  ../../../.omx/scripts/rjc-256-g003b-attempt6.sh
+e4ee2d251233ba1e084091aff6438bd0617d8d1c21bea2ec2ce2212c2bef1b3c  ../../../.omx/scripts/rjc-256-g003b-attempt6-preflight.sh
+1e901b4dbe4ebe1e4816e8458513bfab150b4f7137b4acfb0c062f999d5d32dc  ../../../.omx/scripts/rjc-256-g003b-attempt6-post-lock.sh
+b5659f5a632658088a04a64149475aacc837201cee85e8646820c6c23a198872  ../../../.omx/scripts/rjc-256-pnpm-audit-classifier.mjs
+24273c05e0574df9badfc64b7c4149622ae1b6fd2da9266209c945aeca151330  ../../../.omx/state/sessions/019fb9a7-bd5b-7eb2-b3e2-14f71fa22d15/autopilot-state.json
+80586196a3993f904b33a4a4e3d97e9b3286e4e01f531793d0a0b15c7cf12867  superseded/v2.8/rjc-256-conformance.test.mjs
+3bd9ad08c1389bb8baa29da81415d6921e62b6564135afed36642680667bfb02  superseded/v2.8/supersession.json
+d17d3a9d20b4a139683f2ab39ff19a6118265fe45c66d58612d194c82cd1dfd6  superseded/v2.8/test-runs.json
+f0882d4730f1b65f6fc58dbb15926f60caf7b899342ab3f48397da613a45b675  superseded/v2.8/v2-8-evidence.sha256

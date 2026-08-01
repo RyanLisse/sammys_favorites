@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "status": "failed_non_canonical_no_seal_no_import",
+  "container_name": "rjc256-v2-bootstrap-v2",
+  "container_id": "97ffbafbe7725d84c5c5e71195ee5bc861df579c9db3d1fa276162070a87c4af",
+  "image": "node@sha256:5711a0d445a1af54af9589066c646df387d1831a608226f4cd694fc59e745059",
+  "command": [
+    "env",
+    "-i",
+    "PATH=/usr/local/bin:/usr/bin:/bin",
+    "CI=1",
+    "HOME=/home/node",
+    "COREPACK_HOME=/home/node/.corepack",
+    "PNPM_HOME=/home/node/.pnpm",
+    "npm_config_update_notifier=false",
+    "npm_config_fund=false",
+    "bash",
+    "-s"
+  ],
+  "process_user": "node",
+  "network_mode": "bridge",
+  "mounts": [],
+  "cap_drop": ["ALL"],
+  "security_opt": ["no-new-privileges"],
+  "resource_limits": {
+    "pids": 256,
+    "memory_bytes": 4294967296,
+    "nano_cpus": 2000000000
+  },
+  "exit_code": 1,
+  "started_at": "2026-07-31T22:56:40.731315004Z",
+  "finished_at": "2026-07-31T22:56:47.723553257Z",
+  "attempt_t0": "2026-07-31T22:56:40.870Z",
+  "failure_class": "metadata_parser_assumption",
+  "failure_reasons": [
+    "The npm install-v1 abbreviated packument omitted publication-time data, so all normalized version indexes were empty.",
+    "The OCI selector rejected the unique linux/arm64 descriptor because it assumed the descriptor had no variant."
+  ],
+  "canonical_snapshot_sealed": false,
+  "canonical_artifacts_imported": false,
+  "log_path": "failures/bootstrap-attempts/bootstrap-v2-parser-shape.log",
+  "log_sha256": "e89cbc782553a45ae9cb041df88a115ac06e0c8a9e0ae1d4c95ec796f704bba4"
+}

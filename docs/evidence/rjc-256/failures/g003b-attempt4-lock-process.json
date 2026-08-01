@@ -1,0 +1,23 @@
+{
+  "command": "canonical-full-workspace-lock",
+  "started_at": "2026-08-01T00:34:10Z",
+  "ended_at": "2026-08-01T00:53:07Z",
+  "elapsed_seconds": 1137,
+  "exit_code": 1,
+  "watchdog": {
+    "path": "/usr/bin/timeout",
+    "sha256": "3629fa180f625d4de2e3fd3b15b12c5d42315e5733ecae6d1550b306abd7d482",
+    "version": "timeout (GNU coreutils) 9.1",
+    "term_after_seconds": 1800,
+    "kill_grace_seconds": 30,
+    "timed_out": false
+  },
+  "pnpm_retry": {
+    "retries": 5,
+    "factor": 2,
+    "min_timeout_ms": 60000,
+    "max_timeout_ms": 300000
+  },
+  "network_concurrency": 1,
+  "outer_retry": false
+}

@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "active_lineage": "v2.2",
+  "lineages": [
+    {
+      "lineage": "v1",
+      "status": "superseded_without_green",
+      "test_sha256": "3ccfe787941759f299b66feed6d907c6ef956b64173dc45bc72251d939eb170b",
+      "test_git_blob": "e64ee4e5152d9783f1b89805733633480bec6cfe",
+      "red_metadata_path": "docs/evidence/rjc-256/red-run.json",
+      "red_transcript_path": "docs/evidence/rjc-256/transcripts/red-conformance.log",
+      "supersession_path": "docs/evidence/rjc-256/superseded/v1/supersession.json"
+    },
+    {
+      "lineage": "v2",
+      "status": "superseded_without_green",
+      "test_sha256": "63fbed12bcc6e91469e13fe80c7bb1f6f47ad1695151fe112e00a991302c2f66",
+      "test_git_blob": "18048191c3805667efcb6251a326bb42063d3956",
+      "red_metadata_path": "docs/evidence/rjc-256/red-v2-run.json",
+      "red_transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-conformance.log",
+      "supersession_path": "docs/evidence/rjc-256/superseded/v2/supersession.json"
+    },
+    {
+      "lineage": "v2.1",
+      "status": "superseded_without_green",
+      "test_sha256": "db90bd214ed5f0a46798703d2e7b905c5717e51393eb887f58d9f3ce2c523ce8",
+      "test_git_blob": "f8310f2677a4e9a7240c85ed02d8fe6f564f6ba0",
+      "red_metadata_path": "docs/evidence/rjc-256/red-v2-1-run.json",
+      "red_metadata_sha256": "a23b43e7e0b07af8c38d77783f15cc402babf94445b5fb275ea51f14eb2cad7f",
+      "red_transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-1-conformance.log",
+      "red_transcript_sha256": "c62b9802df3317af94df814a569bb6a9e8596cfd8a808952eabc60a194d08994",
+      "exit_code": 1,
+      "green_exists": false,
+      "supersession_path": "docs/evidence/rjc-256/superseded/v2.1/supersession.json"
+    },
+    {
+      "lineage": "v2.2",
+      "status": "active_red",
+      "test_sha256": "0a88c3cc1a433eadfbcf3f006dff68d28e2a5afab1fd8eb9feece9b8a1b0601b",
+      "test_git_blob": "6692b977de601a7c9c359c254bef1c6e538c40aa",
+      "red_metadata_path": "docs/evidence/rjc-256/red-v2-2-run.json",
+      "red_metadata_sha256": "afc4f4b99aa14694b52e1d795d00ab911345a3e140bbf8a6b045751b4307726f",
+      "red_transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-2-conformance.log",
+      "red_transcript_sha256": "a389af7deb80fe01161e1038bd6d99422fa8cbeb321fb6b062fe9e0132de595a",
+      "exit_code": 1,
+      "green_exists": false,
+      "child_snapshot_id": "sha256:038e13ce9feeca3afc4fa559d8ccf8790ac5f39bf13e560d512953ad269d22b2",
+      "attempt_5_started": false,
+      "review_gate_status": "pending_architect_then_critic"
+    }
+  ]
+}

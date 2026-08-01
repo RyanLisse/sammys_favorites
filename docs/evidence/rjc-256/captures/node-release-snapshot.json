@@ -1,0 +1,157 @@
+{
+  "t0": "2026-07-31T22:58:40.544Z",
+  "bootstrap": {
+    "image_digest": "sha256:5711a0d445a1af54af9589066c646df387d1831a608226f4cd694fc59e745059",
+    "platform": "linux/arm64",
+    "node_version": "24.18.0",
+    "metadata_only": true,
+    "mounts": [],
+    "sockets": [],
+    "credential_input": false,
+    "proxy_input": false,
+    "process": {
+      "env": {
+        "PATH": "/usr/local/bin:/usr/bin:/bin",
+        "CI": "1",
+        "HOME": "/home/node",
+        "COREPACK_HOME": "/home/node/.corepack",
+        "PNPM_HOME": "/home/node/.pnpm",
+        "npm_config_update_notifier": "false",
+        "npm_config_fund": "false"
+      },
+      "uid": 1000,
+      "cap_eff": "0000000000000000",
+      "no_new_privileges": 1
+    }
+  },
+  "official_index": {
+    "url": "https://nodejs.org/dist/index.json",
+    "etag": "W/\"7c2d79554cf45fff7f95b9cbfbfd47c8\"",
+    "content_digest": "sha256:2b97b35ca87144ff59da0bc33c4804d32e5afe81eee8449316ab919fae37c87d",
+    "retrieved_at": "2026-07-31T22:58:53.747Z"
+  },
+  "official_schedule": {
+    "url": "https://raw.githubusercontent.com/nodejs/Release/main/schedule.json",
+    "etag": "W/\"f1d98913cfdc008b928963abe38c8f9a542fe3b3204ebba9031c3bd2fef9a197\"",
+    "content_digest": "sha256:1cf0432ceb9dfde7f1fd4cce43206519942cfdfad5a26039c2f4bb20fde8549c",
+    "retrieved_at": "2026-07-31T22:58:53.747Z",
+    "node24": {
+      "start": "2025-05-06",
+      "lts": "2025-10-28",
+      "maintenance": "2026-10-20",
+      "end": "2028-04-30",
+      "codename": "Krypton"
+    }
+  },
+  "node24_releases": [
+    {
+      "version": "v24.11.0",
+      "published_at": "2025-10-28T00:00:00Z",
+      "lts": true,
+      "npm": "11.6.1",
+      "modules": "137"
+    },
+    {
+      "version": "v24.11.1",
+      "published_at": "2025-11-11T00:00:00Z",
+      "lts": true,
+      "npm": "11.6.2",
+      "modules": "137"
+    },
+    {
+      "version": "v24.12.0",
+      "published_at": "2025-12-10T00:00:00Z",
+      "lts": true,
+      "npm": "11.6.2",
+      "modules": "137"
+    },
+    {
+      "version": "v24.13.0",
+      "published_at": "2026-01-12T00:00:00Z",
+      "lts": true,
+      "npm": "11.6.2",
+      "modules": "137"
+    },
+    {
+      "version": "v24.13.1",
+      "published_at": "2026-02-09T00:00:00Z",
+      "lts": true,
+      "npm": "11.8.0",
+      "modules": "137"
+    },
+    {
+      "version": "v24.14.0",
+      "published_at": "2026-02-24T00:00:00Z",
+      "lts": true,
+      "npm": "11.9.0",
+      "modules": "137"
+    },
+    {
+      "version": "v24.14.1",
+      "published_at": "2026-03-24T00:00:00Z",
+      "lts": true,
+      "npm": "11.11.0",
+      "modules": "137"
+    },
+    {
+      "version": "v24.15.0",
+      "published_at": "2026-04-15T00:00:00Z",
+      "lts": true,
+      "npm": "11.12.1",
+      "modules": "137"
+    },
+    {
+      "version": "v24.16.0",
+      "published_at": "2026-05-21T00:00:00Z",
+      "lts": true,
+      "npm": "11.13.0",
+      "modules": "137"
+    },
+    {
+      "version": "v24.17.0",
+      "published_at": "2026-06-17T00:00:00Z",
+      "lts": true,
+      "npm": "11.13.0",
+      "modules": "137"
+    },
+    {
+      "version": "v24.18.0",
+      "published_at": "2026-06-23T00:00:00Z",
+      "lts": true,
+      "npm": "11.16.0",
+      "modules": "137"
+    },
+    {
+      "version": "v24.18.1",
+      "published_at": "2026-07-28T00:00:00Z",
+      "lts": true,
+      "npm": "11.16.0",
+      "modules": "137"
+    }
+  ],
+  "selected_node": {
+    "version": "v24.18.1",
+    "lts": true,
+    "published_at": "2026-07-28T00:00:00Z"
+  },
+  "docker_registry": {
+    "token_endpoint": "https://auth.docker.io/token",
+    "index_endpoint": "https://registry-1.docker.io/v2/library/node/manifests/24.18.1-bookworm",
+    "platform_manifest_endpoint": "https://registry-1.docker.io/v2/library/node/manifests/sha256:9b02ede55039f443ad57453a741813c6cd105873f0f66fee95d25529e1ba0533",
+    "credential_input": false,
+    "proxy_input": false,
+    "response_digests": {
+      "token": "sha256:3e198130b04b8e595b83ff3d2b857fe4abb03826ccd87ffc7bd906194b0af62c",
+      "index": "sha256:19cd848a0e073d34bd8cd5545a1b6b4d28489b3e3b607366621ced442bd5f6b4",
+      "platform": "sha256:9b02ede55039f443ad57453a741813c6cd105873f0f66fee95d25529e1ba0533"
+    }
+  },
+  "selected_image": {
+    "tag_observed": "24.18.1-bookworm",
+    "index_digest": "sha256:19cd848a0e073d34bd8cd5545a1b6b4d28489b3e3b607366621ced442bd5f6b4",
+    "platform_manifest_digest": "sha256:9b02ede55039f443ad57453a741813c6cd105873f0f66fee95d25529e1ba0533",
+    "platform": "linux",
+    "architecture": "arm64",
+    "variant": "v8"
+  }
+}

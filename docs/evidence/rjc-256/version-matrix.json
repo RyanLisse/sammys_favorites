@@ -1,0 +1,123 @@
+{
+  "schema_version": 2,
+  "maintenance_owner": "Ryan Lisse",
+  "maintenance_owner_confirmation": "pending required owner-authored Linear comment",
+  "historical_reference": {
+    "node": ">=20",
+    "pnpm": "8.15.9",
+    "turbo_manifest": "^2.6.1",
+    "turbo_lock": "2.8.16",
+    "next": "15.5.6",
+    "web_react": "19.1.1",
+    "web_react_dom": "19.1.1",
+    "medusa": "2.11.3",
+    "api_tooling_react": "18.3.1",
+    "api_tooling_react_dom": "18.3.1",
+    "evidence": {
+      "node": {
+        "source": "pinned upstream root package.json engines.node",
+        "retrieved_at": "2026-07-31T00:00:00Z"
+      },
+      "pnpm": {
+        "source": "pinned upstream root package.json packageManager",
+        "retrieved_at": "2026-07-31T00:00:00Z"
+      },
+      "turbo_manifest": {
+        "source": "pinned upstream root package.json devDependencies.turbo",
+        "retrieved_at": "2026-07-31T00:00:00Z"
+      },
+      "turbo_lock": {
+        "source": "pinned upstream pnpm-lock.yaml Turbo resolution",
+        "retrieved_at": "2026-07-31T00:00:00Z"
+      },
+      "next": {
+        "source": "pinned upstream apps/web/package.json dependencies.next",
+        "retrieved_at": "2026-07-31T00:00:00Z"
+      },
+      "web_react": {
+        "source": "pinned upstream apps/web/package.json dependencies.react",
+        "retrieved_at": "2026-07-31T00:00:00Z"
+      },
+      "web_react_dom": {
+        "source": "pinned upstream apps/web/package.json dependencies.react-dom",
+        "retrieved_at": "2026-07-31T00:00:00Z"
+      },
+      "medusa": {
+        "source": "pinned upstream apps/api/package.json Medusa package versions",
+        "retrieved_at": "2026-07-31T00:00:00Z"
+      },
+      "api_tooling_react": {
+        "source": "pinned upstream apps/api/package.json build-tooling React context",
+        "retrieved_at": "2026-07-31T00:00:00Z"
+      },
+      "api_tooling_react_dom": {
+        "source": "pinned upstream apps/api/package.json build-tooling React DOM context",
+        "retrieved_at": "2026-07-31T00:00:00Z"
+      }
+    }
+  },
+  "production_reference": {
+    "node": "24.18.0",
+    "pnpm": "11.18.0",
+    "turbo": "2.10.7",
+    "next": "16.2.12",
+    "web_react": "19.2.8",
+    "web_react_dom": "19.2.8",
+    "medusa": "2.18.0",
+    "api_tooling_react": "18.3.1",
+    "api_tooling_react_dom": "18.3.1",
+    "vite": "5.4.21",
+    "typescript": "5.9.3",
+    "eslint": "9.39.5",
+    "prettier": "3.9.6",
+    "picomatch": "3.0.2",
+    "emittery_override": "0.13.1",
+    "evidence": {
+      "node": {
+        "source": "https://github.com/nodejs/Release/blob/main/schedule.json and exact execution-host Node version recorded in the approved plan",
+        "retrieved_at": "2026-08-01T00:00:00Z"
+      },
+      "pnpm": {
+        "source": "https://registry.npmjs.org/pnpm/11.18.0 and https://pnpm.io/installation#compatibility",
+        "retrieved_at": "2026-08-01T00:00:00Z"
+      },
+      "turbo": {
+        "source": "https://registry.npmjs.org/turbo/2.10.7 (2.10.8 rejected by pnpm minimumReleaseAge policy in the isolated spike session)",
+        "retrieved_at": "2026-08-01T00:00:00Z"
+      },
+      "next": {
+        "source": "https://registry.npmjs.org/next/16.2.12 and local dry-run build verification",
+        "retrieved_at": "2026-08-01T00:00:00Z"
+      },
+      "web_react": {
+        "source": "https://registry.npmjs.org/react/19.2.8 and Next 16.2.12 peer compatibility",
+        "retrieved_at": "2026-08-01T00:00:00Z"
+      },
+      "web_react_dom": {
+        "source": "https://registry.npmjs.org/react-dom/19.2.8 and Next 16.2.12 peer compatibility",
+        "retrieved_at": "2026-08-01T00:00:00Z"
+      },
+      "medusa": {
+        "source": "https://registry.npmjs.org/@medusajs/medusa/2.18.0 and local dry-run build verification",
+        "retrieved_at": "2026-08-01T00:00:00Z"
+      },
+      "api_tooling_react": {
+        "source": "https://registry.npmjs.org/react/18.3.1 and Medusa 2.18.0 admin/tooling context",
+        "retrieved_at": "2026-08-01T00:00:00Z"
+      },
+      "api_tooling_react_dom": {
+        "source": "https://registry.npmjs.org/react-dom/18.3.1 and Medusa 2.18.0 admin/tooling context",
+        "retrieved_at": "2026-08-01T00:00:00Z"
+      },
+      "vite": {
+        "source": "https://registry.npmjs.org/vite/5.4.21 and Medusa 2.18.0 admin Vite build verification",
+        "retrieved_at": "2026-08-01T00:00:00Z"
+      },
+      "emittery_override": {
+        "source": "emittery@0.13.0 ships a broken index.js referencing missing maps.js; 0.13.1 resolves it",
+        "retrieved_at": "2026-08-01T00:00:00Z"
+      }
+    }
+  },
+  "boundary": "Historical values are observation facts only. Production-reference values are selected for the bounded spike and remain subject to its install, build, and audit gates. The dry-run used registry.npmmirror.com to avoid npm 429 rate limits; the formal isolated spike will use registry.npmjs.org with bounded retry."
+}

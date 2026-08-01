@@ -1,0 +1,66 @@
+{
+  "schema_version": 2,
+  "lineage": "v2.5",
+  "phase": "red",
+  "command": "node --test --test-reporter=spec --test-reporter-destination=docs/evidence/rjc-256/transcripts/red-v2-5-conformance.log test/rjc-256-conformance.test.mjs",
+  "node_version": "v24.18.0",
+  "started_at_utc": "2026-08-01T02:58:34Z",
+  "completed_at_utc": "2026-08-01T02:58:37Z",
+  "exit_code": 1,
+  "test_file": "test/rjc-256-conformance.test.mjs",
+  "test_sha256": "c9296f6b41fad62d0c62b306b7d7e9d6697ce9b22e03c28b73f3eec1a72b4788",
+  "test_git_blob": "a553c4fd43b4f3aeba6e6fd252d9d5b51d3f57d6",
+  "transcript": "transcripts/red-v2-5-conformance.log",
+  "transcript_sha256": "15101b495bee278d08198b8447de2d02ccc419589a19bc501c6560474df47fbd",
+  "transcript_sanitization": {
+    "complete": true,
+    "replacement": "absolute repository path replaced with <REPO>",
+    "secrets_observed": false
+  },
+  "result": {
+    "tests": 68,
+    "passed": 55,
+    "failed": 13,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "missing_artifact_classes": 25
+  },
+  "named_case_vector": [
+    "V201", "V202", "V203", "V204", "V205", "V206", "V207", "V208",
+    "V209", "V210", "V211", "V212", "V213", "V214", "V215", "V216",
+    "V217", "V218", "V219", "V220", "V221", "V222", "V223", "V224",
+    "V225", "V226", "V227", "V228", "V229", "V230", "V231", "V232",
+    "V233", "V234", "V235", "V236", "V237", "V238", "V239", "V240",
+    "V241", "V242", "V243", "V244", "V245", "V246", "V247", "V248",
+    "V249", "V250", "V251", "V252"
+  ],
+  "failed_canonical_cases": [
+    "V201", "V205", "V215", "V216", "V217", "V218", "V219",
+    "V220", "V221", "V222", "V223", "V224", "V228"
+  ],
+  "representative_green_boundaries": {
+    "v215_transitive_child_hash_binding": "V246 passed",
+    "v217_semantic_and_patch_equivalence": "V247 passed",
+    "v250_heap_metadata_argv_binding": "V250 passed",
+    "v251_exact_heap_invocation": "V251 passed"
+  },
+  "semantic_mutation_groups_passed": 16,
+  "canonical_node_heap_mb": 4096,
+  "canonical_heap_flag": "--max-old-space-size=4096",
+  "canonical_heap_flag_count": 1,
+  "canonical_heap_flag_position": "immediately after /usr/local/bin/node and immediately before verified Corepack",
+  "sealed_parent_snapshot_reused": "sha256:7a654c2a5d29a85cbd0de3dd8e093485c8199a6aca790fea0dbd7d645457002c",
+  "effective_peer_compatible_child_snapshot": "sha256:038e13ce9feeca3afc4fa559d8ccf8790ac5f39bf13e560d512953ad269d22b2",
+  "v2_4_archive": {
+    "path": "docs/evidence/rjc-256/superseded/v2.4/rjc-256-conformance.test.mjs",
+    "sha256": "f471865c07b73f6b8384e5f59616deffbdf3d414e2a0b557c1597252ac84a50c",
+    "git_blob": "c9f3da95f44850f4320e68d5647ac603926fbcf2",
+    "status": "superseded_without_green"
+  },
+  "v2_4_archived_evidence_manifest_sha256": "705233099acfef7fc2ed3d3cf534787c46b1f0e278aded48330b9222e0ff5103",
+  "v2_4_archived_test_runs_sha256": "0e95e9c7a9beb858e0847015545d7cefddbab205769e0ff98369764b0446512f",
+  "active_lineage": true,
+  "attempt_5_started": false,
+  "review_gate_status": "pending_architect_then_critic"
+}

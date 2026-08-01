@@ -1,0 +1,44 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+overrides:
+  fdir@6.1.1>picomatch: 3.0.2
+
+importers:
+
+  .:
+    devDependencies:
+      picomatch:
+        specifier: 4.0.5
+        version: 4.0.5
+
+  apps/api:
+    devDependencies:
+      fdir:
+        specifier: 6.1.1
+        version: 6.1.1(picomatch@4.0.5)
+
+packages:
+
+  fdir@6.1.1:
+    resolution: {integrity: sha512-QfKBVg453Dyn3mr0Q0O+Tkr1r79lOTAKSi9f/Ot4+qVEwxWhav2Z+SudrG9vQjM2aYRMQQZ2/Q1zdA8ACM1pDg==}
+    peerDependencies:
+      picomatch: 3.0.2
+    peerDependenciesMeta:
+      picomatch:
+        optional: true
+
+  picomatch@4.0.5:
+    resolution: {integrity: sha512-RvwwcruNjI1ncT5xRakeyS9Lf8lcItv34KD+aif+VH9kduAyfYBipGh12274xtenIPZ119/R9BdTBa8gAwSh0A==}
+    engines: {node: '>=12'}
+
+snapshots:
+
+  fdir@6.1.1(picomatch@4.0.5):
+    optionalDependencies:
+      picomatch: 4.0.5
+
+  picomatch@4.0.5: {}

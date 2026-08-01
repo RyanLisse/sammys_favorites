@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "kind": "pnpm_strict_peer_override_only_failure_probe",
+  "status": "expected_failure_proven",
+  "container": {
+    "id": "aace2f67b829d3119ec518bef0c66547a3ba51720e996feb5604ae1d891aa95f",
+    "name": "rjc256-picomatch-override-only-failure-probe-v2-20260801t0149z",
+    "image_digest": "sha256:9b02ede55039f443ad57453a741813c6cd105873f0f66fee95d25529e1ba0533",
+    "platform": "linux/arm64/v8",
+    "user": "1000:1000",
+    "started_at": "2026-08-01T01:49:02.656775555Z",
+    "finished_at": "2026-08-01T01:49:05.013151625Z",
+    "container_exit_code": 0,
+    "pnpm_exit_code": 1,
+    "oom_killed": false,
+    "mounts": [],
+    "docker_socket_present": false,
+    "cap_drop": [
+      "ALL"
+    ],
+    "no_new_privileges": true,
+    "memory_bytes": 4294967296,
+    "nano_cpus": 4000000000,
+    "pids_limit": 512
+  },
+  "runtime": {
+    "node": "24.18.1",
+    "pnpm": "11.18.0",
+    "corepack_entrypoint": "/usr/local/lib/node_modules/corepack/dist/corepack.js",
+    "corepack_entrypoint_sha256": "3655bc798f300951f2070fee411b337d626b0c3ae80c2d24c46ccac4595d4bf9",
+    "strict_peer_dependencies": true,
+    "engine_strict": true,
+    "watchdog_seconds": 600,
+    "kill_grace_seconds": 30
+  },
+  "inputs": {
+    "root_manifest": {
+      "path": "captures/picomatch-override-only-failure-probe.root-package.json",
+      "sha256": "sha256:77b2de18cc18df8496b454d9a4a747057b6fc69acffaafb96aafecc796328958"
+    },
+    "api_manifest": {
+      "path": "captures/picomatch-override-only-failure-probe.api-package.json",
+      "sha256": "sha256:b57c47bf1741d787c96e2b7773a81ff294e25f55da4f9974d83deaaaf6c91cc8"
+    },
+    "workspace_manifest": {
+      "path": "captures/picomatch-override-only-failure-probe.pnpm-workspace.yaml",
+      "sha256": "sha256:3ed496f37a98b212597aaef70fca27e783da4f07b81eaba016823aa68d081d7f"
+    },
+    "run_script": {
+      "path": "captures/picomatch-override-only-failure-probe.run.sh",
+      "sha256": "sha256:819026facbf6f74e89592e2d781eaef9e0f39e921e6700e509e95082e54cee9b"
+    },
+    "command_record": {
+      "path": "captures/picomatch-override-only-failure-probe.command.txt",
+      "sha256": "sha256:b6e23b7ad9378567399e72a763b12778def82cb01575e7a804fa43fc811f2105"
+    }
+  },
+  "outputs": {
+    "transcript": {
+      "path": "captures/picomatch-override-only-failure-probe.transcript.log",
+      "sha256": "sha256:c86809074ece5629bf1713d1ac153bedb197c3cc3016a1d23eec988b6d57da6b"
+    },
+    "pnpm_output": {
+      "path": "captures/picomatch-override-only-failure-probe.pnpm-output.log",
+      "sha256": "sha256:b995db2564f5e1aa868e1acbd86a7e2b28fa911a0ff4c92be54765574ca297c4"
+    },
+    "lock": {
+      "path": "captures/picomatch-override-only-failure-probe.lock.yaml",
+      "sha256": "sha256:7fba0297dafd5ee500a1776f59f43a1440612303d96ab06c101faaf9b14b7b57"
+    }
+  },
+  "assertions": {
+    "root_visible_picomatch": "4.0.5",
+    "api_direct_picomatch_provider": false,
+    "fdir": "6.1.1",
+    "override_selector": "fdir@6.1.1>picomatch",
+    "override_version": "3.0.2",
+    "override_loaded_from_supported_workspace_setting": true,
+    "overridden_peer_range_in_lock": "3.0.2",
+    "resolved_peer_snapshot": "fdir@6.1.1(picomatch@4.0.5)",
+    "strict_peer_error": "ERR_PNPM_PEER_DEP_ISSUES",
+    "installed_picomatch": "4.0.5",
+    "wanted_picomatch": "3.0.2",
+    "override_alone_supplies_compatible_peer": false
+  },
+  "discarded_preflight": {
+    "path": "captures/picomatch-override-only-failure-probe-discarded-config-location.log",
+    "sha256": "sha256:42baeab447b2657f5e1a33b4e8f71e79f608c4fb871be3ec3669053fe0d7ee08",
+    "failure_kind": "pnpm_11_18_0_ignored_legacy_package_json_pnpm_overrides_location",
+    "used_as_primary_proof": false
+  }
+}

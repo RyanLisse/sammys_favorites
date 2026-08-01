@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "lineage": "v2.7",
+  "status": "superseded_without_green",
+  "statement": "superseded before first Green",
+  "reason": "Cycle-5 Critic REVISE requires the complete sequential consensus tuple and the execution program to be content-addressed before the first Docker command.",
+  "archived_test": {
+    "path": "docs/evidence/rjc-256/superseded/v2.7/rjc-256-conformance.test.mjs",
+    "sha256": "9865d1ac8d8a30463b669be81d7f992665ab312f69f4831ee44fa2f90e3b2862",
+    "git_blob": "bafc13ae5d6ca748b01255a74b8e3f1b7099449c"
+  },
+  "original_red": {
+    "metadata_path": "docs/evidence/rjc-256/red-v2-7-run.json",
+    "metadata_sha256": "9853ca2809c1b2c3e59d895fc52b37264cf96c2b646b21947c884814e497528e",
+    "transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-7-conformance.log",
+    "transcript_sha256": "ce0ad0562259903a1eb60bbc576b8b4bae25a2dab8b83f90ff3deb86c7652304"
+  },
+  "archived_test_runs": {
+    "path": "docs/evidence/rjc-256/superseded/v2.7/test-runs.json",
+    "sha256": "30e5f76fbda069ec14bd8d4b87023df35f9e50efcb1afc1fc505331e95af97ca"
+  },
+  "archived_evidence_manifest": {
+    "path": "docs/evidence/rjc-256/superseded/v2.7/v2-7-evidence.sha256",
+    "sha256": "f1ad57c040b34c53581387919d9ad9dc1c595adc9c9501a3dd8bd0c423e32d05"
+  },
+  "architect_approve": {
+    "path": ".omx/plans/rjc-256-peer-compatibility-architect-review-cycle7.md",
+    "sha256": "691bd2441d12cb835366881b56e2b7b4c4e5707c46d1a047ec4afd4f0ea5f31e",
+    "verdict": "approve",
+    "completed_at": "2026-08-01T04:17:59Z",
+    "sequence_index": 1
+  },
+  "critic_revise": {
+    "path": ".omx/plans/rjc-256-peer-compatibility-critic-review-cycle5.md",
+    "sha256": "82270d1a8a8ab4ce2968a0ac35ac235d20e3350ff270cef045c29bfab3844f98",
+    "verdict": "revise",
+    "completed_at": "2026-08-01T04:26:20Z",
+    "sequence_index": 2
+  },
+  "v2_7_green_exists": false,
+  "active_successor_lineage": "v2.8",
+  "attempt_6_authorized": false,
+  "attempt_6_started": false
+}

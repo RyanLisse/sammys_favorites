@@ -1,0 +1,10 @@
+9865d1ac8d8a30463b669be81d7f992665ab312f69f4831ee44fa2f90e3b2862  ../../../test/rjc-256-conformance.test.mjs
+47c493dc5da3de94148bde48dbb90946c1c2ad28472e743ff9955c910b381768  superseded/v2.6/rjc-256-conformance.test.mjs
+6bfc9609ef93ba22128e09d6a7831df7fc4b3cdb13bf31dcbf2d9d816f8dc0a7  superseded/v2.6/supersession.json
+1f4eb278ca7d682d12ffbced09a91c152b94db3888e850da216a988ed6560e79  superseded/v2.6/test-runs.json
+60b186de3aa3d87be3c91b7f5eba5971072d84b5d1b42d807206b0c87336dcd3  superseded/v2.6/v2-6-evidence.sha256
+e8da88919dec04efc689cfd84c5c3c16f1cb30acd907130d7267dcecf514b322  ../../../.omx/plans/rjc-256-peer-compatibility-architect-review-cycle6.md
+b5659f5a632658088a04a64149475aacc837201cee85e8646820c6c23a198872  ../../../.omx/scripts/rjc-256-pnpm-audit-classifier.mjs
+9853ca2809c1b2c3e59d895fc52b37264cf96c2b646b21947c884814e497528e  red-v2-7-run.json
+ce0ad0562259903a1eb60bbc576b8b4bae25a2dab8b83f90ff3deb86c7652304  transcripts/red-v2-7-conformance.log
+30e5f76fbda069ec14bd8d4b87023df35f9e50efcb1afc1fc505331e95af97ca  test-runs.json

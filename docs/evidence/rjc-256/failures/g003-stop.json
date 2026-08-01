@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "status": "blocked_at_fresh_lock_generation",
+  "recorded_at": "2026-07-31T22:06:26Z",
+  "halted_at": "2026-07-31T22:09:24Z",
+  "halt_reason": "User materially changed the requested production-reference matrix before acquisition v5 started; the prior selected tuple must not continue.",
+  "acquisition_v5_started": false,
+  "post_failure_probe": {
+    "purpose": "Verify the resolved Corepack JS entrypoint for a proposed command-line heap-flag retry before any v5 acquisition container was created.",
+    "container_type": "ephemeral no-mount verification probe",
+    "resolved_entrypoint": "/usr/local/lib/node_modules/corepack/dist/corepack.js",
+    "verified_version": "11.18.0",
+    "upstream_clone_or_dependency_operation": false
+  },
+  "upstream_url": "https://github.com/306-Technologies/306-starter-monorepo",
+  "upstream_commit": "10b5d4b0623123737854a3cb02d54f6e32a1fb9e",
+  "base_image": {
+    "reference": "node@sha256:5711a0d445a1af54af9589066c646df387d1831a608226f4cd694fc59e745059",
+    "id": "sha256:5711a0d445a1af54af9589066c646df387d1831a608226f4cd694fc59e745059",
+    "platform": "linux/arm64",
+    "node": "24.18.0"
+  },
+  "isolation": {
+    "user": "node",
+    "mounts": [],
+    "binds": [],
+    "sockets": [],
+    "cap_drop": [
+      "ALL"
+    ],
+    "security_opt": [
+      "no-new-privileges:true"
+    ],
+    "resource_limits": {
+      "cpus": 4,
+      "memory_bytes": 6442450944,
+      "pids": 512
+    },
+    "network_mode": "bridge during acquisition only",
+    "process_env_names": [
+      "PATH",
+      "CI",
+      "HOME",
+      "COREPACK_HOME",
+      "PNPM_HOME",
+      "npm_config_update_notifier",
+      "npm_config_fund"
+    ]
+  },
+  "attempts": [
+    {
+      "name": "rjc256-acquire-g003-v3",
+      "started_at": "2026-07-31T21:37:45Z",
+      "finished_at": "2026-07-31T21:39:57Z",
+      "exit_code": 1,
+      "oom_killed_by_container_runtime": false,
+      "stage": "pnpm install --lockfile-only --ignore-scripts",
+      "result": "ERR_PNPM_FETCH_429 for @medusajs/types",
+      "transcript": "acquisition-v3-registry-429.log",
+      "transcript_sha256": "9e9c379cc002fd317812763069ee711e80913e64b0ce6057c6518e90fcc4f5f9"
+    },
+    {
+      "name": "rjc256-acquire-g003-v4",
+      "started_at": "2026-07-31T21:40:45Z",
+      "finished_at": "2026-07-31T22:06:26Z",
+      "exit_code": 134,
+      "oom_killed_by_container_runtime": false,
+      "stage": "pnpm install --lockfile-only --ignore-scripts with network concurrency 1 and bounded registry backoff",
+      "last_resolution_count": 1349,
+      "result": "V8 JavaScript heap out of memory near 2 GiB",
+      "transcript": "acquisition-v4-heap-oom.log",
+      "transcript_sha256": "595242d1e1cb58013c160039ffdb84e03db78237dac4b0008bb9fe026988b128"
+    }
+  ],
+  "verified_before_stop": [
+    "exact Node v24.18.0",
+    "exact pnpm 11.18.0 through Corepack",
+    "exact detached upstream commit",
+    "both plugins outside the root workspace at Medusa 2.11.2",
+    "allowlisted transformed root/web/workspace inputs",
+    "no repository mounts, host credential mounts, agent sockets, or Docker socket"
+  ],
+  "not_reached": [
+    "completed fresh lockfile",
+    "pnpm fetch",
+    "production audit",
+    "full audit",
+    "clean acquisition image commit",
+    "offline network-none install",
+    "API build",
+    "web build",
+    "canonical spike evidence import"
+  ],
+  "canonical_spike_success_claimed": false,
+  "owner_decision_language": "product-owner direct-use risk acceptance; not upstream permission, not an upstream license, and not legal clearance"
+}

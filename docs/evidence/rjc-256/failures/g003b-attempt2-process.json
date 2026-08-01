@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "capture_kind": "effective_acquisition_process",
+  "env": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "CI": "1",
+    "HOME": "/home/node",
+    "COREPACK_HOME": "/home/node/.corepack",
+    "PNPM_HOME": "/home/node/.pnpm",
+    "npm_config_update_notifier": "false",
+    "npm_config_fund": "false"
+  },
+  "uid": 1000,
+  "cap_eff": "0000000000000000",
+  "no_new_privileges": 1
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": 2,
+  "lineage": "v2.6",
+  "phase": "red",
+  "command": "node --test --test-reporter=spec --test-reporter-destination=<temporary-raw-log> test/rjc-256-conformance.test.mjs; sanitize absolute repository path into transcripts/red-v2-6-conformance.log",
+  "node_version": "v24.18.0",
+  "started_at_utc": "2026-08-01T03:35:00Z",
+  "completed_at_utc": "2026-08-01T03:35:04Z",
+  "exit_code": 1,
+  "test_file": "test/rjc-256-conformance.test.mjs",
+  "test_sha256": "47c493dc5da3de94148bde48dbb90946c1c2ad28472e743ff9955c910b381768",
+  "test_git_blob": "5913b64b5b367b0b5c94494d5778aa479508a903",
+  "transcript": "transcripts/red-v2-6-conformance.log",
+  "transcript_sha256": "20ce01afa2d2a0c0446a6da7189bc5710a3d60a16d15904b8e25e80721a7e403",
+  "transcript_sanitization": {
+    "complete": true,
+    "replacement": "absolute repository path replaced with <REPO>",
+    "secrets_observed": false
+  },
+  "result": {
+    "tests": 76,
+    "passed": 61,
+    "failed": 15,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "named_canonical_cases": 60,
+    "named_canonical_passed": 45,
+    "named_canonical_failed": 15,
+    "semantic_mutation_groups_passed": 16,
+    "missing_artifact_classes": 25
+  },
+  "named_case_vector": [
+    "V201", "V202", "V203", "V204", "V205", "V206", "V207", "V208",
+    "V209", "V210", "V211", "V212", "V213", "V214", "V215", "V216",
+    "V217", "V218", "V219", "V220", "V221", "V222", "V223", "V224",
+    "V225", "V226", "V227", "V228", "V229", "V230", "V231", "V232",
+    "V233", "V234", "V235", "V236", "V237", "V238", "V239", "V240",
+    "V241", "V242", "V243", "V244", "V245", "V246", "V247", "V248",
+    "V249", "V250", "V251", "V252", "V253", "V254", "V255", "V256",
+    "V257", "V258", "V259", "V260"
+  ],
+  "failed_canonical_cases": [
+    "V201", "V205", "V215", "V216", "V217", "V218", "V219",
+    "V220", "V221", "V222", "V223", "V224", "V228", "V254", "V256"
+  ],
+  "iteration_7_boundaries": {
+    "v253_v2_5_archive_read_verification": "passed",
+    "v255_attempt_6_lifecycle_representative_green": "passed",
+    "v257_audit_clean_and_findings_representative_greens": "passed",
+    "v258_lifecycle_adversarial_mutations": 9,
+    "v259_audit_protocol_adversarial_mutations": 7,
+    "v260_ralplan_state_gate": "passed"
+  },
+  "pnpm_audit_contract": {
+    "version": "11.18.0",
+    "source_commit": "925c33d78009b81503058d1c1f5a8c2978175ed2",
+    "audit_level": "low",
+    "clean_report": "exit 0 plus valid strict report plus empty filtered advisories",
+    "vulnerability_report": "exit 1 plus valid strict report plus non-empty filtered advisories",
+    "operational_error": "all other exits, malformed or error-shaped JSON, missing or unknown schema, or exit/report inconsistency"
+  },
+  "v2_5_archive": {
+    "test_sha256": "c9296f6b41fad62d0c62b306b7d7e9d6697ce9b22e03c28b73f3eec1a72b4788",
+    "test_git_blob": "a553c4fd43b4f3aeba6e6fd252d9d5b51d3f57d6",
+    "red_metadata_sha256": "2c31a536573a532d120cc4937e6aa09022bd5f26d219b7eb63d9ff6bc63fc8aa",
+    "red_transcript_sha256": "15101b495bee278d08198b8447de2d02ccc419589a19bc501c6560474df47fbd",
+    "archived_test_runs_sha256": "84e9aa51d575a5bdf24dde2f9e5d85d07d4f1bdb792233776333fb2d5c0d7903",
+    "archived_evidence_manifest_sha256": "049b4ba5bac59ddd060ee63219e816435013ee99fda5d93dbd74142bacea804c",
+    "status": "superseded_without_green"
+  },
+  "attempt_5_terminal_evidence": {
+    "stop_sha256": "feef5f901a88d5f2863fca2a1afa9cb4802a768a05fa9e48f80646fd36a44c0f",
+    "manifest_sha256": "09f501473d24186265009922c75fee835fcc0520df89f1936eb9e37bec21d3cd",
+    "discarded_preflight_sha256": "245f26c67c4aa87b5c9c228bffbc0922305c83e1321c8d4c53510f8a8829973a"
+  },
+  "active_lineage": true,
+  "green_exists": false,
+  "attempt_6_authorized": false,
+  "attempt_6_started": false,
+  "review_gate_status": "pending_architect_then_critic"
+}

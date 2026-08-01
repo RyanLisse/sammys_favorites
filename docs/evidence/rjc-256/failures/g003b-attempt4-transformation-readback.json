@@ -1,0 +1,15 @@
+{
+  "snapshot_id": "sha256:7a654c2a5d29a85cbd0de3dd8e093485c8199a6aca790fea0dbd7d645457002c",
+  "changed_paths": [
+    "apps/api/package.json",
+    "apps/web/package.json",
+    "package.json",
+    "packages/eslint-config/package.json",
+    "pnpm-workspace.yaml"
+  ],
+  "generated_lock_replaces_tracked_lock": true,
+  "declaration_rows_verified": 43,
+  "scripts_changed": false,
+  "source_or_config_changed": false,
+  "mode_rename_or_symlink_summary_only_expected_lock_deletion": true
+}

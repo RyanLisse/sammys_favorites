@@ -1,0 +1,7 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+allowBuilds:
+  lefthook: true
+overrides:
+  emittery: 0.13.1

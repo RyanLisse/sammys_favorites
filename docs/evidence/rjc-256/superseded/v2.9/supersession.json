@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "lineage": "v2.9",
+  "status": "superseded_without_green",
+  "statement": "superseded before first Green",
+  "reason": "Cycle-6 Critic REVISE requires actual canonical review bytes and tracker records to be authoritative and all five execution-program captures to be mandatory in the three-way checksum graph.",
+  "archived_amendment": {
+    "path": "docs/evidence/rjc-256/superseded/v2.9/rjc-256-peer-compatibility-amendment.md",
+    "sha256": "4e97bb4a060fe03f2edd20ff79eb1c22d8076f8a992f78e62797bbe92278ad66"
+  },
+  "archived_test": {
+    "path": "docs/evidence/rjc-256/superseded/v2.9/rjc-256-conformance.test.mjs",
+    "sha256": "d30bfe7a7860e3196c57bd24db383def8d734555f562508615200ee3bef1a59c",
+    "git_blob": "3ca7323bb6a0448b6d3ba3679a4da6fa32b1b1b9"
+  },
+  "original_red": {
+    "metadata_path": "docs/evidence/rjc-256/red-v2-9-run.json",
+    "metadata_sha256": "4ef9ea2728f76896b4d19f0e55717371cf72e22395c60f8228d21d1f47f1d8a6",
+    "transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-9-conformance.log",
+    "transcript_sha256": "87366be13a21f9900ef7c4da2a21474006bf4813b7f28a7bf1bf1a6d7d00eecb"
+  },
+  "archived_test_runs": {
+    "path": "docs/evidence/rjc-256/superseded/v2.9/test-runs.json",
+    "sha256": "40b987cde81be833b2826f1d1a6093487d1db858c875498c0b493db2a862d3bc"
+  },
+  "archived_evidence_manifest": {
+    "path": "docs/evidence/rjc-256/superseded/v2.9/v2-9-evidence.sha256",
+    "sha256": "4edd0392892fbe109ce7aa1428a1c0c1ef37149aa7e63bc91daec384eca87ab7"
+  },
+  "pre_transition_state_sha256": "8227a73c5b603ea848196812b48cdffb1c9dd2b4c8bb13c1f8caa67ada08e4db",
+  "architect_approve": {
+    "path": ".omx/plans/rjc-256-peer-compatibility-architect-review-cycle9.md",
+    "sha256": "5c7d3ce4c8156b5661ed69454c3ffb13196a712f6bec186adc35e0a89b040115",
+    "verdict": "approve",
+    "completed_at": "2026-08-01T05:35:21Z",
+    "sequence_index": 1
+  },
+  "critic_revise": {
+    "path": ".omx/plans/rjc-256-peer-compatibility-critic-review-cycle6.md",
+    "sha256": "ad5c5faf68d1a4bc1b2ef8053b4a8f79cf67698bf454cbabb41c5b51b7b04c50",
+    "verdict": "revise",
+    "reviewed_amendment_sha256": "4e97bb4a060fe03f2edd20ff79eb1c22d8076f8a992f78e62797bbe92278ad66",
+    "prior_architect_artifact_sha256": "5c7d3ce4c8156b5661ed69454c3ffb13196a712f6bec186adc35e0a89b040115",
+    "completed_at": "2026-08-01T05:45:22Z",
+    "sequence_index": 2
+  },
+  "v2_9_green_exists": false,
+  "superseded_at": "2026-08-01T05:51:02Z",
+  "active_successor_lineage": "v2.10",
+  "attempt_6_authorized": false,
+  "attempt_6_started": false
+}

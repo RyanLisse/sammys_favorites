@@ -1,0 +1,86 @@
+{
+  "schema_version": 2,
+  "lineage": "v2.4",
+  "phase": "red",
+  "command": "node --test --test-reporter=spec --test-reporter-destination=docs/evidence/rjc-256/transcripts/red-v2-4-conformance.log test/rjc-256-conformance.test.mjs",
+  "node_version": "v24.18.0",
+  "started_at_utc": "2026-08-01T02:33:58Z",
+  "completed_at_utc": "2026-08-01T02:34:02Z",
+  "exit_code": 1,
+  "test_file": "test/rjc-256-conformance.test.mjs",
+  "test_sha256": "f471865c07b73f6b8384e5f59616deffbdf3d414e2a0b557c1597252ac84a50c",
+  "test_git_blob": "c9f3da95f44850f4320e68d5647ac603926fbcf2",
+  "transcript": "transcripts/red-v2-4-conformance.log",
+  "transcript_sha256": "09105a8b48cf1a3835108e3ab7e9ffd5b02b64b52162a7aa7af7a829583a221c",
+  "transcript_sanitization": {
+    "complete": true,
+    "replacement": "absolute repository path replaced with <REPO>",
+    "secrets_observed": false
+  },
+  "result": {
+    "tests": 64,
+    "passed": 51,
+    "failed": 13,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "missing_artifact_classes": 25
+  },
+  "named_case_vector": [
+    "V201", "V202", "V203", "V204", "V205", "V206", "V207", "V208",
+    "V209", "V210", "V211", "V212", "V213", "V214", "V215", "V216",
+    "V217", "V218", "V219", "V220", "V221", "V222", "V223", "V224",
+    "V225", "V226", "V227", "V228", "V229", "V230", "V231", "V232",
+    "V233", "V234", "V235", "V236", "V237", "V238", "V239", "V240",
+    "V241", "V242", "V243", "V244", "V245", "V246", "V247", "V248"
+  ],
+  "failed_canonical_cases": [
+    "V201", "V205", "V215", "V216", "V217", "V218", "V219",
+    "V220", "V221", "V222", "V223", "V224", "V228"
+  ],
+  "passed_canonical_cases": [
+    "V202", "V203", "V204", "V206", "V207", "V208", "V209", "V210",
+    "V211", "V212", "V213", "V214", "V225", "V226", "V227", "V229",
+    "V230", "V231", "V232", "V233", "V234", "V235", "V236", "V237",
+    "V238", "V239", "V240", "V241", "V242", "V243", "V244", "V245",
+    "V246", "V247", "V248"
+  ],
+  "representative_green_boundaries": {
+    "v215_transitive_child_hash_binding": "V246 passed",
+    "v217_semantic_and_patch_equivalence": "V247 passed"
+  },
+  "semantic_mutation_groups": [
+    "declaration identity and registry linkage",
+    "registry deduplication channel cutoff and integrity",
+    "snapshot identity retry and cutoff isolation",
+    "Next React Medusa Turbo coherence and SWC sealed published-peer proof",
+    "yalc prerelease-only scope and proof",
+    "bootstrap Node OCI isolation and credential boundary",
+    "unknown JSON payload script workspace override setting and post-patch drift",
+    "source config file mode and payload patch allowlist",
+    "Corepack image path digest pnpm and heap binding",
+    "checksum cycle and retained-byte mutation",
+    "full child envelope inventory allowlist linkage digest and direct-provider policy",
+    "bounded late Picomatch metadata byte provenance version completeness and highest-compatible proof",
+    "pnpm direct-provider probe runtime isolation resolution result and checksum binding",
+    "parent-only downstream matrix spike command and executable stamp rejection",
+    "canonical timeout signal kill grace Corepack pnpm argv and no-outer-retry binding",
+    "child-parent ID T0 registry Node resolution-byte and extension linkage bypass rejection"
+  ],
+  "semantic_mutation_groups_passed": 16,
+  "sealed_parent_snapshot_reused": "sha256:7a654c2a5d29a85cbd0de3dd8e093485c8199a6aca790fea0dbd7d645457002c",
+  "effective_peer_compatible_child_snapshot": "sha256:038e13ce9feeca3afc4fa559d8ccf8790ac5f39bf13e560d512953ad269d22b2",
+  "override_only_failure_probe_result_sha256": "1603954e68529b45979adeb0266a0b70cc24e6337c039a2f7ba678f81f96554c",
+  "override_only_failure_probe_checksums_sha256": "0874065e99783fc59cac580a58821ffeb26ffd82b6fd476420b646eb1486e400",
+  "v2_3_archive": {
+    "path": "docs/evidence/rjc-256/superseded/v2.3/rjc-256-conformance.test.mjs",
+    "sha256": "8babb29ce8e24cefd27bd4dc2660112a538c0f4de830b3988459e75aea51a3f2",
+    "git_blob": "3e37b736033cf0fa2c3da16161538c8147351d19"
+  },
+  "v2_3_archived_evidence_manifest_sha256": "5c9ab27836c88b9d201d4800735d2fd330e4f51ca095f51df84ede3915dbb4d7",
+  "v2_3_archived_test_runs_sha256": "232c2d08342a62f9be7e8c0e4be4af3e889daf85a3083f7cdc798ea43d930286",
+  "v2_3_status": "superseded_without_green",
+  "active_lineage": true,
+  "attempt_5_started": false,
+  "review_gate_status": "pending_architect_then_critic"
+}

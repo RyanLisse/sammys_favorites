@@ -1,0 +1,8 @@
+{
+  "extends": "@sammys/typescript-config/base.json",
+  "include": ["src"],
+  "exclude": ["node_modules", ".medusa"],
+  "compilerOptions": {
+    "strictNullChecks": true
+  }
+}

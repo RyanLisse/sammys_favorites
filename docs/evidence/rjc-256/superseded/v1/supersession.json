@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "lineage": "v1",
+  "status": "superseded_without_green",
+  "statement": "superseded before first Green",
+  "v1_green_exists": false,
+  "superseded_at": "2026-07-31T22:48:04Z",
+  "reason": "The product owner replaced the Next 15 production-reference bridge with mandatory latest stable Next 16 and a frozen latest-compatible attempt for every retained direct package.",
+  "archived_test": {
+    "path": "docs/evidence/rjc-256/superseded/v1/rjc-256-conformance.test.mjs",
+    "sha256": "3ccfe787941759f299b66feed6d907c6ef956b64173dc45bc72251d939eb170b",
+    "git_blob": "e64ee4e5152d9783f1b89805733633480bec6cfe"
+  },
+  "original_red": {
+    "metadata_path": "docs/evidence/rjc-256/red-run.json",
+    "metadata_sha256": "ebc4d54704f46b733ce6abd2fffa0fb2a50e15739b5c815f8f644a68c7066f9b",
+    "transcript_path": "docs/evidence/rjc-256/transcripts/red-conformance.log",
+    "transcript_sha256": "20d7b9a4e94c3a823faeb230bbb656087cdb127a79f36465f52c429fbc6ca9b6",
+    "exit_code": 1
+  },
+  "old_matrix": {
+    "path": "docs/evidence/rjc-256/version-matrix.json",
+    "sha256_at_supersession": "6b14e3d569066f2bcc2b4ee655c4f8a61e207e453f5edb3166ca78ec62d7af2f"
+  },
+  "g003_stop": {
+    "path": "docs/evidence/rjc-256/failures/g003-stop.json",
+    "sha256": "39858b86eada289ef55df7afecb9bf21f2364c4653a898acd34e13b149de53ee",
+    "canonical_spike_success_claimed": false
+  },
+  "active_successor_lineage": "v2",
+  "owner_decision_language": "product-owner direct-use risk acceptance; not upstream permission, not an upstream license, and not legal clearance"
+}

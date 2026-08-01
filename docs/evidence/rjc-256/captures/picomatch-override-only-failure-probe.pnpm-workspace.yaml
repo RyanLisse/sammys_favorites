@@ -1,0 +1,8 @@
+packages:
+  - apps/api
+
+engineStrict: true
+strictPeerDependencies: true
+
+overrides:
+  fdir@6.1.1>picomatch: 3.0.2

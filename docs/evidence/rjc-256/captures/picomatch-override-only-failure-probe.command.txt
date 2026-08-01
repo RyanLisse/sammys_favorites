@@ -1,0 +1,23 @@
+Image: node@sha256:9b02ede55039f443ad57453a741813c6cd105873f0f66fee95d25529e1ba0533
+Container: rjc256-picomatch-override-only-failure-probe-v2-20260801t0149z
+Container ID: aace2f67b829d3119ec518bef0c66547a3ba51720e996feb5604ae1d891aa95f
+Platform observed: linux/arm64/v8
+User: 1000:1000
+Isolation: no mounts; no Docker socket; all capabilities dropped; no-new-privileges; 4 GiB; 4 CPUs; 512 PIDs
+
+Exact container creation command:
+  docker create --name rjc256-picomatch-override-only-failure-probe-v2-20260801t0149z --platform linux/arm64 --user 1000:1000 --workdir /home/node --network bridge --cap-drop ALL --security-opt no-new-privileges:true --memory 4g --cpus 4 --pids-limit 512 node@sha256:9b02ede55039f443ad57453a741813c6cd105873f0f66fee95d25529e1ba0533 bash /home/node/probe-run.sh
+
+Inputs copied into the stopped no-mount container:
+  picomatch-override-only-failure-probe.root-package.json -> /home/node/probe-root-package.json
+  picomatch-override-only-failure-probe.api-package.json -> /home/node/probe-api-package.json
+  picomatch-override-only-failure-probe.pnpm-workspace.yaml -> /home/node/probe-workspace.yaml
+  picomatch-override-only-failure-probe.run.sh -> /home/node/probe-run.sh
+
+Exact container start command:
+  docker start -a rjc256-picomatch-override-only-failure-probe-v2-20260801t0149z
+
+Bounded logical pnpm command executed by the script:
+  /usr/bin/timeout --signal=TERM --kill-after=30s 600s node --max-old-space-size=1024 /usr/local/lib/node_modules/corepack/dist/corepack.js pnpm install --lockfile-only --ignore-scripts --network-concurrency=1 --fetch-retries=3 --fetch-retry-factor=2 --fetch-retry-mintimeout=10000 --fetch-retry-maxtimeout=60000 --config.engine-strict=true --config.strict-peer-dependencies=true
+
+The root importer directly provides picomatch 4.0.5. The API importer provides fdir 6.1.1 without a direct Picomatch provider. pnpm-workspace.yaml applies the supported pnpm 11.18.0 override `fdir@6.1.1>picomatch: 3.0.2`. The exact install returns ERR_PNPM_PEER_DEP_ISSUES because installed Picomatch remains 4.0.5 while fdir wants overridden peer 3.0.2.

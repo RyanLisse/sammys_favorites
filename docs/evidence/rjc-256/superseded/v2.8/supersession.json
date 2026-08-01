@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "lineage": "v2.8",
+  "status": "superseded_without_green",
+  "statement": "superseded before first Green",
+  "reason": "Cycle-8 Architect REVISE requires every execution-program leaf to be bound to one canonical machine-readable manifest inside the reviewed amendment, with paired actual/state co-mutation coverage before Docker.",
+  "archived_test": {
+    "path": "docs/evidence/rjc-256/superseded/v2.8/rjc-256-conformance.test.mjs",
+    "sha256": "80586196a3993f904b33a4a4e3d97e9b3286e4e01f531793d0a0b15c7cf12867",
+    "git_blob": "12aa7e9f201c51093a7d17dd20606bc5b59d0da9"
+  },
+  "original_red": {
+    "metadata_path": "docs/evidence/rjc-256/red-v2-8-run.json",
+    "metadata_sha256": "472c29495cbd1f6e89e85c5c5915de62b3c087c35f441b0dec05375ce224325b",
+    "transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-8-conformance.log",
+    "transcript_sha256": "cf585fcaf31eed3933a427d85ff9eb2d8abb9c2c951f31490fe03bcd30558019"
+  },
+  "archived_test_runs": {
+    "path": "docs/evidence/rjc-256/superseded/v2.8/test-runs.json",
+    "sha256": "d17d3a9d20b4a139683f2ab39ff19a6118265fe45c66d58612d194c82cd1dfd6"
+  },
+  "archived_evidence_manifest": {
+    "path": "docs/evidence/rjc-256/superseded/v2.8/v2-8-evidence.sha256",
+    "sha256": "f0882d4730f1b65f6fc58dbb15926f60caf7b899342ab3f48397da613a45b675"
+  },
+  "pre_transition_state_sha256": "69bd210f7786d094349a568b5ab0c92702380c02e20bed2ebf6e75fbb437260a",
+  "architect_revise": {
+    "path": ".omx/plans/rjc-256-peer-compatibility-architect-review-cycle8.md",
+    "sha256": "131b1d729bf311f612267ef0b0202368e63bc82f51822cc03aeb52d50088b88e",
+    "verdict": "revise",
+    "completed_at": "2026-08-01T05:03:52Z",
+    "sequence_index": 1
+  },
+  "v2_8_green_exists": false,
+  "active_successor_lineage": "v2.9",
+  "attempt_6_authorized": false,
+  "attempt_6_started": false
+}

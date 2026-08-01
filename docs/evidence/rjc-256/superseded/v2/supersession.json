@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "lineage": "v2",
+  "status": "superseded_without_green",
+  "statement": "superseded before first Green",
+  "v2_green_exists": false,
+  "superseded_at": "2026-07-31T23:20:35Z",
+  "reason": "invalid_v209_numerical_equality_specification",
+  "archived_test": {
+    "path": "docs/evidence/rjc-256/superseded/v2/rjc-256-conformance.test.mjs",
+    "sha256": "63fbed12bcc6e91469e13fe80c7bb1f6f47ad1695151fe112e00a991302c2f66",
+    "git_blob": "18048191c3805667efcb6251a326bb42063d3956"
+  },
+  "original_red": {
+    "metadata_path": "docs/evidence/rjc-256/red-v2-run.json",
+    "metadata_sha256": "a139ef9552f92aa2b8abaa4e6dde36df10854e13afa7255b8ff868277bdfe7ed",
+    "transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-conformance.log",
+    "transcript_sha256": "1a74b105389a58d2c0a90cb1aa00c7c2c2541d24ae3dea80838b1d09c3072f22",
+    "exit_code": 1
+  },
+  "active_successor_lineage": "v2.1",
+  "owner_decision_language": "product-owner direct-use risk acceptance; not upstream permission, not an upstream license, and not legal clearance"
+}

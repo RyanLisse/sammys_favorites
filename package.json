@@ -1,0 +1,36 @@
+{
+  "name": "@sammys/monorepo",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "dev:commerce": "turbo run dev --filter=@sammys/commerce",
+    "dev:storefront": "turbo run dev --filter=@sammys/storefront",
+    "dev:atelier": "turbo run dev --filter=@sammys/atelier",
+    "dev:agent-worker": "turbo run dev --filter=@sammys/agent-worker",
+    "lint": "oxlint .",
+    "format": "oxfmt --write .",
+    "check": "oxlint . && oxfmt --check .",
+    "fix": "oxlint --fix . && oxfmt --write .",
+    "check-types": "turbo run check-types",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test --filter=@sammys/e2e",
+    "prepare": "lefthook install"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "lefthook": "^2.1.10",
+    "oxfmt": "^0.61.0",
+    "oxlint": "^1.76.0",
+    "turbo": "2.10.7",
+    "typescript": "5.9.3",
+    "ultracite": "7.9.4"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@11.18.0+sha512.33d83c77da82f49fba836925c6f1b841181ec3132b670639bd012f7075f5c7cf634c5f870147c19aae7478fac01df09d8892e880454896edd23ee9b33757563c"
+}

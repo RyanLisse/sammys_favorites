@@ -1,0 +1,18 @@
+{
+  "env": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "CI": "1",
+    "HOME": "/home/node",
+    "COREPACK_HOME": "/home/node/.corepack",
+    "PNPM_HOME": "/home/node/.pnpm",
+    "npm_config_update_notifier": "false",
+    "npm_config_fund": "false"
+  },
+  "uid": 1000,
+  "gid": 1000,
+  "architecture": "arm64",
+  "cap_eff": "0000000000000000",
+  "no_new_privileges": 1,
+  "docker_socket_present": false,
+  "input_mount_present": false
+}

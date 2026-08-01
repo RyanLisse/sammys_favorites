@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "lineage": "v2.10",
+  "status": "superseded_without_green",
+  "statement": "superseded before first Green",
+  "reason": "Cycle-10 Architect REVISE requires exact canonical sequence lexemes before lossy numeric conversion, including fully synchronized artifact, state alias, SHA, and tracker mutations.",
+  "archived_amendment": {
+    "path": "docs/evidence/rjc-256/superseded/v2.10/rjc-256-peer-compatibility-amendment.md",
+    "sha256": "9933a5dc4b971a46c07315dbae5406cb8472b6ba150821ff2bc725fb0e1252ae"
+  },
+  "archived_test": {
+    "path": "docs/evidence/rjc-256/superseded/v2.10/rjc-256-conformance.test.mjs",
+    "sha256": "1707ffd06d1098474c9a96b4f0eef4cd558132b961da2ee33dd0848960ad00bf",
+    "git_blob": "d5abbe663dc38b16b72d897e8752348feaf4054c"
+  },
+  "original_red": {
+    "metadata_path": "docs/evidence/rjc-256/red-v2-10-run.json",
+    "metadata_sha256": "62d40cc691b8ac49c68723d6e1df028a4b2c02ee2d4e842c51732c7dc8a9a591",
+    "transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-10-conformance.log",
+    "transcript_sha256": "632f0192201dd7d04f2aa0a9c3a8adf3e0396ae00913c3d5ccd87904548e5f0c"
+  },
+  "archived_test_runs": {
+    "path": "docs/evidence/rjc-256/superseded/v2.10/test-runs.json",
+    "sha256": "079af82873cd47ed93c0c133bd4619b4fd169b4a9f96b1a552626d6fa10cf457"
+  },
+  "archived_evidence_manifest": {
+    "path": "docs/evidence/rjc-256/superseded/v2.10/v2-10-evidence.sha256",
+    "sha256": "4c9a54d5ae8a78766aaaca4890e129317f41589ec22ec653e241ec997f96ac52"
+  },
+  "pre_transition_state_sha256": "6418c2169f9aeec3f6b8446f49f510aa55fd5c4f6a624d743652998869b23b7b",
+  "pre_transition_tracker_sha256": "9ee0e702a5c2f9dfcfd60696dc0d00f970f593773d5a36bd8770366471c2887a",
+  "architect_revise": {
+    "path": ".omx/plans/rjc-256-peer-compatibility-architect-review-cycle10.md",
+    "sha256": "d84ab110009939b033857e5fc8bf196f962adfffac386572938b894ec5d29505",
+    "verdict": "revise",
+    "reviewed_amendment_sha256": "9933a5dc4b971a46c07315dbae5406cb8472b6ba150821ff2bc725fb0e1252ae",
+    "completed_at": "2026-08-01T06:24:51Z",
+    "sequence_index": 1
+  },
+  "v2_10_green_exists": false,
+  "superseded_at": "2026-08-01T06:30:00Z",
+  "active_successor_lineage": "v2.11",
+  "attempt_6_authorized": false,
+  "attempt_6_started": false
+}

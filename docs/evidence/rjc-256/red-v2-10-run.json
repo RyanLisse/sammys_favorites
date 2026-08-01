@@ -1,0 +1,78 @@
+{
+  "schema_version": 2,
+  "lineage": "v2.10",
+  "phase": "red",
+  "command": "NO_COLOR=1 node --test test/rjc-256-conformance.test.mjs; sanitize absolute repository path into transcripts/red-v2-10-conformance.log",
+  "node_version": "v24.18.0",
+  "started_at_utc": "2026-08-01T06:03:35Z",
+  "completed_at_utc": "2026-08-01T06:03:39Z",
+  "exit_code": 1,
+  "test_file": "test/rjc-256-conformance.test.mjs",
+  "test_sha256": "1707ffd06d1098474c9a96b4f0eef4cd558132b961da2ee33dd0848960ad00bf",
+  "test_git_blob": "d5abbe663dc38b16b72d897e8752348feaf4054c",
+  "transcript": "transcripts/red-v2-10-conformance.log",
+  "transcript_sha256": "632f0192201dd7d04f2aa0a9c3a8adf3e0396ae00913c3d5ccd87904548e5f0c",
+  "transcript_sanitization": {
+    "complete": true,
+    "replacement": "absolute repository path replaced with <REPO>",
+    "secrets_observed": false
+  },
+  "result": {
+    "tests": 105,
+    "passed": 88,
+    "failed": 17,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "named_canonical_cases": 89,
+    "named_canonical_passed": 72,
+    "named_canonical_failed": 17,
+    "semantic_mutation_groups_passed": 16,
+    "paired_review_semantic_mutations_rejected": 13,
+    "malformed_review_mutations_rejected": 8,
+    "review_alias_tracker_mutations_rejected": 6,
+    "capture_graph_mutations_rejected": 20,
+    "missing_artifact_classes": 25
+  },
+  "named_case_vector": [
+    "V201", "V202", "V203", "V204", "V205", "V206", "V207", "V208", "V209", "V210",
+    "V211", "V212", "V213", "V214", "V215", "V216", "V217", "V218", "V219", "V220",
+    "V221", "V222", "V223", "V224", "V225", "V226", "V227", "V228", "V229", "V230",
+    "V231", "V232", "V233", "V234", "V235", "V236", "V237", "V238", "V239", "V240",
+    "V241", "V242", "V243", "V244", "V245", "V246", "V247", "V248", "V249", "V250",
+    "V251", "V252", "V253", "V254", "V255", "V256", "V257", "V258", "V259", "V260",
+    "V261", "V262", "V263", "V264", "V265", "V266", "V267", "V268", "V269", "V270",
+    "V271", "V272", "V273", "V274", "V275", "V276", "V277", "V278", "V279", "V280",
+    "V281", "V282", "V283", "V284", "V285", "V286", "V287", "V288", "V289"
+  ],
+  "failed_canonical_cases": [
+    "V201", "V205", "V215", "V216", "V217", "V218", "V219", "V220", "V221",
+    "V222", "V223", "V224", "V228", "V254", "V256", "V263", "V264"
+  ],
+  "iteration_11_boundaries": {
+    "v281_v2_9_archive_read_verification": "passed",
+    "v282_canonical_review_bytes_and_tracker_consensus_fixture": "passed",
+    "v283_paired_review_semantic_mutations": 13,
+    "v284_malformed_review_mutations": 8,
+    "v285_review_alias_tracker_mutations": 6,
+    "v286_five_capture_graph": "passed",
+    "v287_capture_graph_mutations": 20,
+    "v288_host_pre_docker_refusal": "passed",
+    "v289_iteration_11_state_gate": "passed"
+  },
+  "prior_review_transition": {
+    "architect_artifact_sha256": "5c7d3ce4c8156b5661ed69454c3ffb13196a712f6bec186adc35e0a89b040115",
+    "architect_sequence_index": 1,
+    "architect_verdict": "approve",
+    "critic_artifact_sha256": "ad5c5faf68d1a4bc1b2ef8053b4a8f79cf67698bf454cbabb41c5b51b7b04c50",
+    "critic_sequence_index": 2,
+    "critic_verdict": "revise",
+    "reviewed_amendment_sha256": "4e97bb4a060fe03f2edd20ff79eb1c22d8076f8a992f78e62797bbe92278ad66",
+    "preserved_as_prior_history": true
+  },
+  "active_lineage": true,
+  "green_exists": false,
+  "attempt_6_authorized": false,
+  "attempt_6_started": false,
+  "review_gate_status": "pending_architect_then_critic"
+}

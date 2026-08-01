@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "kind": "pnpm_strict_peer_direct_provider_probe",
+  "status": "passed",
+  "container": {
+    "id": "3f411023d770eb480cb08654c36176922c27b94c11c48f9a5ef04e8667dd3ba4",
+    "image_digest": "sha256:9b02ede55039f443ad57453a741813c6cd105873f0f66fee95d25529e1ba0533",
+    "platform": "linux/arm64/v8",
+    "user": "1000:1000",
+    "started_at": "2026-08-01T01:17:48.68695209Z",
+    "finished_at": "2026-08-01T01:17:51.125525966Z",
+    "exit_code": 0,
+    "oom_killed": false,
+    "mounts": [],
+    "docker_socket_present": false,
+    "cap_drop": ["ALL"],
+    "no_new_privileges": true,
+    "memory_bytes": 4294967296,
+    "nano_cpus": 4000000000,
+    "pids_limit": 512
+  },
+  "runtime": {
+    "node": "24.18.1",
+    "pnpm": "11.18.0",
+    "corepack_entrypoint": "/usr/local/lib/node_modules/corepack/dist/corepack.js",
+    "corepack_entrypoint_sha256": "3655bc798f300951f2070fee411b337d626b0c3ae80c2d24c46ccac4595d4bf9",
+    "strict_peer_dependencies": true,
+    "engine_strict": true,
+    "watchdog_seconds": 600,
+    "kill_grace_seconds": 30
+  },
+  "inputs": {
+    "root_manifest": {
+      "path": "captures/picomatch-direct-provider-probe.root-package.json",
+      "sha256": "sha256:e4d956625ed3af3d8b9cefe8ba73b0b005c0b08d50579a5a4e1a14e5d8ab4123"
+    },
+    "api_manifest": {
+      "path": "captures/picomatch-direct-provider-probe.api-package.json",
+      "sha256": "sha256:6820cf65341fb4f48f3cbad405ef1832b5e3a11459582fb7934ee6cc3a649d00"
+    },
+    "workspace_manifest": {
+      "path": "captures/picomatch-direct-provider-probe.pnpm-workspace.yaml",
+      "sha256": "sha256:e38fac7e2b4e493efa64723801821cb494aa1b35a8f52579d0430e05e3adddb3"
+    },
+    "run_script": {
+      "path": "captures/picomatch-direct-provider-probe.run.sh",
+      "sha256": "sha256:0f1e88fb49eeb0a3db8c784609bfd4c2ffeed36b61e35946259d92a90e4a7d54"
+    },
+    "command_record": {
+      "path": "captures/picomatch-direct-provider-probe.command.txt",
+      "sha256": "sha256:1cccf6cc4db9a5c9e9c595c7fd399f4e701a5f1391dcf92333d09538370a2017"
+    }
+  },
+  "outputs": {
+    "transcript": {
+      "path": "captures/picomatch-direct-provider-probe.transcript.log",
+      "sha256": "sha256:40f9663151267af1fd4f2753366098ef020e7dbcc24b72524e31aff84a9abc69"
+    },
+    "lock": {
+      "path": "captures/picomatch-direct-provider-probe.lock.yaml",
+      "sha256": "sha256:993058335b7ed213e1b0464d2e91a649b17258b7f0e4fc64b31da111bfd35279"
+    },
+    "lock_excerpt": {
+      "path": "captures/picomatch-direct-provider-probe.lock-excerpt.txt",
+      "sha256": "sha256:584611a555e75f858fea016ab0a2d34d93d4841beb0cf2be2c862bff80540803"
+    }
+  },
+  "assertions": {
+    "root_visible_picomatch": "4.0.5",
+    "api_direct_picomatch": "3.0.2",
+    "fdir": "6.1.1",
+    "resolved_peer_snapshot": "fdir@6.1.1(picomatch@3.0.2)",
+    "both_picomatch_majors_coexist": true,
+    "strict_peer_error": false,
+    "direct_api_devdependency_required": true,
+    "pnpm_override_used": false
+  },
+  "discarded_preflight": {
+    "path": "captures/picomatch-direct-provider-probe-preflight-failure.log",
+    "sha256": "sha256:7d403cab1ed951e112a961ea6e05f9285f1e3084e5c2ead650878dead0084243",
+    "failure_kind": "container_workdir_created_root_owned_before_node_user_start",
+    "pnpm_started": false,
+    "dependency_resolution_started": false
+  }
+}

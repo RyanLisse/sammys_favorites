@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "probe_kind": "anonymous_public_transport_readiness_only",
+  "started_at": "2026-07-31T23:46:36.314Z",
+  "completed_at": "2026-07-31T23:46:36.909Z",
+  "url": "https://registry.npmjs.org/@medusajs%2Ftypes",
+  "status": 200,
+  "status_text": "OK",
+  "rate_limit_headers": {},
+  "body_consumed_as_metadata": false,
+  "process_env_names": [
+    "CI",
+    "COREPACK_HOME",
+    "HOME",
+    "PATH",
+    "PNPM_HOME",
+    "npm_config_fund",
+    "npm_config_update_notifier"
+  ],
+  "resolution_metadata_effect": "none"
+}

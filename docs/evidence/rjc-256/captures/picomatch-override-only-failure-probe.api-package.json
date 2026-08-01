@@ -1,0 +1,10 @@
+{
+  "name": "rjc-256-picomatch-override-only-failure-probe-api",
+  "private": true,
+  "engines": {
+    "node": "24.18.1"
+  },
+  "devDependencies": {
+    "fdir": "6.1.1"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "lineage": "v2.5",
+  "status": "superseded_without_green",
+  "statement": "superseded before first Green",
+  "reason": "Attempt 5 stopped during fail-closed container preflight because Docker materialized the configured target workspace WorkingDir before clone. A successor lineage must bind a neutral pre-existing Config.WorkingDir, prove the target workspace absent before clone, and classify pnpm audit results deterministically.",
+  "archived_test": {
+    "path": "docs/evidence/rjc-256/superseded/v2.5/rjc-256-conformance.test.mjs",
+    "sha256": "c9296f6b41fad62d0c62b306b7d7e9d6697ce9b22e03c28b73f3eec1a72b4788",
+    "git_blob": "a553c4fd43b4f3aeba6e6fd252d9d5b51d3f57d6"
+  },
+  "original_red": {
+    "metadata_path": "docs/evidence/rjc-256/red-v2-5-run.json",
+    "metadata_sha256": "2c31a536573a532d120cc4937e6aa09022bd5f26d219b7eb63d9ff6bc63fc8aa",
+    "transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-5-conformance.log",
+    "transcript_sha256": "15101b495bee278d08198b8447de2d02ccc419589a19bc501c6560474df47fbd"
+  },
+  "archived_test_runs": {
+    "path": "docs/evidence/rjc-256/superseded/v2.5/test-runs.json",
+    "sha256": "84e9aa51d575a5bdf24dde2f9e5d85d07d4f1bdb792233776333fb2d5c0d7903"
+  },
+  "archived_evidence_manifest": {
+    "path": "docs/evidence/rjc-256/superseded/v2.5/v2-5-evidence.sha256",
+    "sha256": "049b4ba5bac59ddd060ee63219e816435013ee99fda5d93dbd74142bacea804c"
+  },
+  "attempt_5_started": true,
+  "attempt_5_green_exists": false,
+  "attempt_5_terminal_evidence": "docs/evidence/rjc-256/failures/g003b-attempt5-evidence.sha256",
+  "active_successor_lineage": "v2.6",
+  "attempt_6_authorized": false,
+  "attempt_6_started": false
+}

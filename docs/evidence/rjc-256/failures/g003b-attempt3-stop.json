@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "goal": "G003b",
+  "attempt": 3,
+  "status": "stopped_during_fresh_lock_generation",
+  "recorded_at": "2026-07-31T23:51:39.441020544Z",
+  "transport_readiness_probe": {
+    "capture": "../captures/attempt3-transport-readiness.json",
+    "status": 200,
+    "completed_at": "2026-07-31T23:46:36.909Z",
+    "body_consumed_as_metadata": false
+  },
+  "snapshot": {
+    "t0": "2026-07-31T22:58:40.544Z",
+    "snapshot_id": "sha256:7a654c2a5d29a85cbd0de3dd8e093485c8199a6aca790fea0dbd7d645457002c",
+    "registry_snapshot_sha256": "sha256:2c2a2d4f026d1c6b1a09c7c844bcf61df62e8d7b5f820c385dd96afb24b104a6",
+    "node_release_snapshot_sha256": "sha256:98809dc6302861c594967fc473d93b736ba767533d1bc5149c484274e5f093b4",
+    "declaration_count": 43,
+    "pnpm": "11.18.0",
+    "node": "v24.18.1",
+    "image_platform": "linux/arm64/v8",
+    "image_platform_manifest_digest": "sha256:9b02ede55039f443ad57453a741813c6cd105873f0f66fee95d25529e1ba0533"
+  },
+  "upstream": {
+    "url": "https://github.com/306-Technologies/306-starter-monorepo",
+    "detached_commit": "10b5d4b0623123737854a3cb02d54f6e32a1fb9e"
+  },
+  "failure": {
+    "stage": "pnpm install --lockfile-only --ignore-scripts with strict peer and engine validation",
+    "exit_code": 1,
+    "oom_killed": false,
+    "error_code": "ERR_PNPM_FETCH_429",
+    "url": "https://registry.npmjs.org/@medusajs%2Ftypes",
+    "package_context": "dependency of @medusajs/framework@2.18.0",
+    "approved_backoff_seconds": [10, 20, 40],
+    "approved_backoff_exhausted": true,
+    "last_resolution_count": 164,
+    "same_as_attempt_2_external_blocker": true
+  },
+  "not_reached": [
+    "completed fresh pnpm lockfile",
+    "pnpm fetch --frozen-lockfile",
+    "dependency-tree-free acquisition seal",
+    "acquisition image commit",
+    "network-none offline install",
+    "API build",
+    "web Turbopack build",
+    "web ESLint",
+    "web typecheck",
+    "ESLint config import smoke",
+    "API Jest/SWC smoke",
+    "production audit",
+    "full audit",
+    "canonical spike.json",
+    "first Green"
+  ],
+  "success_claims": {
+    "lock": false,
+    "fetch": false,
+    "offline_install": false,
+    "build_or_smoke": false,
+    "audit": false,
+    "canonical_spike": false,
+    "green": false
+  },
+  "preservation": {
+    "fresh_attempt_3_container": true,
+    "attempt_2_workspace_store_or_cache_reused": false,
+    "stopped_attempt_3_container_retained": true,
+    "retry_performed_after_attempt_3_failure": false,
+    "alternate_registry_or_cache_used": false,
+    "credentials_or_proxy_used": false,
+    "settings_weakened": false,
+    "rjc257_work_performed": false,
+    "frozen_v1_v2_v2_1_and_snapshot_modified": false
+  }
+}

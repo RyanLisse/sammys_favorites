@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "lineage": "v2.11",
+  "status": "superseded_without_green",
+  "statement": "superseded before first Green",
+  "reason": "Cycle-8 Critic REVISE requires a single canonical helper authorization receipt, no post-helper state rereads, and receipt-bound private staging of all five approved program leaves before Docker.",
+  "archived_amendment": {
+    "path": "docs/evidence/rjc-256/superseded/v2.11/rjc-256-peer-compatibility-amendment.md",
+    "sha256": "78777d1f88e24f39ed42994e37de79491cb7f65e9cd8c3dc4fbc8fe508c9d5b1"
+  },
+  "archived_test": {
+    "path": "docs/evidence/rjc-256/superseded/v2.11/rjc-256-conformance.test.mjs",
+    "sha256": "211372f4ed397298b5847f2aebfa15f1875412967a29805a5e466b7710f31e4c",
+    "git_blob": "164e1235f0f14b05c8b9d1eac24edead3f0994bf"
+  },
+  "original_red": {
+    "metadata_path": "docs/evidence/rjc-256/red-v2-11-run.json",
+    "metadata_sha256": "f28480c4bd5c32f87376ae7e3a28ea0dc4324e7f9224774bd19f5126d26bf905",
+    "transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-11-conformance.log",
+    "transcript_sha256": "c9944bdeecf2420b8440677ca2fd6b1ad9b645559cdc18c6e748a8060a722170"
+  },
+  "archived_test_runs": {
+    "path": "docs/evidence/rjc-256/superseded/v2.11/test-runs.json",
+    "sha256": "32130c377f20aad8e4614c5e930b619f036c9ec8d9ec4335a1eee8705a632f7a"
+  },
+  "archived_evidence_manifest": {
+    "path": "docs/evidence/rjc-256/superseded/v2.11/v2-11-evidence.sha256",
+    "sha256": "eaa1652ce631fd229d7fbab8c535aad092ccbcb527236e2afae702da9d0b84bf"
+  },
+  "pre_transition_state_sha256": "f26cda8f3149f4f99ee369b1f1a30c66947d61404254349ac42a213ff8f1f3ab",
+  "pre_transition_tracker_sha256": "67d860e92a6862e5599269e3e992c1ad23b5c4f48e05848e1f5c56a6a5216ae2",
+  "pre_transition_goals_sha256": "273a6fe1dad63a88431441281b2d96d0edab8a8e811b20d50fb3b4035365f681",
+  "pre_transition_ledger_sha256": "b56dbe55dfc2b35b97b27ffb4cef1fa30801780b68ec07150d0db095993707a0",
+  "architect_approve": {
+    "path": ".omx/plans/rjc-256-peer-compatibility-architect-review-cycle11.md",
+    "sha256": "c10024ffb178cb7e2fc888af696139239afb5bff1b4b95741b8ca5b8cf4eaa14",
+    "verdict": "approve",
+    "reviewed_amendment_sha256": "78777d1f88e24f39ed42994e37de79491cb7f65e9cd8c3dc4fbc8fe508c9d5b1",
+    "completed_at": "2026-08-01T06:50:01Z",
+    "sequence_index": 1
+  },
+  "critic_revise": {
+    "path": ".omx/plans/rjc-256-peer-compatibility-critic-review-cycle8.md",
+    "sha256": "16a1c83db1cf327e948c02df111d8b0047a3a893bca9f60ec0029aeb5ce81a27",
+    "verdict": "revise",
+    "reviewed_amendment_sha256": "78777d1f88e24f39ed42994e37de79491cb7f65e9cd8c3dc4fbc8fe508c9d5b1",
+    "prior_architect_artifact_sha256": "c10024ffb178cb7e2fc888af696139239afb5bff1b4b95741b8ca5b8cf4eaa14",
+    "completed_at": "2026-08-01T06:57:20Z",
+    "sequence_index": 2
+  },
+  "v2_11_green_exists": false,
+  "superseded_at": "2026-08-01T07:00:00Z",
+  "active_successor_lineage": "v2.12",
+  "attempt_6_authorized": false,
+  "attempt_6_started": false
+}

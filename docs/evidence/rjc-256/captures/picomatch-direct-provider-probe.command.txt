@@ -1,0 +1,18 @@
+Image: node@sha256:9b02ede55039f443ad57453a741813c6cd105873f0f66fee95d25529e1ba0533
+Platform observed: linux/arm64/v8
+User: 1000:1000
+Isolation: no mounts; no Docker socket; all capabilities dropped; no-new-privileges; 4 GiB; 4 CPUs; 512 PIDs
+
+Inputs copied into the stopped no-mount container:
+  picomatch-direct-provider-probe.root-package.json -> /home/node/probe-root-package.json
+  picomatch-direct-provider-probe.api-package.json -> /home/node/probe-api-package.json
+  picomatch-direct-provider-probe.pnpm-workspace.yaml -> /home/node/probe-workspace.yaml
+  picomatch-direct-provider-probe.run.sh -> /home/node/probe-run.sh
+
+Container command:
+  bash /home/node/probe-run.sh
+
+Bounded logical pnpm command executed by the script:
+  /usr/bin/timeout --signal=TERM --kill-after=30s 600s node --max-old-space-size=1024 /usr/local/lib/node_modules/corepack/dist/corepack.js pnpm install --lockfile-only --ignore-scripts --network-concurrency=1 --fetch-retries=3 --fetch-retry-factor=2 --fetch-retry-mintimeout=10000 --fetch-retry-maxtimeout=60000 --config.engine-strict=true --config.strict-peer-dependencies=true
+
+The root importer intentionally provides picomatch 4.0.5 while apps/api directly provides picomatch 3.0.2. Success therefore proves the API-local direct provider binds fdir@6.1.1 to picomatch 3.0.2 while the incompatible major remains elsewhere in the workspace.

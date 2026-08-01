@@ -1,0 +1,11 @@
+{
+  "name": "rjc-256-picomatch-override-only-failure-probe",
+  "private": true,
+  "packageManager": "pnpm@11.18.0",
+  "engines": {
+    "node": "24.18.1"
+  },
+  "devDependencies": {
+    "picomatch": "4.0.5"
+  }
+}

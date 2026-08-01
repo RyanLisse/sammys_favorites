@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "lineage": "v2.1",
+  "status": "superseded_without_green",
+  "statement": "superseded before first Green",
+  "v2_1_green_exists": false,
+  "superseded_at": "2026-08-01T01:23:46Z",
+  "reason": "architect_required_complete_peer_compatible_child_late_metadata_probe_and_v2_2_lineage",
+  "archived_test": {
+    "path": "docs/evidence/rjc-256/superseded/v2.1/rjc-256-conformance.test.mjs",
+    "sha256": "db90bd214ed5f0a46798703d2e7b905c5717e51393eb887f58d9f3ce2c523ce8",
+    "git_blob": "f8310f2677a4e9a7240c85ed02d8fe6f564f6ba0"
+  },
+  "original_red": {
+    "metadata_path": "docs/evidence/rjc-256/red-v2-1-run.json",
+    "metadata_sha256": "a23b43e7e0b07af8c38d77783f15cc402babf94445b5fb275ea51f14eb2cad7f",
+    "transcript_path": "docs/evidence/rjc-256/transcripts/red-v2-1-conformance.log",
+    "transcript_sha256": "c62b9802df3317af94df814a569bb6a9e8596cfd8a808952eabc60a194d08994",
+    "exit_code": 1
+  },
+  "active_successor_lineage": "v2.2",
+  "owner_decision_language": "product-owner direct-use risk acceptance; not upstream permission, not an upstream license, and not legal clearance"
+}

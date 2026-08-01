@@ -1,0 +1,72 @@
+{
+  "schema_version": 2,
+  "lineage": "v2.2",
+  "phase": "red",
+  "command": "node --test test/rjc-256-conformance.test.mjs",
+  "node_version": "v24.18.0",
+  "started_at_utc": "2026-08-01T01:27:52Z",
+  "completed_at_utc": "2026-08-01T01:27:55Z",
+  "exit_code": 1,
+  "test_file": "test/rjc-256-conformance.test.mjs",
+  "test_sha256": "0a88c3cc1a433eadfbcf3f006dff68d28e2a5afab1fd8eb9feece9b8a1b0601b",
+  "test_git_blob": "6692b977de601a7c9c359c254bef1c6e538c40aa",
+  "transcript": "transcripts/red-v2-2-conformance.log",
+  "transcript_sha256": "a389af7deb80fe01161e1038bd6d99422fa8cbeb321fb6b062fe9e0132de595a",
+  "transcript_sanitization": {
+    "complete": true,
+    "replacement": "absolute repository path replaced with <REPO>",
+    "secrets_observed": false
+  },
+  "result": {
+    "tests": 52,
+    "passed": 39,
+    "failed": 13,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "missing_artifact_classes": 19
+  },
+  "named_case_vector": [
+    "V201", "V202", "V203", "V204", "V205", "V206", "V207", "V208", "V209", "V210",
+    "V211", "V212", "V213", "V214", "V215", "V216", "V217", "V218", "V219", "V220",
+    "V221", "V222", "V223", "V224", "V225", "V226", "V227", "V228", "V229", "V230",
+    "V231", "V232", "V233", "V234", "V235", "V236", "V237", "V238", "V239", "V240"
+  ],
+  "failed_canonical_cases": [
+    "V201", "V205", "V215", "V216", "V217", "V218", "V219", "V220", "V221", "V222", "V223", "V224", "V228"
+  ],
+  "passed_canonical_cases": [
+    "V202", "V203", "V204", "V206", "V207", "V208", "V209", "V210", "V211", "V212", "V213", "V214",
+    "V225", "V226", "V227", "V229", "V230", "V231", "V232", "V233", "V234", "V235", "V236", "V237",
+    "V238", "V239", "V240"
+  ],
+  "semantic_mutation_groups": [
+    "declaration identity and registry linkage",
+    "registry deduplication channel cutoff and integrity",
+    "snapshot identity retry and cutoff isolation",
+    "Next React Medusa Turbo coherence and SWC sealed published-peer proof",
+    "yalc prerelease-only scope and proof",
+    "bootstrap Node OCI isolation and credential boundary",
+    "transformation path key file mode and payload allowlist",
+    "Corepack image path digest pnpm and heap binding",
+    "checksum cycle and retained-byte mutation",
+    "full child envelope inventory allowlist linkage digest and direct-provider policy",
+    "bounded late Picomatch metadata byte provenance version completeness and highest-compatible proof",
+    "pnpm direct-provider probe runtime isolation resolution result and checksum binding"
+  ],
+  "semantic_mutation_groups_passed": 12,
+  "sealed_parent_snapshot_reused": "sha256:7a654c2a5d29a85cbd0de3dd8e093485c8199a6aca790fea0dbd7d645457002c",
+  "peer_compatible_child_snapshot": "sha256:038e13ce9feeca3afc4fa559d8ccf8790ac5f39bf13e560d512953ad269d22b2",
+  "late_metadata_extension_sha256": "127303ce5377b3c542a92bdad434e36d65097f382ca02cf9128d2836bc8852b9",
+  "direct_provider_probe_result_sha256": "7f7b59747bbe020063a3e5b2421e939a6468763fbf9136f0262c88feec2712fe",
+  "direct_provider_probe_checksums_sha256": "7eccd9695f8fa9e0688d609e482e1d76d6a5ea40b0fcca5963d308796ffde34c",
+  "v2_1_archive": {
+    "path": "docs/evidence/rjc-256/superseded/v2.1/rjc-256-conformance.test.mjs",
+    "sha256": "db90bd214ed5f0a46798703d2e7b905c5717e51393eb887f58d9f3ce2c523ce8",
+    "git_blob": "f8310f2677a4e9a7240c85ed02d8fe6f564f6ba0"
+  },
+  "v2_1_status": "superseded_without_green",
+  "active_lineage": true,
+  "attempt_5_started": false,
+  "review_gate_status": "pending_architect_then_critic"
+}

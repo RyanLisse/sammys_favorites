@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "phase": "red",
+  "command": "node --test test/rjc-256-conformance.test.mjs",
+  "node_version": "v24.18.0",
+  "started_at_utc": "2026-07-31T21:29:20Z",
+  "exit_code": 1,
+  "test_file": "test/rjc-256-conformance.test.mjs",
+  "test_sha256": "3ccfe787941759f299b66feed6d907c6ef956b64173dc45bc72251d939eb170b",
+  "test_git_blob": "e64ee4e5152d9783f1b89805733633480bec6cfe",
+  "transcript": "transcripts/red-conformance.log",
+  "transcript_sanitization": {
+    "complete": true,
+    "replacement": "absolute repository path replaced with <REPO>",
+    "secrets_observed": false
+  },
+  "transcript_sha256": "20d7b9a4e94c3a823faeb230bbb656087cdb127a79f36465f52c429fbc6ca9b6",
+  "result": {
+    "tests": 39,
+    "passed": 15,
+    "failed": 24,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0
+  },
+  "named_case_vector": [
+    "C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08",
+    "C09", "C10", "C11", "C12", "C13", "C14", "C15", "C16",
+    "C18", "C19", "C20", "C21", "C23", "C24", "C25", "C26"
+  ],
+  "missing_artifact_classes": [
+    "baseline",
+    "version-matrix",
+    "migration-map",
+    "security-advisories",
+    "spike",
+    "linear-acceptance",
+    "adr",
+    "spike-input-manifests",
+    "spike-input-workspace",
+    "spike-input-lockfile",
+    "workspace-reduction-patch",
+    "acquisition-transcript",
+    "offline-build-transcript",
+    "container-inspection-captures",
+    "in-process-isolation-captures",
+    "leaf-checksum-manifest"
+  ],
+  "provenance_requirements_in_conformance_suite": false
+}

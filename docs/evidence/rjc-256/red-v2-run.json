@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "lineage": "v2",
+  "phase": "red",
+  "command": "node --test test/rjc-256-conformance.test.mjs",
+  "node_version": "v24.18.0",
+  "started_at_utc": "2026-07-31T22:48:20Z",
+  "exit_code": 1,
+  "test_file": "test/rjc-256-conformance.test.mjs",
+  "test_sha256": "63fbed12bcc6e91469e13fe80c7bb1f6f47ad1695151fe112e00a991302c2f66",
+  "test_git_blob": "18048191c3805667efcb6251a326bb42063d3956",
+  "transcript": "transcripts/red-v2-conformance.log",
+  "transcript_sha256": "1a74b105389a58d2c0a90cb1aa00c7c2c2541d24ae3dea80838b1d09c3072f22",
+  "transcript_sanitization": {
+    "complete": true,
+    "replacement": "absolute repository path replaced with <REPO>",
+    "secrets_observed": false
+  },
+  "result": {
+    "tests": 39,
+    "passed": 13,
+    "failed": 26,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "missing_artifact_classes": 23
+  },
+  "named_case_vector": [
+    "V201", "V202", "V203", "V204", "V205", "V206", "V207", "V208", "V209", "V210",
+    "V211", "V212", "V213", "V214", "V215", "V216", "V217", "V218", "V219", "V220",
+    "V221", "V222", "V223", "V224", "V225", "V226", "V227", "V228", "V229", "V230"
+  ],
+  "failed_canonical_cases": [
+    "V201", "V203", "V204", "V205", "V206", "V207", "V208", "V209", "V210", "V211",
+    "V212", "V213", "V214", "V215", "V216", "V217", "V218", "V219", "V220", "V221",
+    "V222", "V223", "V224", "V227", "V228", "V229"
+  ],
+  "passed_preservation_or_existing_content_cases": [
+    "V202", "V225", "V226", "V230"
+  ],
+  "semantic_mutation_groups": [
+    "declaration identity and registry linkage",
+    "registry deduplication channel cutoff and integrity",
+    "snapshot identity retry and cutoff isolation",
+    "Next React Medusa Turbo and SWC group coherence",
+    "yalc prerelease-only scope and proof",
+    "bootstrap Node OCI isolation and credential boundary",
+    "transformation path key file mode and payload allowlist",
+    "Corepack image path digest pnpm and heap binding",
+    "checksum cycle and retained-byte mutation"
+  ],
+  "semantic_mutation_groups_passed": 9,
+  "v1_archive": {
+    "path": "docs/evidence/rjc-256/superseded/v1/rjc-256-conformance.test.mjs",
+    "sha256": "3ccfe787941759f299b66feed6d907c6ef956b64173dc45bc72251d939eb170b",
+    "git_blob": "e64ee4e5152d9783f1b89805733633480bec6cfe"
+  },
+  "v1_status": "superseded_without_green",
+  "provenance_requirements_in_content_suite": false
+}
