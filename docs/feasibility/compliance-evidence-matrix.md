@@ -1,8 +1,6 @@
 # RJC-261 compliance evidence matrix
 
-Status: **open / specialist sign-off pending**
-Evidence date: **2026-08-01 (Europe/Amsterdam)**
-Accountable coordinator: **Ryan Lisse**
+Status: **open / specialist sign-off pending** Evidence date: **2026-08-01 (Europe/Amsterdam)** Accountable coordinator: **Ryan Lisse**
 
 This is a product-delivery evidence aid, not legal or tax advice. It records current official-source observations and safe operating fallbacks. It is not a legal clearance, provider approval, customs ruling, laboratory certificate, or specialist sign-off. No row below is green.
 

@@ -1,8 +1,6 @@
 # RJC-261 provider feasibility: independent official-source check
 
-Observed: 2026-08-01 (Europe/Amsterdam)
-Scope: Stripe sandbox/webhooks, Meta WhatsApp Business Cloud, Vercel Chat SDK, and AliExpress Open Platform
-Method: public official documentation only; no credentials, account dashboards, sandbox calls, provider mutations, code changes, or Linear changes
+Observed: 2026-08-01 (Europe/Amsterdam) Scope: Stripe sandbox/webhooks, Meta WhatsApp Business Cloud, Vercel Chat SDK, and AliExpress Open Platform Method: public official documentation only; no credentials, account dashboards, sandbox calls, provider mutations, code changes, or Linear changes
 
 ## Decision
 
