@@ -35,6 +35,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Local tooling and operating-system files
+.context/
 .DS_Store
 .idea/
 .vscode/*.local.json
