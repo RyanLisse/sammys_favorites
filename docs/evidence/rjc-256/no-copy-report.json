@@ -1,14 +1,42 @@
 {
-  "schema_version": 1,
-  "compared_at": "2026-08-01T11:45:00Z",
-  "current_scope": "clean-room scaffold commit 82c2815a0113af8cfa58c96be1e09249e76a59e5 plus later Sammy-owned Phase 0 packages",
-  "upstream_repository": "https://github.com/306-Technologies/306-starter-monorepo",
-  "upstream_commit": "10b5d4b0623123737854a3cb02d54f6e32a1fb9e",
-  "current_file_count": 31,
-  "upstream_file_count": 131,
+  "comparison": "SHA-256 exact match for every active tracked file and normalized-line Jaccard >= 0.8 for text files",
   "exact_matches": [],
+  "generated_at": "2026-08-01T12:27:25.406Z",
   "high_similarity_matches": [],
-  "similarity_threshold": 0.8,
   "passed": true,
-  "command": "node scripts/rjc-256/verify-no-upstream-copy.mjs <detached-upstream-checkout>"
+  "schema_version": 2,
+  "scope": {
+    "excluded": [
+      "docs/evidence/** (immutable evidence and historical research)",
+      "pnpm-lock.yaml (generated dependency resolution)",
+      "apps/storefront/next-env.d.ts (framework generated)",
+      "**/*.tsbuildinfo (compiler generated)"
+    ],
+    "included": "all tracked files in the target tree"
+  },
+  "similarity_threshold": 0.8,
+  "sources": [
+    {
+      "commit": "10b5d4b0623123737854a3cb02d54f6e32a1fb9e",
+      "file_count": 131,
+      "kind": "pinned-upstream",
+      "repository": "https://github.com/306-Technologies/306-starter-monorepo",
+      "tree": "36a3fe5dd2c318faf232e15bc6ea190bc246a6e5"
+    },
+    {
+      "commit": "cf901921a132be19f4bdc53fcdebb011bca16350",
+      "file_count": 43,
+      "kind": "superseded-scaffold",
+      "repository": "this repository",
+      "tree": "deb5153e9ccee1e1d3aa2b8821888af59bb58275"
+    }
+  ],
+  "target": {
+    "active_file_count": 91,
+    "commit": "a3d98589f5c115d8587dbe4651267607c75115c7",
+    "committed_at": "2026-08-01T14:26:52+02:00",
+    "content_manifest_algorithm": "for each path sorted lexicographically: UTF-8 path, NUL, ASCII byte length, NUL, raw content, NUL",
+    "content_manifest_sha256": "69c0381f83b8f879896251ca23cf803f4ed2f435be84adc0dabc5710ae65a6af",
+    "tree": "4abbb7f003c759efda3ee68d152b768d9848eda5"
+  }
 }

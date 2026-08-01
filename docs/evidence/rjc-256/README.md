@@ -10,3 +10,27 @@ All captures, failure records, red runs, old digests, resolution snapshots, and
 the abandoned direct-use investigation and are not build, dependency, codegen,
 or runtime inputs. Their presence does not authorize reuse of the researched
 repository.
+
+## No-copy report
+
+`scripts/rjc-256/verify-no-upstream-copy.mjs` compares every active tracked
+file in an exact target Git tree with both the pinned 306 research checkout and
+the superseded local scaffold. The only exclusions are immutable evidence and
+generated dependency, framework, and compiler outputs. Exact SHA-256 matches
+are checked for every file; normalized-line similarity is additionally checked
+for text files.
+
+The report binds the target commit and tree IDs and a SHA-256 content manifest.
+That manifest hashes, in byte-sorted path order, each UTF-8 path, its raw byte
+length, and its raw file content with NUL separators. Generate the final report
+only after the target implementation commit exists:
+
+```sh
+node scripts/rjc-256/verify-no-upstream-copy.mjs \
+  <detached-pinned-upstream-checkout> --target <target-commit>
+```
+
+The command rejects an upstream checkout that is not detached at
+`10b5d4b0623123737854a3cb02d54f6e32a1fb9e`. The resulting evidence commit may
+follow the target commit; the report must not claim to cover its own later
+evidence commit.
