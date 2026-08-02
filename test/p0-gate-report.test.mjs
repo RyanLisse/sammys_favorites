@@ -15,6 +15,25 @@ test("external proof gaps keep G0, Human Review, and launch effects closed", () 
   assert.equal(report.deliveryPolicy.supplierWritesEnabled, false);
 });
 
+test("asOf is a real date backed by at least one observation made on it", () => {
+  // Relaxing retrievedAt from "equal to asOf" to "not after asOf" is what makes
+  // an append-only record possible, but on its own it lets asOf be pushed
+  // forward with nothing new observed. A report dated X must contain at least
+  // one observation from X, or the date is an unbacked claim.
+  assert.match(report.asOf, /^\d{4}-\d{2}-\d{2}$/u);
+  assert.equal(new Date(report.asOf).toISOString().slice(0, 10), report.asOf);
+  const observedOnReportDate = Object.values(report.providers).some(
+    (provider) =>
+      provider.sourceObservations.some(
+        (observation) => observation.retrievedAt === report.asOf
+      )
+  );
+  assert.ok(
+    observedOnReportDate,
+    `no observation was made on asOf ${report.asOf}`
+  );
+});
+
 test("every provider has dated official-source prerequisites, permissions, and findings", () => {
   for (const provider of Object.values(report.providers)) {
     assert.ok(provider.fallback.length > 20);
@@ -33,7 +52,14 @@ test("every provider has dated official-source prerequisites, permissions, and f
           "open.aliexpress.com",
         ].includes(source.hostname)
       );
+      // Zero-padded ISO dates compare correctly as strings, so an observation
+      // may predate asOf but never postdate it. The round-trip rejects a
+      // well-shaped impossible date such as 2026-13-45.
       assert.match(observation.retrievedAt, /^\d{4}-\d{2}-\d{2}$/u);
+      assert.equal(
+        new Date(observation.retrievedAt).toISOString().slice(0, 10),
+        observation.retrievedAt
+      );
       assert.ok(observation.retrievedAt <= report.asOf);
       assert.ok(observation.prerequisites.length > 0);
       assert.ok(observation.scopesOrPermissions.length > 0);

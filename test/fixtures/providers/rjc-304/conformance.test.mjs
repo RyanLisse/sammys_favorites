@@ -89,6 +89,24 @@ test("rejects an update type the webhook is not subscribed to", () => {
   assert.equal(result.reason, "update-type-not-subscribed");
 });
 
+test("fails closed when an update carries more or fewer than one optional field", () => {
+  // Telegram guarantees at most one optional field per update. Interpreting a
+  // payload that breaks that guarantee would let a subscribed type shadow an
+  // unsubscribed one sitting beside it.
+  const shapes = [
+    { callback_query: {}, message: {}, update_id: 2001 },
+    { message: {}, my_chat_member: {}, update_id: 2002 },
+    { update_id: 2003 },
+  ];
+
+  for (const update of shapes) {
+    const result = receiver().receive({ ...inbound(0), update });
+    assert.equal(result.outcome, "rejected");
+    assert.equal(result.reason, "update-shape-invalid");
+    assert.equal(result.receipt, undefined);
+  }
+});
+
 test("processes a repeated update_id exactly once", () => {
   const instance = receiver();
 

@@ -37,7 +37,7 @@ yarn-error.log*
 # Local tooling and operating-system files
 .context/
 .omc/
-Plans/
+/Plans/
 .DS_Store
 .idea/
 .vscode/*.local.json

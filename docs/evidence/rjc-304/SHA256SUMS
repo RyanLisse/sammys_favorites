@@ -1,2 +1,2 @@
-b061d3770e8e52a79e0f06283ec746a5ccdc1d95b042b863c0dbaa9e13d1694d  test/fixtures/providers/rjc-304/telegram-webhook-verifier.mjs
-27017f483be100344bc93f80be736da3eb1b6ce7cbd6fb60408c5f51dfa18293  test/fixtures/providers/rjc-304/conformance.test.mjs
+85378dc7b2829725cf31781a79596bf8a9ebbaa14b9f0eaf7d6e97fdb2c8f342  test/fixtures/providers/rjc-304/telegram-webhook-verifier.mjs
+36a4c2daa7e227d2bc5ffeabc4b293aa72e8834f461813fe88926ae8288ec5a0  test/fixtures/providers/rjc-304/conformance.test.mjs

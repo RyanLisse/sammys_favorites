@@ -77,8 +77,17 @@ export const createTelegramWebhookReceiver = ({
       if (!Number.isSafeInteger(update?.update_id)) {
         return { outcome: "rejected", reason: "update-id-invalid" };
       }
-      const updateType = Object.keys(update).find((key) => key !== "update_id");
-      if (!allowed.has(updateType)) {
+      // Telegram states at most one optional field is present in any update.
+      // A forged payload can still carry several, and picking the first match
+      // would smuggle an unsubscribed type past this check, so a violated
+      // guarantee fails closed rather than being interpreted.
+      const updateTypes = Object.keys(update).filter(
+        (key) => key !== "update_id"
+      );
+      if (updateTypes.length !== 1) {
+        return { outcome: "rejected", reason: "update-shape-invalid" };
+      }
+      if (!allowed.has(updateTypes[0])) {
         return { outcome: "rejected", reason: "update-type-not-subscribed" };
       }
       if (seenUpdateIds.has(update.update_id)) {

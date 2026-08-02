@@ -13,7 +13,7 @@
 
 The Meta WhatsApp Cloud lane requires a business portfolio, a WhatsApp Business Account, a registered and owned sender phone number, completed app review, granted `whatsapp_business_messaging` and `whatsapp_business_management` permissions, an approved utility template, and observed 24-hour customer-service-window behaviour. Every one of those is issued by Meta. None of them has a date Sammy's Favorites controls, and none of them has a guaranteed outcome. RJC-301 recorded the lane as `blocked_external` on 2026-08-01 with no provider receipt of any kind.
 
-The Telegram Bot API requires a bot token from `@BotFather`. There is no business verification, no account asset to own, no app review, no permission grant, no template approval process, and no messaging window. The entire credential chain is self-serviceable in minutes, which means the lane's evidence — signed-by-secret webhook delivery, duplicate handling, delivery status — can actually be produced rather than waited for.
+The Telegram Bot API requires a bot token from `@BotFather`. There is no business verification, no account asset to own, no app review, no permission grant, no template approval process, and no messaging window. The entire credential chain is self-serviceable in minutes, which means the lane's evidence — secret-token-authenticated webhook delivery, duplicate handling, delivery status — can actually be produced rather than waited for.
 
 Observed 2026-08-02/03 against official sources: `@chat-adapter/telegram@4.36.0` is published on the same version line as the WhatsApp adapter, from the same `github.com/vercel/chat` repository, depending exactly on `chat@4.36.0` and `@chat-adapter/shared@4.36.0`, requiring Node 20 or newer.
 

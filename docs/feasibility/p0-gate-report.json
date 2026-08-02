@@ -14,7 +14,7 @@
       "status": "blocked_external",
       "reasons": [
         "Stripe sandbox and signed-webhook evidence are not available",
-        "Telegram bot identity, registered webhook, signed-delivery, and duplicate-suppression evidence are not available",
+        "Telegram bot identity, registered webhook, secret-token-authenticated delivery, and duplicate-suppression evidence are not available",
         "AliExpress application keys, approved API scope list, ordering, and tracking evidence are not available",
         "Specialist compliance sign-off is pending"
       ]

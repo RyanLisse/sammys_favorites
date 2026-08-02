@@ -36,7 +36,15 @@ The comparison is therefore the entire authenticity check, and the fixture treat
 7. A repeated `update_id` is accepted once and then classified as a duplicate. Telegram documents `update_id` as existing precisely so a receiver can "ignore repeated updates or restore the correct update sequence, should they get out of order."
 8. No rejected or duplicate outcome ever mints a receipt.
 
+Property 7 additionally fails closed when an update carries more or fewer than one optional field. Telegram guarantees at most one, but a forged payload can carry several, and picking the first match would let a subscribed type shadow an unsubscribed one sitting beside it.
+
 This is a synthetic local contract proof. It is not proof that the package is installed, that a webhook is registered, that a real update was received, or that Telegram delivered anything.
+
+### What the deduplication does not prove
+
+The fixture deduplicates in an in-process `Set`. That is enough to prove the decision rule — same `update_id`, accept once — and nothing more. It is not durable and not shared: a restart forgets every `update_id`, and two instances behind the same webhook would each accept the same update once.
+
+Production deduplication is not this component's job. `docs/architecture.md` assigns durable delivery, idempotency, dead letters, and reconciliation to RJC-265, and `@sammys/policy` already consumes each verification receipt exactly once through `WebhookVerificationRepository`. The live RJC-304 captures must therefore evidence the duplicate decision against durable storage, not against this `Set`.
 
 ## Policy boundary
 
