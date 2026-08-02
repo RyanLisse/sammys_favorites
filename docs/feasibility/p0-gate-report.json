@@ -1,18 +1,20 @@
 {
-  "schemaVersion": 2,
-  "asOf": "2026-08-01",
+  "schemaVersion": 3,
+  "asOf": "2026-08-03",
   "issueStatus": "human_review",
   "overall": "at_risk",
   "evidenceArtifacts": {
     "providerMatrix": "docs/feasibility/provider-evidence-matrix.md",
-    "complianceMatrix": "docs/feasibility/compliance-evidence-matrix.md"
+    "complianceMatrix": "docs/feasibility/compliance-evidence-matrix.md",
+    "channelDecision": "docs/decisions/0003-telegram-channel-pivot.md"
   },
+  "appendOnlyNote": "sourceObservations are dated records. Later findings are added with their own retrievedAt; earlier entries are never edited or removed, so observation dates may differ from asOf.",
   "gates": {
     "G0": {
       "status": "blocked_external",
       "reasons": [
         "Stripe sandbox and signed-webhook evidence are not available",
-        "Meta WABA, phone number, template, permission grant, and service-window evidence are not available",
+        "Telegram bot identity, registered webhook, signed-delivery, and duplicate-suppression evidence are not available",
         "AliExpress application keys, approved API scope list, ordering, and tracking evidence are not available",
         "Specialist compliance sign-off is pending"
       ]
@@ -52,6 +54,18 @@
             "subscribe only to the payment event types consumed by the integration"
           ],
           "finding": "Signature verification requires the Stripe-Signature header, endpoint secret, and raw body; replay-safe and duplicate delivery handling still need sandbox evidence."
+        },
+        {
+          "url": "https://docs.stripe.com/mcp",
+          "retrievedAt": "2026-08-03",
+          "prerequisites": [
+            "MCP access enabled for the sandbox environment only, never live",
+            "OAuth authorization in preference to a Bearer restricted key in a config file"
+          ],
+          "scopesOrPermissions": [
+            "restricted sandbox key or OAuth grant limited to the resources the evidence lane actually touches"
+          ],
+          "finding": "Stripe documents an official MCP server at https://mcp.stripe.com exposing generic stripe_api_read and stripe_api_write tools covering PaymentIntent creation and webhook-endpoint registration, plus get_stripe_account_info, with access enabled separately per environment. This is a documentation observation and not a read-back tool catalog; RJC-300 connected to a narrower curated variant. It narrows where the Stripe blocker lies without removing it, because a real signed delivery and a duplicate or stale rejection still require an endpoint that receives an actual request."
         }
       ],
       "requiredEvidence": [
@@ -63,7 +77,10 @@
       "fallback": "Checkout and live payment collection remain disabled."
     },
     "metaWhatsApp": {
-      "status": "blocked_external",
+      "status": "superseded_by_decision",
+      "supersededBy": "docs/decisions/0003-telegram-channel-pivot.md",
+      "supersededOn": "2026-08-03",
+      "supersessionReason": "WhatsApp is no longer the automated messaging channel. The lane was gated on assets and approvals only Meta issues, with no date under Sammy's Favorites control. Observations below are retained unedited as recorded on 2026-08-01 and are no longer a live evidence requirement.",
       "sourceObservations": [
         {
           "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/get-started",
@@ -104,8 +121,67 @@
       ],
       "fallback": "Use authenticated Atelier workflows and manual customer communication; no automated WhatsApp delivery."
     },
+    "telegram": {
+      "status": "blocked_external",
+      "replaces": "metaWhatsApp",
+      "decisionRecord": "docs/decisions/0003-telegram-channel-pivot.md",
+      "sourceObservations": [
+        {
+          "url": "https://core.telegram.org/bots/api",
+          "retrievedAt": "2026-08-03",
+          "prerequisites": [
+            "bot token issued by BotFather, stored outside Git",
+            "public HTTPS callback that can receive a real update",
+            "high-entropy secret_token registered through setWebhook"
+          ],
+          "scopesOrPermissions": [
+            "allowed_updates limited to the update types the product actually consumes"
+          ],
+          "finding": "Authentication is a single bot token; there is no business portfolio, owned phone-number asset, app review, permission grant, template approval, or customer-service window. setWebhook accepts a secret_token of 1-256 characters from A-Za-z0-9_- that Telegram returns in the X-Telegram-Bot-Api-Secret-Token header on every webhook request, and update_id is documented as the basis for ignoring repeated updates and restoring order."
+        },
+        {
+          "url": "https://chat-sdk.dev/adapters/official/telegram",
+          "retrievedAt": "2026-08-03",
+          "prerequisites": [
+            "TELEGRAM_BOT_TOKEN",
+            "TELEGRAM_WEBHOOK_SECRET_TOKEN for webhook verification"
+          ],
+          "scopesOrPermissions": [
+            "adapter reads and sends only through the single bot identity it is configured with"
+          ],
+          "finding": "The official Telegram adapter documents the bot token as its only required credential and validates incoming webhook requests against the secret token configured through setWebhook. Documented platform constraints are callback data limited to 64 bytes and fetchMessages returning only adapter-cached messages from the current process."
+        },
+        {
+          "url": "https://registry.npmjs.org/@chat-adapter%2ftelegram",
+          "retrievedAt": "2026-08-03",
+          "prerequisites": [
+            "pinned adapter and SDK versions with a reviewed dependency and build-script policy",
+            "Node 20 or newer"
+          ],
+          "scopesOrPermissions": [
+            "no provider entitlement is conferred by the package itself"
+          ],
+          "finding": "Version 4.36.0 is published from the vercel/chat repository directory packages/adapter-telegram, depending exactly on chat@4.36.0 and @chat-adapter/shared@4.36.0 with engines.node >=20, published 2026-08-01. Package availability proves a pinnable candidate exists and proves nothing about provider delivery or authenticity."
+        }
+      ],
+      "requiredEvidence": [
+        "getMe receipt establishing bot identity, hashed, retaining only non-secret fields",
+        "registered webhook with secret_token and minimal allowed_updates, evidenced by getWebhookInfo",
+        "real inbound update with a constant-time X-Telegram-Bot-Api-Secret-Token comparison outcome",
+        "negative case: an update with a wrong or absent secret header is rejected",
+        "repeated update_id idempotently ignored, with business-effect count and reconciliation result",
+        "outbound sendMessage delivery receipt",
+        "receipt minted for provider telegram through the existing WebhookVerificationRepository"
+      ],
+      "securityNote": "The Telegram header secret is a bearer credential, not an HMAC over the payload. It proves the caller knows the secret but does not bind to the body and leaves no re-verifiable per-message artifact. Compensating controls are recorded in ADR 0003.",
+      "fallback": "Automated messaging stays disabled; the authenticated Atelier surface and manual customer communication remain the operating position."
+    },
     "chatSdk": {
-      "status": "documented_beta_not_integrated",
+      "status": "retargeted_not_integrated",
+      "adapterTarget": "@chat-adapter/telegram@4.36.0",
+      "previousAdapterTarget": "@chat-adapter/whatsapp@4.36.0",
+      "retargetedOn": "2026-08-03",
+      "decisionRecord": "docs/decisions/0003-telegram-channel-pivot.md",
       "sourceObservations": [
         {
           "url": "https://chat-sdk.dev/docs",
@@ -134,11 +210,12 @@
         }
       ],
       "requiredEvidence": [
-        "pinned package and adapter versions",
-        "explicit Graph API compatibility decision",
+        "pinned package and adapter versions with a reviewed dependency and build-script policy",
         "inbound and outbound fixture conformance",
-        "duplicate, replay, attachment-size, and provider-status tests"
+        "duplicate, replay, attachment-size, and provider-status tests",
+        "a deployed end-to-end exchange using the Telegram bot identity from the telegram lane"
       ],
+      "retargetNote": "RJC-303 fixture conformance is provider-independent and carries over: identity scoping, thread-ID shape, duplicate rejection, monotonic delivery status, fail-closed authenticity, and the rule that channel identity never confers commerce authority. The Graph API version selection recorded for the WhatsApp adapter does not apply to Telegram, which has no equivalent versioned Graph surface.",
       "fallback": "Keep the channel adapter disabled and test proposals through local fixtures only."
     },
     "aliExpress": {
@@ -195,7 +272,10 @@
   "deliveryPolicy": {
     "p1AndP2MayStart": false,
     "supplierWritesEnabled": false,
-    "automatedWhatsAppEnabled": false,
+    "automatedMessagingEnabled": false,
     "livePaymentsEnabled": false
+  },
+  "renamedFields": {
+    "automatedWhatsAppEnabled": "automatedMessagingEnabled since schemaVersion 3; the channel is now Telegram per ADR 0003 and the flag is channel-neutral. Its value is unchanged and stays false until the telegram lane receipts exist."
   }
 }
