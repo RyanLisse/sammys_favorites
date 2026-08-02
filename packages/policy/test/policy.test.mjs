@@ -588,6 +588,48 @@ test("accepts webhooks only through an immutable verification receipt lookup", a
   assert.equal(replay.reasonCode, "UNTRUSTED_WEBHOOK");
 });
 
+test("binds a webhook receipt to its provider, so a channel swap needs no policy change", async () => {
+  // ADR 0003 replaced WhatsApp with Telegram, whose authenticity check is a
+  // constant-time secret-header comparison rather than an HMAC over the
+  // payload. That difference lives in the adapter that mints the receipt, so
+  // this layer must accept a telegram receipt unchanged - and must still
+  // refuse to honour it under a different expected provider.
+  const webhookBinding = { ...binding, capability: "webhook.receive" };
+  const telegramReceipt = {
+    bindingSha256: sha256CanonicalJson(webhookBinding),
+    expiresAt: "2026-08-01T12:05:00Z",
+    provider: "telegram",
+    receiptId: "webhook-receipt-telegram-1",
+    verifiedAt: "2026-08-01T11:59:00Z",
+  };
+
+  const telegramContext = context({
+    expectedWebhookProvider: "telegram",
+    grants: new Set(["webhook.receive"]),
+    webhookVerificationRepository: new InMemoryWebhookVerificationRepository([
+      telegramReceipt,
+    ]),
+  });
+  const verified = await evaluator.evaluate(telegramContext, {
+    binding: webhookBinding,
+    webhookVerificationReceiptId: telegramReceipt.receiptId,
+  });
+  assert.equal(verified.reasonCode, "ALLOW");
+
+  const crossProvider = context({
+    expectedWebhookProvider: "stripe",
+    grants: new Set(["webhook.receive"]),
+    webhookVerificationRepository: new InMemoryWebhookVerificationRepository([
+      telegramReceipt,
+    ]),
+  });
+  const rejected = await evaluator.evaluate(crossProvider, {
+    binding: webhookBinding,
+    webhookVerificationReceiptId: telegramReceipt.receiptId,
+  });
+  assert.equal(rejected.reasonCode, "UNTRUSTED_WEBHOOK");
+});
+
 test("atomically consumes provider-bound webhook receipts and rejects invalid dates", async () => {
   const webhookBinding = { ...binding, capability: "webhook.receive" };
   const receipt = {
