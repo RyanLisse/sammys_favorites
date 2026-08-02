@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-300",
+  "capturedAt": "2026-08-02T11:41:34Z",
+  "repositoryCommit": "3bb48f0fe280cadf9eec8a28557cf36860a3e46c",
+  "source": "stripe@openai-curated-remote",
+  "status": "blocked_external",
+  "evidenceClassification": "ephemeral_authenticated_account_observation",
+  "checkoutEnabled": false,
+  "providerActivationPerformed": false,
+  "sandboxMutationsPerformed": false,
+  "secretValuesCaptured": false,
+  "authenticatedContext": {
+    "accountInfoReadSucceeded": true,
+    "accountDisplayName": "Sammy's Favorites sandbox",
+    "stripeAccountIdSha256": "978b2b4d7021477b1dccbe5776b0c4dac4a31694974b256f6d01e4c06163f7ec",
+    "accountAccessObservation": "observed_not_immutable",
+    "displayNameIsAuthoritativeSandboxSignal": false,
+    "authoritativeSandboxMode": "not_evidenced",
+    "providerResponseArtifactCaptured": false,
+    "dashboardOwnerIdentityVerified": false,
+    "dashboardTestModeIndicatorInspected": false
+  },
+  "providerInventory": {
+    "paymentIntentCount": 0,
+    "webhookEndpointCount": 0
+  },
+  "capabilityProbe": {
+    "paymentIntentCreateOperationAvailable": false,
+    "paymentIntentWriteAttempted": false,
+    "webhookEndpointCreateOperationAvailable": true,
+    "webhookEndpointWriteAttempted": false,
+    "webhookEndpointWriteSkippedReason": "No isolated callback URL, signing flow, or explicit provider-activation receipt was available."
+  },
+  "acceptance": {
+    "authenticatedAccountAccess": "observed_not_immutable",
+    "authenticatedSandboxAccountAccess": "not_evidenced",
+    "sandboxOwnerIdentity": "not_evidenced",
+    "dashboardTestModeIndicator": "not_evidenced",
+    "paymentIntentTestPath": "not_evidenced",
+    "realSignedWebhookVerification": "not_evidenced",
+    "duplicateDeliveryIdempotencyAndAudit": "not_evidenced",
+    "accountableSecondReviewer": "not_evidenced",
+    "rjc261ImmutableEvidenceLink": "not_evidenced",
+    "secretHygiene": "evidenced_for_this_capture"
+  },
+  "externalBlockers": [
+    {
+      "id": "stripe.sandbox.owner_confirmation",
+      "blocker": "An authenticated MCP read returned an account display name containing sandbox, but that mutable name is not an authoritative environment signal. No immutable provider response, accountable owner identity, sandbox identifier, or Dashboard test-mode indicator was captured."
+    },
+    {
+      "id": "stripe.payment_intent.test_lifecycle",
+      "blocker": "The authenticated account contains no PaymentIntents and the connected MCP API catalog exposes no PaymentIntent create operation."
+    },
+    {
+      "id": "stripe.webhook.real_signature",
+      "blocker": "The account contains no webhook endpoints and no isolated callback/signature-verification path was available."
+    },
+    {
+      "id": "stripe.webhook.duplicate_idempotency",
+      "blocker": "There is no real signed event to redeliver, deduplicate, audit, or reconcile."
+    },
+    {
+      "id": "stripe.accountable_second_reviewer",
+      "blocker": "No accountable human reviewer has signed the provider receipts."
+    }
+  ],
+  "decision": {
+    "linearAcceptance": "partially_evidenced",
+    "g0StripeLane": "blocked_external",
+    "safeFallback": "checkout_disabled"
+  }
+}

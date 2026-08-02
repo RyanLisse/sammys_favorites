@@ -1,0 +1,5 @@
+9c06ba39ae9ccf1f81d084970496ddba78936da0d868376057b857cb70024a84  docs/evidence/rjc-300/README.md
+d07135e3223fe333a1124c24df13904b7e3a213b46cb3837d9b7e8e056e0b09a  docs/evidence/rjc-300/blocker-receipt.json
+7903470b82bb73e4c8668f76ed634ca565a74cec5773c693e7926ec419314473  docs/evidence/rjc-300/rjc-300-evidence.test.mjs
+3fa50dbeb340975bd0fe6a31940c23c3f5646b06cdcc0549fa14222f1aefeb45  docs/evidence/rjc-300/test-runs.json
+dd057a20696d4d15048028fdc20b0830cc279372ac7b213d35b76ea3e8da33b8  test/fixtures/providers/rjc-300/evidence-contract.json

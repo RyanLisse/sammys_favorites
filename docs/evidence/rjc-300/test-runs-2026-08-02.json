@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-300",
+  "recordedAt": "2026-08-02T11:54:17Z",
+  "evidenceClassification": "local_verification_log_not_independently_signed",
+  "integritySidecar": "docs/evidence/rjc-300/test-runs-2026-08-02.sha256",
+  "runs": [
+    {
+      "check": "node --test docs/evidence/rjc-300/rjc-300-evidence.test.mjs docs/evidence/rjc-300/rjc-300-mcp-evidence.test.mjs",
+      "result": "pass",
+      "exitCode": 0,
+      "evidence": "4 tests passed; 0 failed"
+    },
+    {
+      "check": "shasum -a 256 -c docs/evidence/rjc-300/evidence.sha256",
+      "result": "pass",
+      "exitCode": 0,
+      "evidence": "README.md, blocker-receipt.json, rjc-300-evidence.test.mjs, test-runs.json, and evidence-contract.json: OK; this run log is excluded to avoid a self-referential pass claim"
+    },
+    {
+      "check": "shasum -a 256 -c docs/evidence/rjc-300/mcp-evidence.sha256",
+      "result": "pass",
+      "exitCode": 0,
+      "evidence": "mcp-preflight-receipt.json, MCP-SANDBOX-ACCESS.md, and rjc-300-mcp-evidence.test.mjs: OK"
+    },
+    {
+      "check": "pnpm dlx ultracite fix/check on the new RJC-300 paths",
+      "result": "tool_scope_limitation",
+      "exitCode": 2,
+      "evidence": "Expected at least one target file; all matched evidence files are excluded by repository ignore rules."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-300",
+  "capturedAt": "2026-08-01T20:43:50Z",
+  "repositoryCommit": "3bb48f0fe280cadf9eec8a28557cf36860a3e46c",
+  "status": "blocked_external",
+  "evidenceClassification": "local_preflight_only",
+  "checkoutEnabled": false,
+  "sandboxMutationsPerformed": false,
+  "secretValuesCaptured": false,
+  "preflight": {
+    "stripeCredentialEnvironmentVariableNamesPresent": [],
+    "stripeCliInstalled": false,
+    "authenticatedStripeSessionVerified": false,
+    "stripeDashboardSessionInspected": false
+  },
+  "externalBlockers": [
+    {
+      "id": "stripe.sandbox.access",
+      "blocker": "No Stripe test-mode secret or restricted credential and no authenticated Stripe CLI or Dashboard session were made available to this worktree.",
+      "impact": "Sandbox account ownership, test-mode access, resource restrictions, and account identity cannot be verified."
+    },
+    {
+      "id": "stripe.payment_intent.test_lifecycle",
+      "blocker": "No authorized Stripe test-mode credential or confirmed intended payment-method path was available.",
+      "impact": "A real sandbox PaymentIntent cannot be created or retrieved."
+    },
+    {
+      "id": "stripe.webhook.real_signature",
+      "blocker": "No registered sandbox webhook endpoint, endpoint signing secret, deployed receiver, or authorized Stripe delivery source was available.",
+      "impact": "No real signed webhook delivery can be received or verified."
+    },
+    {
+      "id": "stripe.webhook.duplicate_idempotency",
+      "blocker": "No real verified webhook receipt or authorized delivery/retry mechanism was available.",
+      "impact": "Duplicate delivery idempotency, audit behavior, and reconciliation cannot be evidenced."
+    },
+    {
+      "id": "stripe.accountable_reviewer",
+      "blocker": "No accountable evidence reviewer was designated for this capture.",
+      "impact": "Provider receipts cannot receive the required Human Review sign-off."
+    }
+  ],
+  "acceptance": {
+    "sandboxOwnershipAndTestModeAccess": "not_evidenced",
+    "paymentIntentTestPath": "not_evidenced",
+    "realSignedWebhookVerification": "not_evidenced",
+    "duplicateDeliveryIdempotencyAndAudit": "not_evidenced",
+    "secretHygiene": "evidenced_for_this_capture",
+    "rjc261ImmutableEvidenceLink": "not_evidenced"
+  },
+  "receiptIdentifiers": {
+    "stripeAccountIdHash": null,
+    "paymentIntentIdHash": null,
+    "webhookEndpointIdHash": null,
+    "webhookEventIdHash": null,
+    "idempotencyKeyHash": null,
+    "reconciliationReceiptIdHash": null
+  },
+  "decision": {
+    "linearAcceptance": "partially_evidenced",
+    "g0StripeLane": "blocked_external",
+    "safeFallback": "checkout_disabled"
+  }
+}
