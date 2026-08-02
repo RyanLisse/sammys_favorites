@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-301",
+  "evidenceClass": "external_blocker",
+  "status": "missing_external_authority",
+  "observedAt": null,
+  "providerReceipt": null,
+  "blocker": "No redacted token-debug receipt, system-user assignment, app-review state, or Business Manager permission view was supplied; documented permissions cannot be represented as grants actually observed for Sammy's Favorites.",
+  "documentedCandidatePermissions": [
+    "whatsapp_business_messaging",
+    "whatsapp_business_management"
+  ],
+  "requiredReceiptFields": [
+    "captured_at",
+    "app_id_sha256",
+    "token_actor_type_redacted",
+    "permission_name",
+    "permission_grant_state",
+    "app_review_state",
+    "asset_assignment_state",
+    "token_expiry_redacted",
+    "receipt_sha256"
+  ],
+  "expectedHashedIdentifiers": [
+    "sha256:dd95b1a1a57c3326a578b499c7f4f5c57dd8c302dde1232e82ee45a578236b22"
+  ],
+  "hashNote": "This value hashes a receipt-field label only and is not an actual Meta app identifier hash."
+}

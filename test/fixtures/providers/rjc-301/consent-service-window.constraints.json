@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-301",
+  "evidenceClass": "public_documentation",
+  "status": "documented_not_observed",
+  "customerServiceWindowHours": 24,
+  "windowTrigger": "customer_message_or_call",
+  "insideWindowAllowsFreeFormServiceMessages": true,
+  "outsideWindowRequiresApprovedTemplate": true,
+  "projectConsentReceipt": null,
+  "projectOptOutReceipt": null,
+  "projectWindowBehaviorReceipt": null,
+  "operationalConstraint": "Do not initiate automated WhatsApp communication until an authorized reviewer supplies hashed consent provenance, a tested opt-out/suppression receipt, an approved utility template receipt, and controlled inside/outside-window provider results.",
+  "sources": [
+    {
+      "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/messages/send-messages",
+      "httpStatusObserved": 200,
+      "retrievedAt": "2026-08-01T20:44:29Z",
+      "supports": "24-hour customer-service window and template requirement outside it"
+    },
+    {
+      "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/templates/overview",
+      "httpStatusObserved": 200,
+      "retrievedAt": "2026-08-01T20:44:29Z",
+      "supports": "template review and approved status"
+    },
+    {
+      "url": "https://developers.facebook.com/documentation/business-messaging/whatsapp/getting-opt-in",
+      "httpStatusObserved": 200,
+      "retrievedAt": "2026-08-01T20:44:29Z",
+      "supports": "opt-in requirements and user control"
+    }
+  ]
+}

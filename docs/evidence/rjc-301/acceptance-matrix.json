@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-301",
+  "asOf": "2026-08-01T20:44:29Z",
+  "acceptance": "partial",
+  "automatedWhatsAppEnabled": false,
+  "fallback": "atelier_manual_communication",
+  "criteria": [
+    {
+      "id": "meta.business_portfolio.ownership",
+      "status": "blocked_external",
+      "artifact": "test/fixtures/providers/rjc-301/asset-ownership.blocker.json"
+    },
+    {
+      "id": "meta.waba.ownership",
+      "status": "blocked_external",
+      "artifact": "test/fixtures/providers/rjc-301/asset-ownership.blocker.json"
+    },
+    {
+      "id": "meta.phone_number.registration",
+      "status": "blocked_external",
+      "artifact": "test/fixtures/providers/rjc-301/asset-ownership.blocker.json"
+    },
+    {
+      "id": "meta.permissions.observed_grant",
+      "status": "blocked_external",
+      "artifact": "test/fixtures/providers/rjc-301/observed-scopes.blocker.json"
+    },
+    {
+      "id": "meta.template.approved",
+      "status": "blocked_external",
+      "artifact": "test/fixtures/providers/rjc-301/approved-template.blocker.json"
+    },
+    {
+      "id": "meta.customer_service_window.behavior",
+      "status": "documented_not_observed",
+      "artifact": "test/fixtures/providers/rjc-301/consent-service-window.constraints.json"
+    },
+    {
+      "id": "meta.consent_and_opt_out",
+      "status": "documented_not_observed",
+      "artifact": "test/fixtures/providers/rjc-301/consent-service-window.constraints.json"
+    },
+    {
+      "id": "meta.webhook.challenge_and_signature",
+      "status": "blocked_external",
+      "artifact": "test/fixtures/providers/rjc-301/signed-delivery.blocker.json"
+    },
+    {
+      "id": "meta.delivery_and_duplicate_reconciliation",
+      "status": "blocked_external",
+      "artifact": "test/fixtures/providers/rjc-301/signed-delivery.blocker.json"
+    }
+  ]
+}

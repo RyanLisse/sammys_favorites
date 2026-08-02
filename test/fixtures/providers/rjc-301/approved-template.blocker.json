@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-301",
+  "evidenceClass": "external_blocker",
+  "status": "missing_external_authority",
+  "observedAt": null,
+  "providerReceipt": null,
+  "blocker": "No WhatsApp Manager template export or redacted screen receipt was supplied, so an actual utility template, its WABA association, locale, category, current APPROVED state, and inside/outside-window test cannot be verified.",
+  "requiredReceiptFields": [
+    "captured_at",
+    "waba_id_sha256",
+    "template_id_sha256",
+    "template_name_sha256",
+    "category",
+    "locale",
+    "provider_status",
+    "reviewed_at",
+    "inside_window_test_receipt_sha256",
+    "outside_window_test_receipt_sha256"
+  ],
+  "expectedHashedIdentifiers": [
+    "sha256:b24e7abce64bbfcf024631e421aef9c56987ab6d2d51b101812ab382fbaa8327"
+  ],
+  "hashNote": "This value hashes a receipt-field label only and is not an actual approved-template identifier hash."
+}
