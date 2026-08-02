@@ -9,10 +9,12 @@ import {
 
 const PHONE_NUMBER_ID_HASH =
   "sha256:583e80fa06b4d5c34312ba2807755f8f3a0d17af2a2b690dd3da8ca26c22e47f";
-const USER_WA_ID_HASH = "sha256:59e66446d7abe6163528c2d4782c76495397af40925fcde6e67c9228904ba537";
+const USER_WA_ID_HASH =
+  "sha256:59e66446d7abe6163528c2d4782c76495397af40925fcde6e67c9228904ba537";
 
 const inboundMessage = {
-  messageIdHash: "sha256:b0f96d0d72b0bf504638ef6e4c85e9a65a1fb6e70d9b551d5e7548ddeaf6e56b",
+  messageIdHash:
+    "sha256:b0f96d0d72b0bf504638ef6e4c85e9a65a1fb6e70d9b551d5e7548ddeaf6e56b",
   phoneNumberIdHash: PHONE_NUMBER_ID_HASH,
   signatureValid: true,
   text: "fixture: request draft order summary",
@@ -32,7 +34,7 @@ test("pins an internally compatible Chat SDK and WhatsApp adapter pair", () => {
 test("keeps production Chat SDK traffic disabled", () => {
   assert.throws(
     () => createFixtureAdapter({ environment: "production" }),
-    /production traffic is disabled/,
+    /production traffic is disabled/u
   );
 });
 
@@ -46,7 +48,10 @@ test("normalizes provider identity and stable thread scope without raw identifie
     provider: "whatsapp",
     userWaIdHash: USER_WA_ID_HASH,
   });
-  assert.equal(result.threadId, `whatsapp:${PHONE_NUMBER_ID_HASH}:${USER_WA_ID_HASH}`);
+  assert.equal(
+    result.threadId,
+    `whatsapp:${PHONE_NUMBER_ID_HASH}:${USER_WA_ID_HASH}`
+  );
   assert.equal(JSON.stringify(result).includes("+"), false);
 });
 
@@ -60,24 +65,33 @@ test("deduplicates repeated provider message delivery", () => {
 
 test("tracks monotonic delivery statuses and terminal provider failure", () => {
   const adapter = createFixtureAdapter({ environment: "fixture" });
-  const messageIdHash = inboundMessage.messageIdHash;
+  const { messageIdHash } = inboundMessage;
 
-  assert.equal(adapter.recordStatus(messageIdHash, "accepted").outcome, "updated");
+  assert.equal(
+    adapter.recordStatus(messageIdHash, "accepted").outcome,
+    "updated"
+  );
   assert.equal(adapter.recordStatus(messageIdHash, "sent").outcome, "updated");
-  assert.equal(adapter.recordStatus(messageIdHash, "delivered").outcome, "updated");
+  assert.equal(
+    adapter.recordStatus(messageIdHash, "delivered").outcome,
+    "updated"
+  );
   assert.equal(adapter.recordStatus(messageIdHash, "read").outcome, "updated");
   assert.equal(adapter.recordStatus(messageIdHash, "sent").outcome, "stale");
-  assert.equal(adapter.recordStatus(messageIdHash, "failed").outcome, "terminal");
+  assert.equal(
+    adapter.recordStatus(messageIdHash, "failed").outcome,
+    "terminal"
+  );
 
   const deliveredMessageIdHash =
     "sha256:8a0fbb2e39459c7a0d118ae3dc87fbf963c8b8d3dc965b2f8a1f28e2b7d4c6a1";
   assert.equal(
     adapter.recordStatus(deliveredMessageIdHash, "delivered").outcome,
-    "updated",
+    "updated"
   );
   assert.equal(
     adapter.recordStatus(deliveredMessageIdHash, "failed").outcome,
-    "terminal",
+    "terminal"
   );
 
   const failedMessageIdHash =
@@ -86,22 +100,31 @@ test("tracks monotonic delivery statuses and terminal provider failure", () => {
     adapter.recordStatus(failedMessageIdHash, "failed", {
       code: "provider-rejected",
     }).outcome,
-    "failed",
+    "failed"
   );
-  assert.equal(adapter.recordStatus(failedMessageIdHash, "delivered").outcome, "terminal");
+  assert.equal(
+    adapter.recordStatus(failedMessageIdHash, "delivered").outcome,
+    "terminal"
+  );
 });
 
 test("fails closed for invalid authenticity and malformed identity", () => {
   const adapter = createFixtureAdapter({ environment: "fixture" });
 
-  assert.deepEqual(adapter.receive({ ...inboundMessage, signatureValid: false }), {
-    outcome: "rejected",
-    reason: "signature-invalid",
-  });
-  assert.deepEqual(adapter.receive({ ...inboundMessage, userWaIdHash: "raw-user-id" }), {
-    outcome: "rejected",
-    reason: "identity-not-redacted",
-  });
+  assert.deepEqual(
+    adapter.receive({ ...inboundMessage, signatureValid: false }),
+    {
+      outcome: "rejected",
+      reason: "signature-invalid",
+    }
+  );
+  assert.deepEqual(
+    adapter.receive({ ...inboundMessage, userWaIdHash: "raw-user-id" }),
+    {
+      outcome: "rejected",
+      reason: "identity-not-redacted",
+    }
+  );
 });
 
 test("never treats channel identity or message content as commerce authority", () => {
@@ -129,7 +152,7 @@ test("never treats channel identity or message content as commerce authority", (
         source: "atelier",
       },
     }),
-    { authorized: true, authority: "trusted-approval-receipt" },
+    { authority: "trusted-approval-receipt", authorized: true }
   );
   assert.deepEqual(
     evaluateCommerceAuthorization({
@@ -145,6 +168,6 @@ test("never treats channel identity or message content as commerce authority", (
     {
       authorized: false,
       reason: "authenticated-action-bound-approval-required",
-    },
+    }
   );
 });

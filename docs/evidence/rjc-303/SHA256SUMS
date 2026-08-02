@@ -1,4 +1,4 @@
 96a7297ba10dbf6ad6662a282ed40a0fc7031c5bfcb8bd728d0b96e710b24963  docs/evidence/rjc-303/candidate-matrix.json
 8ec9318e320c5315126c5aa4a87ee0e1959dea26c8828c4f5012a1982c1a8859  docs/evidence/rjc-303/conformance-report.json
-2c024c2aee0c4499f61864e5e2a6aead6759194c70cd830302b9baf3a88594ce  test/fixtures/providers/rjc-303/conformance.test.mjs
-c92c97a218c0cc61c9e6b89465291a5b8db7d57df54277dcbe57eaf0a061ee68  test/fixtures/providers/rjc-303/fixture-adapter.mjs
+845ee4dd9680b036d21be5a5b4c5e2927835bd41af4965ed55cabecae1c975bf  test/fixtures/providers/rjc-303/conformance.test.mjs
+99c6e81d56c758cc90ba2b238bb9135e76c42b9a68efe8801e2836ca9443b60b  test/fixtures/providers/rjc-303/fixture-adapter.mjs

@@ -1,4 +1,4 @@
-const HASH_PATTERN = /^sha256:[a-f0-9]{64}$/;
+const HASH_PATTERN = /^sha256:[a-f0-9]{64}$/u;
 const STATUS_ORDER = new Map([
   ["accepted", 0],
   ["sent", 1],
@@ -13,7 +13,8 @@ export const CHAT_SDK_PIN = Object.freeze({
   productionTraffic: false,
 });
 
-const isRedactedHash = (value) => typeof value === "string" && HASH_PATTERN.test(value);
+const isRedactedHash = (value) =>
+  typeof value === "string" && HASH_PATTERN.test(value);
 
 export const createFixtureAdapter = ({ environment }) => {
   if (environment !== "fixture") {
@@ -30,7 +31,11 @@ export const createFixtureAdapter = ({ environment }) => {
         return { outcome: "rejected", reason: "signature-invalid" };
       }
 
-      const identityValues = [event.messageIdHash, event.phoneNumberIdHash, event.userWaIdHash];
+      const identityValues = [
+        event.messageIdHash,
+        event.phoneNumberIdHash,
+        event.userWaIdHash,
+      ];
       if (!identityValues.every(isRedactedHash)) {
         return { outcome: "rejected", reason: "identity-not-redacted" };
       }
@@ -107,5 +112,5 @@ export const evaluateCommerceAuthorization = ({
     };
   }
 
-  return { authorized: true, authority: "trusted-approval-receipt" };
+  return { authority: "trusted-approval-receipt", authorized: true };
 };
