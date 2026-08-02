@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-302",
+  "provider": "AliExpress Open Platform",
+  "evidenceClass": "public_documentation_reachability",
+  "provesAccountAccess": false,
+  "captureMethod": "Unauthenticated GET of official API-documentation JSON; response bytes retained under captures/ and SHA-256 verified by the focused test",
+  "captureRedaction": "The repeated public documentation example credential value was replaced with [REDACTED_PUBLIC_SAMPLE], and credential parameter names were replaced with REDACTED_PUBLIC_FIELD before retention; byte lengths and SHA-256 values refer to the retained redacted bytes.",
+  "observations": [
+    {
+      "apiPath": "aliexpress.ds.product.get",
+      "observedAt": "2026-08-01T20:49:42Z",
+      "url": "https://open.aliexpress.com/handler/share/apidoc/getApi.json?cid=21038&path=aliexpress.ds.product.get&methodType=GET%2FPOST",
+      "httpStatus": 200,
+      "responseBytes": 108552,
+      "responseSha256": "f404f9b6ad9c768ab5e90fed931c396adba3e96223aefed626f55c83b9706336",
+      "responseStored": true,
+      "responseFile": "captures/aliexpress.ds.product.get.json"
+    },
+    {
+      "apiPath": "aliexpress.ds.freight.query",
+      "observedAt": "2026-08-01T20:49:42Z",
+      "url": "https://open.aliexpress.com/handler/share/apidoc/getApi.json?cid=21038&path=aliexpress.ds.freight.query&methodType=GET%2FPOST",
+      "httpStatus": 200,
+      "responseBytes": 37688,
+      "responseSha256": "6603d2e01e191da7f75121ffcb631892357a1c5839a138fe20cd8e2be9d0c1fa",
+      "responseStored": true,
+      "responseFile": "captures/aliexpress.ds.freight.query.json"
+    },
+    {
+      "apiPath": "aliexpress.ds.order.create",
+      "observedAt": "2026-08-01T20:49:42Z",
+      "url": "https://open.aliexpress.com/handler/share/apidoc/getApi.json?cid=21038&path=aliexpress.ds.order.create&methodType=GET%2FPOST",
+      "httpStatus": 200,
+      "responseBytes": 62117,
+      "responseSha256": "d984dd8e8b871d67409445db2b79d7d00acd7455b7affb92fd584fd105e7c822",
+      "responseStored": true,
+      "responseFile": "captures/aliexpress.ds.order.create.json"
+    },
+    {
+      "apiPath": "aliexpress.trade.ds.order.get",
+      "observedAt": "2026-08-01T20:49:42Z",
+      "url": "https://open.aliexpress.com/handler/share/apidoc/getApi.json?cid=21038&path=aliexpress.trade.ds.order.get&methodType=GET%2FPOST",
+      "httpStatus": 200,
+      "responseBytes": 55028,
+      "responseSha256": "eb96b5f1e42eb8336b9314b79573ec4a035529a2d974190dc54f6dfc391f0548",
+      "responseStored": true,
+      "responseFile": "captures/aliexpress.trade.ds.order.get.json"
+    },
+    {
+      "apiPath": "aliexpress.ds.order.tracking.get",
+      "observedAt": "2026-08-01T20:49:42Z",
+      "url": "https://open.aliexpress.com/handler/share/apidoc/getApi.json?cid=21038&path=aliexpress.ds.order.tracking.get&methodType=GET%2FPOST",
+      "httpStatus": 200,
+      "responseBytes": 26060,
+      "responseSha256": "3cb102d0ee5dbe88b52e6acca78a98e958a8e262deb5a6b711306b8076acbbc7",
+      "responseStored": true,
+      "responseFile": "captures/aliexpress.ds.order.tracking.get.json"
+    }
+  ],
+  "limitations": [
+    "Public documentation reachability does not prove application ownership or approval.",
+    "Public documentation reachability does not prove account-specific grants, quotas, eligibility, or callable authorization.",
+    "No product, freight, order, order-detail, or tracking API was called.",
+    "No official account-specific statement establishing an eligible test facility or its unavailability was available."
+  ]
+}

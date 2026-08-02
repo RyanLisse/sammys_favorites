@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-302",
+  "provider": "AliExpress Open Platform",
+  "observedAt": "2026-08-01T20:44:50Z",
+  "evidenceMode": "public_official_documentation_only",
+  "supplierOrderWritePortEnabled": false,
+  "orderPlaced": false,
+  "storefrontScraped": false,
+  "acceptance": {
+    "applicationOwnership": {
+      "status": "blocked",
+      "blocker": "No authorized AliExpress Open Platform owner supplied a redacted application-ownership and approval receipt.",
+      "requiredEvidence": "Dated, redacted portal export or screenshot naming the application identifier by hash and showing the owning legal account and approval state."
+    },
+    "grantedScopes": {
+      "status": "blocked",
+      "blocker": "No authenticated application scope or account-limit export is available to this lane.",
+      "requiredEvidence": [
+        "aliexpress.ds.product.get",
+        "aliexpress.ds.freight.query",
+        "aliexpress.ds.order.create",
+        "aliexpress.trade.ds.order.get",
+        "aliexpress.ds.order.tracking.get",
+        "Account-specific quotas, region and program eligibility"
+      ]
+    },
+    "exactSkuSnapshot": {
+      "status": "blocked",
+      "blocker": "No approved application authorization or designated exact SKU was supplied, so no authenticated product read was attempted.",
+      "requiredEvidence": "Redacted response bound to hashed listing and SKU identifiers, with price, currency, inventory, attributes, provider timestamp, request timestamp and response hash."
+    },
+    "freightQuote": {
+      "status": "blocked",
+      "blocker": "No approved application authorization, exact SKU, quantity, origin or redacted destination inputs were supplied.",
+      "requiredEvidence": "Fresh authenticated quote bound to the exact-SKU snapshot and redacted destination, including service, fee/currency, stock, tracking support and delivery estimate."
+    },
+    "authorizedOrderTrackingLifecycle": {
+      "status": "blocked",
+      "blocker": "No authorized owner confirmed an eligible non-production test facility, and this lane has no authority to place or pay for an order.",
+      "requiredEvidence": "Either a provider-authorized non-production create-detail-tracking lifecycle with redacted identifiers and hashes, or an official account-specific statement that no eligible test facility exists."
+    },
+    "idempotencyDriftReconciliation": {
+      "status": "blocked",
+      "blocker": "Without an authorized lifecycle, duplicate-submit behavior, stale quote drift, tracking transitions and reconciliation outcomes cannot be observed.",
+      "requiredEvidence": [
+        "Stable hashed client correlation and duplicate-submit outcome",
+        "Quote-to-order price, currency, stock and freight drift decision",
+        "Order-detail-to-tracking transition comparison",
+        "Mismatch reason, operator decision, timestamp and append-only receipt hash"
+      ]
+    }
+  },
+  "fallback": {
+    "mode": "manual_supplier_ordering_and_tracking",
+    "automatedSupplierWriteAllowed": false,
+    "reconciliation": "A human operator must manually compare the approved exact SKU, quantity, price/currency, freight, supplier order reference and each tracking transition; mismatches remain unresolved until a reason and receipt hash are recorded.",
+    "releaseRule": "Do not enable SupplierOrderWritePort or direct supplier-to-customer fulfilment from this fixture."
+  }
+}
