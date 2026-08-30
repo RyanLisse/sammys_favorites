@@ -51,3 +51,19 @@ The cited propositions were reviewed against the official pages on 2026-08-01. S
 6. A provider-specific privacy role, retention and international-transfer pack before any live personal-data flow.
 
 Until these exist, the evidence state is **externally pending**, not approved.
+
+## 2026-08-03 addendum: messaging channel changed to Telegram
+
+[ADR 0003](../decisions/0003-telegram-channel-pivot.md) replaces Meta WhatsApp Cloud with the Telegram Bot API as the automated messaging channel. The matrix above is a dated evidence set and is retained unedited; this addendum overrides the messaging-provider references in the privacy row for all work from 2026-08-03 onward.
+
+**Read "WhatsApp/Chat SDK" in the privacy row's affected flows as "Telegram/Chat SDK".** Do not gather Meta DPA, WABA, or template evidence — that lane is closed.
+
+What changes in the privacy assessment:
+
+- The processor to assess is Telegram, not Meta. Its controller/processor role, legal entity, establishment, and the applicable Chapter V transfer mechanism must be determined on its own terms. Nothing about Meta's assessment carries over, and Telegram must not be assumed to be a processor any more than Meta was.
+- The credential to place under custody is a bot token rather than a system-user token plus app secret. It is a bearer credential for the whole bot: exposure means an attacker can read inbound messages and send as Sammy's Favorites. Rotation path and storage location belong in the same pack as the Stripe keys.
+- The webhook secret is likewise a bearer value, not a signature key. It authenticates the caller but does not bind to the payload, so the receipt trail is weaker in kind than an HMAC trail. ADR 0003 records the compensating controls.
+- Consent and opt-out remain required. Telegram has no 24-hour service window and no template approval, which removes two of Meta's structural brakes on unsolicited contact — the obligation to obtain and honour consent does not weaken just because the platform stops enforcing a proxy for it. If anything this row needs more attention, not less.
+- Item 6 of the closing list ("a provider-specific privacy role, retention and international-transfer pack before any live personal-data flow") is unchanged and now applies to Telegram.
+
+What does not change: no row is green, specialist sign-off is still pending, automated messaging stays disabled, and the fallback remains the authenticated Atelier surface with manual customer communication. The next critical review date of **2026-08-15** stands.

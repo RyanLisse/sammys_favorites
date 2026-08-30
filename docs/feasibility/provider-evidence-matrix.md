@@ -2,6 +2,8 @@
 
 Observed: 2026-08-01 (Europe/Amsterdam) Scope: Stripe sandbox/webhooks, Meta WhatsApp Business Cloud, Vercel Chat SDK, and AliExpress Open Platform Method: public official documentation only; no credentials, account dashboards, sandbox calls, provider mutations, code changes, or Linear changes
 
+> **Append-only record.** Everything dated 2026-08-01 below is preserved as observed on that date and is not edited. Later findings are added as dated addenda at the end of this document. See the [2026-08-03 addendum](#2026-08-03-addendum-telegram-replaces-whatsapp) for the channel change made by [ADR 0003](../decisions/0003-telegram-channel-pivot.md).
+
 ## Decision
 
 `G0` remains `blocked_external`. Public documentation establishes that the intended capabilities exist, but it does not establish that Sammy's Favorites owns the required accounts/assets, has the required grants, or has completed a real signed end-to-end exchange. Documentation reachability is not onboarding or sandbox evidence.
@@ -41,6 +43,8 @@ Fallback: checkout and payment collection stay disabled.
 
 ### Meta WhatsApp Business Cloud
 
+> **Superseded 2026-08-03 by [ADR 0003](../decisions/0003-telegram-channel-pivot.md).** WhatsApp is no longer the automated messaging channel. The observations below stand as recorded on 2026-08-01 and are retained unedited; they are no longer a live evidence requirement.
+
 Documented capability:
 
 - Current Meta setup requires a Meta app connected to a business portfolio and WhatsApp Business Account (WABA), plus a sender/test phone-number setup.
@@ -66,6 +70,8 @@ Minimum evidence to clear the Meta portion of G0:
 Fallback: Atelier remains the authenticated operating surface and communication remains manual.
 
 ### Vercel Chat SDK
+
+> **Partially superseded 2026-08-03 by [ADR 0003](../decisions/0003-telegram-channel-pivot.md).** The Chat SDK boundary finding still holds; the adapter target changed from `@chat-adapter/whatsapp` to `@chat-adapter/telegram`. The WhatsApp-specific observations below are retained unedited as recorded on 2026-08-01.
 
 Documented capability:
 
@@ -228,6 +234,71 @@ Every URL below returned HTTP 200 on 2026-08-01 and its response content support
 - https://open.aliexpress.com/handler/share/apidoc/getApi.json?cid=21038&path=aliexpress.ds.order.create&methodType=GET%2FPOST — order create/pay, idempotent outer order ID, and required common authentication parameters.
 - https://open.aliexpress.com/handler/share/apidoc/getApi.json?cid=21038&path=aliexpress.trade.ds.order.get&methodType=GET%2FPOST — buyer order detail and logistics status.
 - https://open.aliexpress.com/handler/share/apidoc/getApi.json?cid=21038&path=aliexpress.ds.order.tracking.get&methodType=GET%2FPOST — order tracking nodes, carrier, timestamps, and SKU/item linkage.
+
+## 2026-08-03 addendum: Telegram replaces WhatsApp
+
+Observed: 2026-08-03 (Europe/Amsterdam). Method: public official documentation and the public npm registry only; no credentials, no bot token, no provider call, no message sent.
+
+This addendum records the channel change decided in [ADR 0003](../decisions/0003-telegram-channel-pivot.md). It does not clear `G0`. It changes which messaging lane is being evidenced from one that waits on Meta's review queue to one whose credentials Sammy's Favorites can issue for itself.
+
+### Telegram Bot API
+
+Documented capability:
+
+- Authentication is a single bot token issued by `@BotFather`. There is no business portfolio, no business account asset, no owned phone number, no app review, and no permission-grant step.
+- `setWebhook` accepts a `secret_token` of 1–256 characters from `A-Za-z0-9_-`, documented as "a secret token to be sent in a header `X-Telegram-Bot-Api-Secret-Token` in every webhook request" so the receiver can verify authenticity. It also accepts `allowed_updates`, `max_connections` (1–100, default 40), `drop_pending_updates`, and `ip_address` for pinning delivery to a fixed address.
+- `getWebhookInfo` returns `url`, `pending_update_count`, `ip_address`, `last_error_date`, `last_error_message`, `max_connections`, and `allowed_updates`.
+- `Update.update_id` identifiers "start from a certain positive number and increase sequentially", documented as existing so a webhook receiver can "ignore repeated updates or restore the correct update sequence, should they get out of order." This is the documented basis for duplicate suppression.
+- There is no template-approval process and no customer-service window equivalent to WhatsApp's 24-hour rule.
+
+Registry observation:
+
+- `@chat-adapter/telegram@4.36.0` is published, `repository: github.com/vercel/chat` directory `packages/adapter-telegram`, dependencies exactly `chat@4.36.0` and `@chat-adapter/shared@4.36.0`, `engines.node >=20`, published 2026-08-01.
+- The adapter documents `TELEGRAM_BOT_TOKEN` as required and `TELEGRAM_WEBHOOK_SECRET_TOKEN`, `TELEGRAM_ALLOWED_USER_IDS`, `TELEGRAM_BOT_USERNAME` as optional. Documented platform constraints: callback data is limited to 64 bytes, and `fetchMessages` returns only adapter-cached messages from the current process.
+
+Unavailable proof:
+
+- No bot token, no `getMe` receipt, no registered webhook, no received update, no signature-header comparison outcome, no duplicate-suppression receipt, and no outbound delivery receipt exists. Documentation reachability is not provider evidence, exactly as recorded for every other lane in this document.
+
+Security note carried into the evidence requirements: the Telegram header secret is a bearer credential, not an HMAC over the payload. It proves the caller knows the secret; it does not bind to the body and leaves no re-verifiable per-message artifact. ADR 0003 records the controls that follow — CSPRNG-generated secret, constant-time comparison, TLS-only endpoint, minimal `allowed_updates`, optional `ip_address` pinning.
+
+Minimum evidence to clear the Telegram portion of G0:
+
+1. `getMe` receipt establishing bot identity, retaining only non-secret fields with the bot identifier hashed.
+2. Registered webhook with a `secret_token` and a minimal `allowed_updates` list, evidenced by `getWebhookInfo`.
+3. A real inbound update whose `X-Telegram-Bot-Api-Secret-Token` header was compared in constant time, with the verification outcome, `update_id`, and timestamps retained.
+4. A negative case: an update carrying a wrong or absent secret header is rejected.
+5. A repeated `update_id` is idempotently ignored, with the business-effect count, the duplicate decision, and the deterministic reconciliation result.
+6. An outbound `sendMessage` delivery receipt.
+7. Receipt minting proven against `provider: "telegram"` through the existing `WebhookVerificationRepository`, evidencing that the policy boundary is unchanged.
+
+Fallback: automated messaging stays disabled; the authenticated Atelier surface and manual customer communication remain the operating position. This is the same fallback the WhatsApp lane had, so the pivot does not change the safe runtime state.
+
+### Chat SDK adapter target
+
+The pinned candidate changes from `@chat-adapter/whatsapp@4.36.0` to `@chat-adapter/telegram@4.36.0` against the same `chat@4.36.0`. The RJC-303 fixture conformance properties — identity scoping, thread-ID shape, duplicate rejection, monotonic delivery status, fail-closed authenticity, and the rule that channel identity never confers commerce authority — are provider-independent and carry over. The Graph API version selection recorded for the WhatsApp adapter does not apply to Telegram, which has no equivalent versioned Graph surface.
+
+### Correction to a 2026-08-01 source observation
+
+The 2026-08-01 record lists `https://chat-sdk.dev/adapters` as returning HTTP 200. On 2026-08-03 that URL returns **HTTP 404**, while `https://chat-sdk.dev/docs` and `https://chat-sdk.dev/adapters/official/telegram` return 200. The original line is left in place as what was observed on that date; this is the current observation. The adapter-catalog page is therefore no longer usable as a citable source for adapter status.
+
+### Stripe: documentation-level finding on MCP tool coverage
+
+RJC-300's 2026-08-02 receipt records that the connected MCP catalog — `stripe@openai-curated-remote` — exposed no PaymentIntent create operation, and treats that as a blocker for the test-PaymentIntent lifecycle.
+
+Stripe's official MCP documentation describes a different server, `https://mcp.stripe.com`, exposing generic `stripe_api_read` and `stripe_api_write` tools that cover PaymentIntent creation and webhook-endpoint registration, plus `get_stripe_account_info`, with per-environment access control so sandbox and live are enabled separately.
+
+This is classified as **`public_documentation`, not `provider_observed`**. No connection to `https://mcp.stripe.com` has been made from this repository and no tool catalog has been read back. It narrows where the Stripe blocker actually lies — it does not remove it. Even with that server connected, a real signed webhook delivery and a duplicate/stale rejection still require an endpoint that receives an actual request from Stripe; an MCP client can register an endpoint but cannot be one.
+
+## Verified official sources — 2026-08-03
+
+Every URL below was checked on 2026-08-03 and its response supported the associated observation.
+
+- https://core.telegram.org/bots/api — `setWebhook` `secret_token` and `X-Telegram-Bot-Api-Secret-Token`, `allowed_updates`, `max_connections`, `ip_address`, `getWebhookInfo` fields, and `update_id` sequencing/deduplication.
+- https://chat-sdk.dev/adapters/official/telegram — adapter credentials, webhook secret-token verification, and documented platform constraints.
+- https://registry.npmjs.org/@chat-adapter%2ftelegram — published `4.36.0`, dependency set, `engines.node`, repository and publish date.
+- https://docs.stripe.com/mcp — official Stripe MCP endpoint, exposed tool set, OAuth and restricted-key auth models, and per-environment access control.
+- https://chat-sdk.dev/adapters — returned **HTTP 404** (correction to the 2026-08-01 entry).
 
 ## Review note
 

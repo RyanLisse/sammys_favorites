@@ -6,6 +6,7 @@ This map points to the decisions and boundaries that are authoritative during th
 
 - [ADR 0001: upstream baseline and clean-room decision](decisions/0001-upstream-baseline-and-direct-use-risk.md)
 - [ADR 0002: bounded Effect adoption](decisions/0002-effect-adoption-boundary.md)
+- [ADR 0003: Telegram replaces WhatsApp as the automated messaging channel](decisions/0003-telegram-channel-pivot.md)
 - [Threat model and approval policy](security/threat-model.md)
 
 ## Ownership map
