@@ -1,2 +1,5 @@
+d4cfecc38cb5eeb5e20df166f3b0a713998f8a54fdca2e11465db5489e20368c  docs/evidence/rjc-304/telegram-getme-2026-08-30.json
+3f53f10c41ab6115648dae722fd246bc86c21c11052833e382be0edb4a8a3e62  docs/evidence/rjc-304/rjc-304-getme-evidence.test.mjs
+d4cfecc38cb5eeb5e20df166f3b0a713998f8a54fdca2e11465db5489e20368c  test/fixtures/providers/rjc-304/telegram-getme-observation.json
 85378dc7b2829725cf31781a79596bf8a9ebbaa14b9f0eaf7d6e97fdb2c8f342  test/fixtures/providers/rjc-304/telegram-webhook-verifier.mjs
 36a4c2daa7e227d2bc5ffeabc4b293aa72e8834f461813fe88926ae8288ec5a0  test/fixtures/providers/rjc-304/conformance.test.mjs

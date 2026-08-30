@@ -1,0 +1,29 @@
+{
+  "issue": "RJC-304",
+  "evidenceClass": "provider_observed",
+  "retrievedAt": "2026-08-30",
+  "method": "Telegram Bot API getMe + getWebhookInfo",
+  "credentialMaterialPresent": false,
+  "productionTraffic": false,
+  "automatedMessagingEnabled": false,
+  "getMe": {
+    "ok": true,
+    "is_bot": true,
+    "username": "Sammysfavorites_bot",
+    "first_name": "Daisy4sammy",
+    "bot_id_sha256": "sha256:f3ba8c6512ad33f7f7fde99d2a1d8f4ada68e75f99f6b923e0b68f3dfd9f0caf"
+  },
+  "getWebhookInfo": {
+    "webhook_configured": false,
+    "pending_update_count": 0
+  },
+  "g0Status": "blocked_external",
+  "remainingReceipts": [
+    "public HTTPS setWebhook",
+    "real inbound update",
+    "negative secret header rejection",
+    "duplicate update_id suppression",
+    "outbound sendMessage delivery"
+  ],
+  "finding": "Live getMe confirms bot identity with hashed id only; getWebhookInfo confirms no webhook registered. credentialMaterialPresent is false in the repository. productionTraffic and automatedMessagingEnabled remain false. This does NOT clear G0."
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "asOf": "2026-08-03",
+  "asOf": "2026-08-30",
   "issueStatus": "human_review",
   "overall": "at_risk",
   "evidenceArtifacts": {
@@ -162,6 +162,18 @@
             "no provider entitlement is conferred by the package itself"
           ],
           "finding": "Version 4.36.0 is published from the vercel/chat repository directory packages/adapter-telegram, depending exactly on chat@4.36.0 and @chat-adapter/shared@4.36.0 with engines.node >=20, published 2026-08-01. Package availability proves a pinnable candidate exists and proves nothing about provider delivery or authenticity."
+        },
+        {
+          "url": "https://core.telegram.org/bots/api",
+          "retrievedAt": "2026-08-30",
+          "evidenceClass": "provider_observed",
+          "prerequisites": [
+            "bot token issued by BotFather, stored outside Git and not captured in this repository"
+          ],
+          "scopesOrPermissions": [
+            "getMe and getWebhookInfo called against the live bot identity; no webhook registered"
+          ],
+          "finding": "Live getMe returned ok:true for is_bot:true username Sammysfavorites_bot first_name Daisy4sammy with bot id retained only as sha256:f3ba8c6512ad33f7f7fde99d2a1d8f4ada68e75f99f6b923e0b68f3dfd9f0caf. getWebhookInfo shows webhook_configured:false and pending_update_count:0. credentialMaterialPresent is false in the repository. This is provider_observed identity and webhook-absent evidence; it does not clear G0. Remaining receipts: public HTTPS setWebhook, real inbound update, negative secret header, duplicate update_id, outbound sendMessage."
         }
       ],
       "requiredEvidence": [
