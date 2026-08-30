@@ -34,3 +34,16 @@ The command rejects an upstream checkout whose `HEAD` does not resolve to
 `10b5d4b0623123737854a3cb02d54f6e32a1fb9e`. The resulting evidence commit may
 follow the target commit; the report must not claim to cover its own later
 evidence commit.
+
+### Addendum 2026-08-30
+
+`no-copy-report.json` was regenerated against `main` at
+`182b21f09f0a297bf213fa5d528170649814b7d9` (PR #10 merged), superseding the
+2026-08-01 run that targeted `f809076d9314aa971444d9f7a797c8cd71288a67`. The
+pinned 306 research checkout is unchanged at
+`10b5d4b0623123737854a3cb02d54f6e32a1fb9e`; the run passed with no exact and no
+high-similarity matches across 119 active tracked files.
+
+This regenerated report is the G1 checkout pointer for RJC-256 through RJC-260.
+It records only the no-copy comparison at that commit. It is not a G1
+completion signal, and it does not by itself satisfy any other G1 requirement.
