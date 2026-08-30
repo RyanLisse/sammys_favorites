@@ -14,7 +14,7 @@
       "status": "blocked_external",
       "reasons": [
         "Stripe sandbox and signed-webhook evidence are not available",
-        "Telegram bot identity, registered webhook, secret-token-authenticated delivery, and duplicate-suppression evidence are not available",
+        "Telegram bot identity is established by the 2026-08-30 hashed getMe observation; the registered webhook, secret-token-authenticated inbound delivery, duplicate suppression, and outbound send evidence are not available",
         "AliExpress application keys, approved API scope list, ordering, and tracking evidence are not available",
         "Specialist compliance sign-off is pending"
       ]
@@ -22,7 +22,7 @@
     "G1": {
       "status": "in_progress",
       "reasons": [
-        "RJC-256 through RJC-260 require merged clean-checkout evidence"
+        "RJC-256 through RJC-260 clean-checkout evidence is merged on main at fc4372ef73bd1b96768395ec8886a7f3e7a487df; the remaining RJC-256 through RJC-260 work keeps G1 in progress"
       ]
     }
   },
