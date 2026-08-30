@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-300",
+  "recordedAt": "2026-08-01T20:44:53Z",
+  "runs": [
+    {
+      "phase": "red",
+      "check": "evidence contract before blocker receipt",
+      "result": "expected_failure",
+      "exitCode": 1,
+      "evidence": "Error: RED: missing docs/evidence/rjc-300/blocker-receipt.json"
+    },
+    {
+      "phase": "green",
+      "check": "evidence contract after blocker receipt",
+      "result": "pass",
+      "exitCode": 0,
+      "evidence": "PASS rjc-300 evidence contract"
+    },
+    {
+      "phase": "green",
+      "check": "Stripe secret-shaped value scan",
+      "result": "pass",
+      "exitCode": 0,
+      "evidence": "PASS no Stripe secret-shaped values found"
+    },
+    {
+      "phase": "format",
+      "check": "Ultracite formatting for allowlisted paths",
+      "result": "pass_with_tool_scope_limitation",
+      "exitCode": 1,
+      "evidence": "All matched files use the correct format; Ultracite then reported no files found to lint because the allowlist contains documentation and JSON fixtures only."
+    },
+    {
+      "phase": "green",
+      "check": "node --test docs/evidence/rjc-300/rjc-300-evidence.test.mjs",
+      "result": "pass",
+      "exitCode": 0,
+      "evidence": "2 tests passed; 0 failed"
+    },
+    {
+      "phase": "integrity",
+      "check": "shasum -a 256 -c docs/evidence/rjc-300/evidence.sha256",
+      "result": "pass",
+      "exitCode": 0,
+      "evidence": "blocker-receipt.json and evidence-contract.json: OK"
+    }
+  ]
+}

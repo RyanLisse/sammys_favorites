@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-300",
+  "allowedStatuses": [
+    "fully_evidenced",
+    "partially_evidenced",
+    "blocked_external"
+  ],
+  "requiredAcceptanceKeys": [
+    "sandboxOwnershipAndTestModeAccess",
+    "paymentIntentTestPath",
+    "realSignedWebhookVerification",
+    "duplicateDeliveryIdempotencyAndAudit",
+    "secretHygiene",
+    "rjc261ImmutableEvidenceLink"
+  ],
+  "blockedAcceptance": {
+    "sandboxOwnershipAndTestModeAccess": "not_evidenced",
+    "paymentIntentTestPath": "not_evidenced",
+    "realSignedWebhookVerification": "not_evidenced",
+    "duplicateDeliveryIdempotencyAndAudit": "not_evidenced",
+    "secretHygiene": "evidenced_for_this_capture",
+    "rjc261ImmutableEvidenceLink": "not_evidenced"
+  },
+  "blockedReceiptRequirements": {
+    "status": "blocked_external",
+    "checkoutEnabled": false,
+    "sandboxMutationsPerformed": false,
+    "secretValuesCaptured": false
+  }
+}
