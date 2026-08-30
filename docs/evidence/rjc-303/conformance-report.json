@@ -1,0 +1,33 @@
+{
+  "issue": "RJC-303",
+  "evidenceType": "local-redacted-fixture-conformance",
+  "productionTraffic": false,
+  "credentialMaterialPresent": false,
+  "command": "node --test test/fixtures/providers/rjc-303/conformance.test.mjs",
+  "tdd": {
+    "initialRed": "ERR_MODULE_NOT_FOUND: fixture-adapter.mjs",
+    "compatibilityCorrectionRed": "expected graphApiVersion v25.0 but fixture still declared v21.0",
+    "finalExpected": "7 passed, 0 failed"
+  },
+  "coverage": [
+    "exact core and adapter pins",
+    "production fail-closed",
+    "hashed channel identity",
+    "stable provider-scoped threading",
+    "duplicate inbound delivery",
+    "monotonic delivery status",
+    "terminal provider failure",
+    "failure cannot overwrite delivered or read state",
+    "invalid signature",
+    "malformed or unredacted identity",
+    "channel identity and message content denied as commerce authority",
+    "separate authenticated action-bound Atelier receipt required for commerce authority",
+    "mismatched action binding rejected"
+  ],
+  "limitations": [
+    "The conformance target is an isolated fixture contract, not an installed or production-wired Chat SDK package.",
+    "No Meta credentials, WABA, phone-number asset, webhook subscription, approved template, or live provider delivery was available.",
+    "No package manifest, lockfile, CI, or shared product code was changed."
+  ],
+  "acceptance": "partial"
+}

@@ -1,0 +1,40 @@
+{
+  "issue": "RJC-303",
+  "retrievedAt": "2026-08-01",
+  "decision": "evidence-only-do-not-enable",
+  "candidate": {
+    "core": {
+      "package": "chat",
+      "version": "4.36.0",
+      "node": ">=20",
+      "integrity": "sha512-3A5HjnjilStMazAgY2PESloyT8g+GsoEf5uvqzPtvpGJrNh9oGWQ7IRZzw4+pFFTbUnCEtsclEAc2KMloRRZRQ=="
+    },
+    "adapter": {
+      "package": "@chat-adapter/whatsapp",
+      "version": "4.36.0",
+      "node": ">=20",
+      "integrity": "sha512-aLya34K4OaP8SMDo4Lrut/wQ11mugddryTZuKWnc6AT1AN55GKFB71+0pvT1p+cgXD8Zxr1+SkBOrnJwhZHt1Q==",
+      "exactRuntimeDependencies": {
+        "@chat-adapter/shared": "4.36.0",
+        "chat": "4.36.0"
+      }
+    },
+    "releaseCommit": "470b6af94b9d6c9a7b75cb3cbd9c7f7f6edc820f",
+    "graphApiVersion": "v25.0",
+    "productionTraffic": false
+  },
+  "officialCompatibility": {
+    "packagePair": "compatible-by-exact-adapter-dependency",
+    "graphApi": "Meta lists v25.0 as released 2026-02-18 and available until TBD",
+    "documentationMismatch": "The rendered Chat SDK configuration table says v21.0, while both the 4.36.0 release source and published tarball set DEFAULT_API_VERSION to v25.0. The candidate therefore pins v25.0 explicitly and does not rely on the rendered default.",
+    "betaLabel": "not-reconfirmed-in-current-official-page"
+  },
+  "sources": [
+    "https://chat-sdk.dev/docs.md",
+    "https://chat-sdk.dev/adapters/official/whatsapp.md",
+    "https://registry.npmjs.org/chat/-/chat-4.36.0.tgz",
+    "https://registry.npmjs.org/@chat-adapter/whatsapp/-/whatsapp-4.36.0.tgz",
+    "https://github.com/vercel/chat/tree/470b6af94b9d6c9a7b75cb3cbd9c7f7f6edc820f/packages/adapter-whatsapp",
+    "https://developers.facebook.com/docs/graph-api/changelog/version25.0/"
+  ]
+}
