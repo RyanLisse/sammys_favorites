@@ -1,0 +1,54 @@
+{
+  "issue": "RJC-354",
+  "evidenceClass": "provider_observed",
+  "retrievedAt": "2026-08-30",
+  "timezone": "Europe/Amsterdam",
+  "method": "Telegram Bot API getUpdates + sendMessage",
+  "transport": "long_polling",
+  "webhookUsed": false,
+  "credentialMaterialPresent": false,
+  "productionTraffic": false,
+  "automatedMessagingEnabled": false,
+  "phase": "test",
+  "inboundUpdates": [
+    {
+      "sequence": 1,
+      "atLocalApprox": "2026-08-30T22:29:17+02:00",
+      "chat": "same private chat",
+      "chat_type": "private",
+      "text": "/start",
+      "update_id_sha256": "sha256:5be311f056fa8d4929118f1cc628f95b9977af53c5722d49fe1f707ef666eca9"
+    },
+    {
+      "sequence": 2,
+      "atLocalApprox": "2026-08-30T22:29:24+02:00",
+      "chat": "same private chat",
+      "chat_type": "private",
+      "text_len": 3,
+      "update_id_sha256": "sha256:0eb94617bb8a4e522a85dcdc3b6c00e9121c17b58e29bc888db57fe13ee789d9"
+    }
+  ],
+  "outboundSendMessage": {
+    "ok": true,
+    "atLocalApprox": "2026-08-30T22:29:59+02:00",
+    "chat": "same private chat",
+    "message_id_sha256": "sha256:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+  },
+  "offsetHandling": {
+    "updatesConsumed": false,
+    "note": "A later getUpdates call still contained the original update_id, so no offset was committed and the update was never consumed. This is an offset observation only; it is not duplicate-suppression evidence."
+  },
+  "getWebhookInfo": {
+    "webhook_configured": false
+  },
+  "secretTokenEvidenced": false,
+  "g0Status": "blocked_external",
+  "remainingReceipts": [
+    "public HTTPS setWebhook registration with minimal allowed_updates",
+    "real inbound webhook request carrying X-Telegram-Bot-Api-Secret-Token",
+    "negative case: wrong or absent secret header rejected",
+    "duplicate update_id suppressed against durable storage with a business-effect count",
+    "receipt minted for provider telegram through WebhookVerificationRepository"
+  ],
+  "finding": "Test-phase long polling observed two inbound updates in one private chat and one successful outbound sendMessage, with every Telegram identifier retained only as a sha256 digest. Because the transport was getUpdates rather than a registered webhook, this evidences inbound receipt and outbound delivery only. webhook_configured is still false, so nothing here evidences the X-Telegram-Bot-Api-Secret-Token comparison, and the uncommitted offset is not duplicate suppression. credentialMaterialPresent is false in the repository. productionTraffic and automatedMessagingEnabled remain false. This does not clear G0."
+}
