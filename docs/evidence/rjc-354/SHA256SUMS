@@ -1,0 +1,3 @@
+4bfc9cc62c7cdcf1a9f9eac81dfa04e31d246568c8bb21548d9e70f245c50000  docs/evidence/rjc-354/telegram-getupdates-sendmessage-2026-08-30.json
+8f5d20f99a43f47862f7e71cfafbd5eacfd2e6e007273f867f939f067f1dea0f  docs/evidence/rjc-354/rjc-354-getupdates-sendmessage-evidence.test.mjs
+4bfc9cc62c7cdcf1a9f9eac81dfa04e31d246568c8bb21548d9e70f245c50000  test/fixtures/providers/rjc-354/telegram-getupdates-sendmessage-observation.json
