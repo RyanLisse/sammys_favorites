@@ -79,10 +79,36 @@ An accountable operator can produce the remaining receipts in an isolated sessio
 
 No customer is contacted at any step. No token, secret, chat content, or personal data enters the repository; identifiers are hashed.
 
+## 2026-08-30 addendum: hashed getMe identity, webhook absent
+
+Observed: 2026-08-30. Method: Telegram Bot API `getMe` + `getWebhookInfo` performed outside this repository; no bot token or secret is recorded here.
+
+This addendum is **`provider_observed`**, not `public_documentation`. It records the first live Telegram identity receipt for RJC-354/RJC-304 without enabling messaging or clearing `G0`.
+
+Recorded facts (verbatim, redacted):
+
+- `retrievedAt`: 2026-08-30
+- `method`: Telegram Bot API getMe + getWebhookInfo
+- `getMe ok`: true
+- `is_bot`: true
+- `username`: Sammysfavorites_bot
+- `first_name`: Daisy4sammy
+- bot id retained only as `sha256:f3ba8c6512ad33f7f7fde99d2a1d8f4ada68e75f99f6b923e0b68f3dfd9f0caf` (sha256 of the numeric id string)
+- `webhook configured`: false
+- `pending_update_count`: 0
+- `credentialMaterialPresent`: false
+- `productionTraffic` / `automatedMessagingEnabled`: still false
+
+This does **not** clear `G0`. Remaining live receipts: public HTTPS `setWebhook`, real inbound update, negative secret header, duplicate `update_id`, outbound `sendMessage`.
+
+Machine-readable record: [telegram-getme-2026-08-30.json](telegram-getme-2026-08-30.json). Fixture mirror: `test/fixtures/providers/rjc-304/telegram-getme-observation.json`.
+
 ## Verification
 
 ```sh
 node --test test/fixtures/providers/rjc-304/conformance.test.mjs
+node --test docs/evidence/rjc-304/rjc-304-getme-evidence.test.mjs
+node --test test/p0-gate-report.test.mjs
 pnpm --filter @sammys/policy run test
 shasum -a 256 -c docs/evidence/rjc-304/SHA256SUMS
 ```
