@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-301",
+  "evidenceClass": "external_blocker",
+  "status": "missing_external_authority",
+  "observedAt": null,
+  "providerReceipt": null,
+  "blocker": "No authorized Meta Business Manager or WhatsApp Manager session, export, or redacted operator receipt was supplied, so actual business-portfolio ownership, WABA ownership, and registered sender ownership cannot be verified.",
+  "requiredReceiptFields": [
+    "captured_at",
+    "operator_role_redacted",
+    "business_portfolio_id_sha256",
+    "waba_id_sha256",
+    "phone_number_id_sha256",
+    "ownership_or_admin_state",
+    "provider_surface",
+    "receipt_sha256"
+  ],
+  "expectedHashedIdentifiers": [
+    "sha256:297bd46e95800930e64009f5e971cce54654cb41ca3af42d657932656cf1777d",
+    "sha256:9487c2167fd13fc11d099fab56ee2eaca4540c64f30fb3a1e4b299398365deed",
+    "sha256:46cdba88e001bd007f98da6e6e7c1d3adcc758b72a85a4b68e3448e9f3ddc373"
+  ],
+  "hashNote": "These values hash receipt-field labels only and are schema markers, not hashes of actual Meta asset identifiers. Actual identifier hashes remain unavailable."
+}

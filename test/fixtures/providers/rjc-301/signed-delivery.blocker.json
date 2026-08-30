@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "issue": "RJC-301",
+  "evidenceClass": "external_blocker",
+  "status": "missing_external_authority",
+  "observedAt": null,
+  "providerReceipt": null,
+  "blocker": "No authorized app secret, deployed callback, messages-field subscription, or controlled Meta test delivery was available. Therefore GET verification, valid/invalid HMAC outcomes, real delivery statuses, and duplicate/retry reconciliation remain externally blocked.",
+  "requiredReceiptFields": [
+    "captured_at",
+    "callback_origin_sha256",
+    "app_id_sha256",
+    "get_challenge_result",
+    "payload_sha256",
+    "signature_sha256",
+    "signature_validation_result",
+    "messages_subscription_state",
+    "message_id_sha256",
+    "delivery_status_sequence",
+    "duplicate_delivery_count",
+    "idempotency_result",
+    "receipt_sha256"
+  ],
+  "expectedHashedIdentifiers": [
+    "sha256:c64b8d3c77f7dca1701f10932e38ecf7b7bc1236487bcad50770de70b9a2cf03",
+    "sha256:db4571ea53063fc816d0098d88f331049bffa85373c3901b11404c3e8b6ed0ee"
+  ],
+  "hashNote": "These values hash receipt-field labels only and are not hashes of actual Meta delivery or message identifiers."
+}
