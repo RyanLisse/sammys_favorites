@@ -2,7 +2,7 @@
 
 ## Outcome
 
-RJC-304 is **partially evidenced**. The local fixture contract covers secret-token authenticity, subscription scope, `update_id` deduplication, and receipt minting. Live provider evidence is **blocked on a bot token that has not been issued**, so automated messaging stays disabled and this lane does not clear `G0`.
+RJC-304 is **partially evidenced**. The local fixture contract covers secret-token authenticity, subscription scope, `update_id` deduplication, and receipt minting. Live **getMe** identity is now recorded with a hashed bot id only ([2026-08-30 addendum](#2026-08-30-addendum-hashed-getme-identity-webhook-absent)); **getWebhookInfo** confirms no webhook is registered and no credential material is in this repository. Remaining live blockers are a public HTTPS callback with **setWebhook**, a real inbound update, negative secret-header rejection, duplicate **update_id** suppression, and an outbound **sendMessage** receipt. Automated messaging stays disabled and this lane does not clear **G0**.
 
 The channel decision is [ADR 0003](../../decisions/0003-telegram-channel-pivot.md). The dated provider findings are in the [provider matrix addendum](../../feasibility/provider-evidence-matrix.md#2026-08-03-addendum-telegram-replaces-whatsapp).
 
