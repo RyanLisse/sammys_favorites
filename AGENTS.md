@@ -34,3 +34,13 @@ Write accessible, performant, type-safe, maintainable code:
 - Keep assertions inside `test` or `it` blocks.
 - Do not commit focused or skipped tests.
 - Run the narrowest relevant checks first, then broader validation when warranted.
+
+## Merge and verification bar
+
+Work in pstack poteto-mode: one finding per patch, unslopped, verified on the real artifact. Do not copy Catapulze's Bun/Effect stack; Effect is not a repository default ([ADR 0002](docs/decisions/0002-effect-adoption-boundary.md)).
+
+**Merge nothing** until all GitHub CI jobs on that PR are green: Frozen lockfile and advisory verification (`pnpm audit --audit-level high`), Policy PostgreSQL durability, Real local services / `verify-shell-startup`, Quality gates, every Workspace job, and `claude-review` if present.
+
+**UI-visible PRs** need inspected visual proof of the real user path (screenshot or short video). Use seed/fixture data only; capture after inspecting the surface. Never commit proof artifacts. Use an isolated storefront port via `.cursor/skills/verify-sammys-favorites` — launch, doctor, drive, capture.
+
+One finding per patch, then `pnpm check`, wait for CI, then push. Lefthook + Ultracite (`pnpm format` / `pnpm check`); never `qlty fmt`.
