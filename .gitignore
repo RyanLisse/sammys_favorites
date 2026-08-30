@@ -34,6 +34,9 @@ pnpm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Local verification proof (never commit)
+.context/verify-artifacts/
+
 # Local tooling and operating-system files
 .context/
 .omc/
