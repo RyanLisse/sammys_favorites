@@ -25,7 +25,7 @@
       "chat": "same private chat",
       "chat_type": "private",
       "text_len": 3,
-      "update_id_sha256": "sha256:0eb94617bb8a4e522a85dcdc3b6c00e9121c17b58e29bc888db57fe13ee789d9"
+      "update_id_sha256": "sha256:9465c2f2385d82696f36976352c80e661bc0fd5db2ad72342f19b93de7be7748"
     }
   ],
   "outboundSendMessage": {

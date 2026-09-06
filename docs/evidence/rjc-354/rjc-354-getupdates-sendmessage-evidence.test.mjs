@@ -53,7 +53,7 @@ test("both inbound updates are hashed, in one private chat, with no raw ids", as
   assert.equal(second.atLocalApprox, "2026-08-30T22:29:24+02:00");
   assert.equal(
     second.update_id_sha256,
-    "sha256:0eb94617bb8a4e522a85dcdc3b6c00e9121c17b58e29bc888db57fe13ee789d9"
+    "sha256:9465c2f2385d82696f36976352c80e661bc0fd5db2ad72342f19b93de7be7748"
   );
 
   // The second inbound message body is never recorded, only its length.
@@ -112,7 +112,7 @@ test("evidence paths contain no bot token, secret, or raw numeric identifier", a
 
   const hashes = [
     "5be311f056fa8d4929118f1cc628f95b9977af53c5722d49fe1f707ef666eca9",
-    "0eb94617bb8a4e522a85dcdc3b6c00e9121c17b58e29bc888db57fe13ee789d9",
+    "9465c2f2385d82696f36976352c80e661bc0fd5db2ad72342f19b93de7be7748",
     "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
   ];
 

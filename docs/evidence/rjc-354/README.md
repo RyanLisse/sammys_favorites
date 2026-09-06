@@ -35,7 +35,7 @@ Observed 2026-08-30, Europe/Amsterdam. Timestamps are approximate to the second.
 | inbound 1 | `/start`, private chat, ~22:29:17 |
 | inbound 1 update identifier | `sha256:5be311f056fa8d4929118f1cc628f95b9977af53c5722d49fe1f707ef666eca9` |
 | inbound 2 | same private chat, `text_len` 3, ~22:29:24 |
-| inbound 2 update identifier | `sha256:0eb94617bb8a4e522a85dcdc3b6c00e9121c17b58e29bc888db57fe13ee789d9` |
+| inbound 2 update identifier | `sha256:9465c2f2385d82696f36976352c80e661bc0fd5db2ad72342f19b93de7be7748` |
 | outbound `sendMessage` | `ok: true`, ~22:29:59 |
 | outbound message identifier | `sha256:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce` |
 | updates consumed | false, a later `getUpdates` still contained the original update identifier |
