@@ -21,6 +21,7 @@ export {
 export type { ApprovalVerifier } from "./approval-verifier.js";
 export { canonicalizeJson, sha256CanonicalJson } from "./canonical-json.js";
 export { InMemoryApprovalExecutionRepository } from "./execution-approval-repository.js";
+export { ExecutionCompletionConflictError } from "./execution-completion-conflict-error.js";
 export { PostgresApprovalExecutionRepository } from "./postgres-approval-execution-repository.js";
 export type {
   ApprovalExecutionRepository,

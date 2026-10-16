@@ -5,6 +5,7 @@ import test from "node:test";
 import { Pool } from "pg";
 
 import {
+  ExecutionCompletionConflictError,
   HmacApprovalVerifier,
   PostgresApprovalExecutionRepository,
   createApprovalSignature,
@@ -804,6 +805,93 @@ integrationTest(
       await pool.end();
     }
   }
+);
+
+const assertCompletionConflict = async (conflict) => {
+  const schema = createSchema();
+  const fixture = createFixture(`completion-conflict-${conflict.table}`);
+  const pool = new Pool({ connectionString: databaseUrl });
+  try {
+    const repository = new PostgresApprovalExecutionRepository(
+      pool,
+      schema,
+      verifier
+    );
+    await repository.initialize();
+    await repository.storeVerifiedApproval(fixture.record);
+    const result = await repository.claimExecution(
+      claimRequest(fixture, `completion-conflict-${conflict.table}`)
+    );
+    assert.equal(result.status, "claimed");
+    await pool.query(
+      `UPDATE "${schema}".${conflict.table}
+       SET status = $2 WHERE claim_id = $1`,
+      [result.claim.claimId, conflict.status]
+    );
+
+    await assert.rejects(
+      repository.completeExecution(result.claim.claimId, {
+        completedAt: new Date("2026-08-01T12:01:00Z"),
+        outcome: "succeeded",
+      }),
+      (error) => {
+        assert.ok(error instanceof ExecutionCompletionConflictError);
+        assert.equal(error.claimId, result.claim.claimId);
+        assert.equal(error.table, conflict.table);
+        assert.equal(error.actualRowCount, 0);
+        return true;
+      }
+    );
+    const state = await pool.query(
+      `SELECT claim.completed_at AS claim_completed_at,
+              claim.status AS claim_status, claim.outcome,
+              intent.status AS intent_status,
+              outbox.status AS outbox_status
+       FROM "${schema}".policy_execution_claims AS claim
+       JOIN "${schema}".policy_execution_intents AS intent USING (claim_id)
+       JOIN "${schema}".policy_execution_outbox AS outbox USING (claim_id)`
+    );
+    assert.deepEqual(state.rows[0], {
+      claim_completed_at: null,
+      claim_status: conflict.expectedClaimStatus ?? "pending",
+      intent_status: conflict.expectedIntentStatus,
+      outbox_status: conflict.expectedOutboxStatus,
+      outcome: null,
+    });
+  } finally {
+    await dropSchema(pool, schema);
+    await pool.end();
+  }
+};
+
+integrationTest("rejects completion when an intent row is not pending", () =>
+  assertCompletionConflict({
+    expectedIntentStatus: "completed",
+    expectedOutboxStatus: "pending",
+    status: "completed",
+    table: "policy_execution_intents",
+  })
+);
+
+integrationTest(
+  "rejects completion when a claim row is not pending and has no completion timestamp",
+  () =>
+    assertCompletionConflict({
+      expectedClaimStatus: "completed",
+      expectedIntentStatus: "pending",
+      expectedOutboxStatus: "pending",
+      status: "completed",
+      table: "policy_execution_claims",
+    })
+);
+
+integrationTest("rejects completion when an outbox row is not pending", () =>
+  assertCompletionConflict({
+    expectedIntentStatus: "pending",
+    expectedOutboxStatus: "delivered",
+    status: "delivered",
+    table: "policy_execution_outbox",
+  })
 );
 
 integrationTest(

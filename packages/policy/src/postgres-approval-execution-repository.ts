@@ -12,6 +12,7 @@ import type {
   ExecutionCompletion,
   VerifiedApprovalRecord,
 } from "./execution-approval-repository.js";
+import { ExecutionCompletionConflictError } from "./execution-completion-conflict-error.js";
 import {
   POLICY_INTERNAL_FK_TRIGGERS,
   POLICY_NONCE_INDEX_DEFINITION,
@@ -969,22 +970,46 @@ export class PostgresApprovalExecutionRepository implements ApprovalExecutionRep
           claim.completed_at.getTime() === completion.completedAt.getTime();
         return isSameCompletion;
       }
-      await client.query(
+      const claimUpdate = await client.query(
         `UPDATE "${this.#schema}".policy_execution_claims
          SET status = 'completed', outcome = $2, completed_at = $3
-         WHERE claim_id = $1`,
+         WHERE claim_id = $1 AND status = 'pending'`,
         [claimId, completion.outcome, completion.completedAt]
       );
-      await client.query(
+      if (claimUpdate.rowCount !== 1) {
+        throw new ExecutionCompletionConflictError(
+          claimId,
+          "policy_execution_claims",
+          "exactly-one",
+          claimUpdate.rowCount ?? 0
+        );
+      }
+      const intentUpdate = await client.query(
         `UPDATE "${this.#schema}".policy_execution_intents
-         SET status = $2 WHERE claim_id = $1`,
+         SET status = $2 WHERE claim_id = $1 AND status = 'pending'`,
         [claimId, completion.outcome === "succeeded" ? "completed" : "failed"]
       );
-      await client.query(
+      if ((intentUpdate.rowCount ?? 0) < 1) {
+        throw new ExecutionCompletionConflictError(
+          claimId,
+          "policy_execution_intents",
+          "at-least-one",
+          intentUpdate.rowCount ?? 0
+        );
+      }
+      const outboxUpdate = await client.query(
         `UPDATE "${this.#schema}".policy_execution_outbox
-         SET status = 'delivered' WHERE claim_id = $1`,
+         SET status = 'delivered' WHERE claim_id = $1 AND status = 'pending'`,
         [claimId]
       );
+      if ((outboxUpdate.rowCount ?? 0) < 1) {
+        throw new ExecutionCompletionConflictError(
+          claimId,
+          "policy_execution_outbox",
+          "at-least-one",
+          outboxUpdate.rowCount ?? 0
+        );
+      }
       return true;
     });
 }
