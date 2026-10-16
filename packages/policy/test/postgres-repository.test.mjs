@@ -843,7 +843,8 @@ const assertCompletionConflict = async (conflict) => {
       }
     );
     const state = await pool.query(
-      `SELECT claim.status AS claim_status, claim.outcome,
+      `SELECT claim.completed_at AS claim_completed_at,
+              claim.status AS claim_status, claim.outcome,
               intent.status AS intent_status,
               outbox.status AS outbox_status
        FROM "${schema}".policy_execution_claims AS claim
@@ -851,7 +852,8 @@ const assertCompletionConflict = async (conflict) => {
        JOIN "${schema}".policy_execution_outbox AS outbox USING (claim_id)`
     );
     assert.deepEqual(state.rows[0], {
-      claim_status: "pending",
+      claim_completed_at: null,
+      claim_status: conflict.expectedClaimStatus ?? "pending",
       intent_status: conflict.expectedIntentStatus,
       outbox_status: conflict.expectedOutboxStatus,
       outcome: null,
@@ -869,6 +871,18 @@ integrationTest("rejects completion when an intent row is not pending", () =>
     status: "completed",
     table: "policy_execution_intents",
   })
+);
+
+integrationTest(
+  "rejects completion when a claim row is not pending and has no completion timestamp",
+  () =>
+    assertCompletionConflict({
+      expectedClaimStatus: "completed",
+      expectedIntentStatus: "pending",
+      expectedOutboxStatus: "pending",
+      status: "completed",
+      table: "policy_execution_claims",
+    })
 );
 
 integrationTest("rejects completion when an outbox row is not pending", () =>
